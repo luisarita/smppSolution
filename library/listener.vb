@@ -127,7 +127,7 @@ Public Class listener
                         Else
                             Dim lineParts() As String = thisline.Split({SEPARATOR}, StringSplitOptions.None)
                             If lineParts.Length = 0 Or lineParts.Length = 1 Then
-                                'No hacemos nada, no venian las partes
+                                'We ignore incomplete messages
                             ElseIf lineParts.Length >= 4 Then
                                 If lineParts.Length >= 5 AndAlso lineParts(4) > 1 Then
                                     'Not identified message, please ignore
