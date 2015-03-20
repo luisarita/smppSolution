@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{02AB9706-CBC9-42B8-AA46-A7B2C4581AE7}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>smppManager</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>smppManager</RootNamespace>
+    <StartupObject>smppManager.My.MyApplication</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>WindowsForms</MyType>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetZone>LocalIntranet</TargetZone>
+    <ManifestCertificateThumbprint>EB86987FEA10A9FCA611C663D9CFB92452C7FF8A</ManifestCertificateThumbprint>
+    <ManifestKeyFile>smppManager_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>false</SignManifests>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <PublishUrl>z:\dropbox\tecmovil\publish\manager\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://25.173.56.151/smpp/manager/</InstallUrl>
+    <ProductName>SMPP Manager</ProductName>
+    <PublisherName>SMPP</PublisherName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>167</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>..\..\..\builds\smpp\manager\bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42032,42353,42354,42355</NoWarn>
+    <DebugType>none</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="formControl">
+      <HintPath>..\..\fa\sincronizador\codigo\bin\formControl.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.3.6\Assemblies\v4.0\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="conexion.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="constantes.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="controles\ctlNoProcesados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controles\ctlParticipantes.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controles\ctlRecepcion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controles\ctlRifa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controles\ctlSuscripciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="controles\ctlTrivia.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="funciones\fncGrid.vb" />
+    <Compile Include="funciones\fncGridDataset.vb" />
+    <Compile Include="funciones\fncListBox.vb" />
+    <Compile Include="funciones\fncListboxMySQL.vb" />
+    <Compile Include="funciones\fncText.vb" />
+    <Compile Include="funciones\fncTextBox.vb" />
+    <Compile Include="funciones\objLista.vb" />
+    <Compile Include="funcs.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ingreso.designer.vb">
+      <DependentUpon>ingreso.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ingreso.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrAgrupadores.Designer.vb">
+      <DependentUpon>agrAgrupadores.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mantenimiento\agrAgrupadores.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrEncuesta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrListado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrMsgSuscripcion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrOpcion.vb" />
+    <Compile Include="mantenimiento\agrRifa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrSuscripcion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrTelechat.Designer.vb">
+      <DependentUpon>agrTelechat.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mantenimiento\agrTelechat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrTrivia.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrTrvOpcion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrTrvPregunta.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrTrvResultado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\cargBatchSuscripcion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consAgrupador.Designer.vb">
+      <DependentUpon>consAgrupador.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mantenimiento\consAgrupador.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consEncuestas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consListados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consRifas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consSuscripciones.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consTrivias.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consTelechats.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\cargBatchListado.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrDiccionario.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consDiccionarios.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\cargBatchRifa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\agrChat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\consChats.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento\ctlSuscriptores.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mdi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="controles\ctlNoProcesados.resx">
+      <DependentUpon>ctlNoProcesados.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controles\ctlParticipantes.resx">
+      <DependentUpon>ctlParticipantes.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controles\ctlRecepcion.resx">
+      <DependentUpon>ctlRecepcion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controles\ctlRifa.resx">
+      <DependentUpon>ctlRifa.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controles\ctlSuscripciones.resx">
+      <DependentUpon>ctlSuscripciones.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controles\ctlTrivia.resx">
+      <DependentUpon>ctlTrivia.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ingreso.resx">
+      <DependentUpon>ingreso.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrAgrupadores.resx">
+      <DependentUpon>agrAgrupadores.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrEncuesta.resx">
+      <DependentUpon>agrEncuesta.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrListado.resx">
+      <DependentUpon>agrListado.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrMsgSuscripcion.resx">
+      <DependentUpon>agrMsgSuscripcion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrOpcion.resx">
+      <DependentUpon>agrOpcion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrRifa.resx">
+      <DependentUpon>agrRifa.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrSuscripcion.resx">
+      <DependentUpon>agrSuscripcion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrTelechat.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>agrTelechat.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrTrivia.resx">
+      <DependentUpon>agrTrivia.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrTrvOpcion.resx">
+      <DependentUpon>agrTrvOpcion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrTrvPregunta.resx">
+      <DependentUpon>agrTrvPregunta.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrTrvResultado.resx">
+      <DependentUpon>agrTrvResultado.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\cargBatchSuscripcion.resx">
+      <DependentUpon>cargBatchSuscripcion.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consAgrupador.resx">
+      <DependentUpon>consAgrupador.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consEncuestas.resx">
+      <DependentUpon>consEncuestas.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consListados.resx">
+      <DependentUpon>consListados.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consRifas.resx">
+      <DependentUpon>consRifas.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consSuscripciones.resx">
+      <DependentUpon>consSuscripciones.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consTrivias.resx">
+      <DependentUpon>consTrivias.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consTelechats.resx">
+      <DependentUpon>consTelechats.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\cargBatchListado.resx">
+      <DependentUpon>cargBatchListado.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrDiccionario.resx">
+      <DependentUpon>agrDiccionario.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consDiccionarios.resx">
+      <DependentUpon>consDiccionarios.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\cargBatchRifa.resx">
+      <DependentUpon>cargBatchRifa.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\agrChat.resx">
+      <DependentUpon>agrChat.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\consChats.resx">
+      <DependentUpon>consChats.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento\ctlSuscriptores.resx">
+      <DependentUpon>ctlSuscriptores.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mdi.resx">
+      <DependentUpon>mdi.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="Microsoft.Data.Odbc">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MySql.Data">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="office">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="stdole">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\vnframework\vnframework.vbproj">
+      <Project>{2ec67aa0-d204-4ca3-83f7-39c272edb1b0}</Project>
+      <Name>vnframework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
