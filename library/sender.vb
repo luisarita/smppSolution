@@ -92,7 +92,7 @@ Public Class sender
         signature = mySQLServerScan.getSignature()
         mySQLServerScan.disconnect()
 
-        Dim esmePath As String = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)
+        Dim esmePath As String = IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)
         esmePath = esmePath & "\esme.bat"
 
 
