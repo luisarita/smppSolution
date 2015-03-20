@@ -89,7 +89,7 @@ Public Class listener
     Class processClass
         Private data As String
         Private mySQLServer As sqlServer
-        Dim strFile As String = "yourfile.txt"
+        'Dim strFile As String = "yourfile.txt"
 
         Sub New(ByVal vData As String, ByVal vMySQLServer As sqlServer)
             data = vData
@@ -100,7 +100,7 @@ Public Class listener
             Try
                 data = data.Substring(CONFINDICATOR.Length)
                 Dim parts() As String = data.Replace(vbNewLine, "").Replace(CONFINDICATOR, "@").Split("@")
-
+                'Normal message
                 Dim message As String = parts(2).Trim().Substring(0, 1)
                 Try
                     Dim result As Integer = 0
@@ -110,7 +110,7 @@ Public Class listener
                     If Integer.TryParse(parts(2).Trim().Substring(0, 5), result) Then message = result
                 Catch
                 End Try
-                mySQLServer.confirm(parts(0).Trim(), parts(1).Trim(), message)
+                mySQLServer.confirm(id:=parts(0).Trim(), status:=parts(1).Trim(), esmeResponse:=message, esmeId:=parts(3))
             Catch e As Exception
                 eventLogWriter.write("Process ESME CONFIRMATION: " & e.Message & "", Application.ProductName)
             End Try
@@ -129,17 +129,24 @@ Public Class listener
                             If lineParts.Length = 0 Or lineParts.Length = 1 Then
                                 'No hacemos nada, no venian las partes
                             ElseIf lineParts.Length >= 4 Then
-                                Dim data As String = mySQLServer.sanitizeString(lineParts(2).Trim)
-                                Dim service_type As String = mySQLServer.sanitizeString(lineParts(3).Trim)
+                                If lineParts.Length >= 5 AndAlso lineParts(4) > 1 Then
+                                    'Not identified message, please ignore
+                                ElseIf lineParts.Length >= 5 AndAlso lineParts(4) = 1 Then
+                                    'Delivery Receipt
+                                    'mySQLServer.notify(String.Format("DLR CALL4 {0}", lineParts(4)))
+                                    'mySQLServer.notify(String.Format("DLR CALL3 {0}", lineParts(3)))
+                                    'mySQLServer.notify(String.Format("DLR CALL {0}", data))
+                                    'mySQLServer.deliveryReceipt(id:=lineParts(0).Trim(), status:=lineParts(1).Trim(), esmeResponse:=lineParts(2).Trim(), esmeId:=lineParts(3).Trim())
+                                Else
+                                    Dim data As String = mySQLServer.sanitizeString(lineParts(2).Trim)
+                                    Dim service_type As String = mySQLServer.sanitizeString(lineParts(3).Trim)
+                                    If service_type.Length > 5 Then service_type = service_type.Substring(0, 5)
 
-                                If service_type.Length > 5 Then service_type = service_type.Substring(0, 5)
-                                mySQLServer.insert(number:=lineParts(0), source:=lineParts(1), data:=data, service_type:=service_type)
-                            Else
-                                'WriteToEventLog("Missing parts:" & thisline & ".")
+                                    mySQLServer.insert(number:=lineParts(0), source:=lineParts(1), data:=data, service_type:=service_type)
+                                End If
                             End If
                         End If
-                        End If
-
+                    End If
                 Next
             Catch e As Exception
                 eventLogWriter.write("Process ESME: " & e.Message & " / " & data, Application.ProductName)
