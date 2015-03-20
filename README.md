@@ -11,3 +11,6 @@ service
 
 smppMonitor  
  A .Net Windows service that helps monitor the SMPP Instances and do corresponding restarts
+
+ smppManager  
+  A .Net WIndows Forms project to manage diffrent activities in the platform
