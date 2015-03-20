@@ -12,8 +12,12 @@ service
 smppMonitor  
  A .Net Windows service that helps monitor the SMPP Instances and do corresponding restarts 
 
+tester  
+ A .Net Windows Forms project that loads up the server logic to facilitate debuging  
+
+configurator  
+ A .Net Windows Forms project that makes the configuration of the SMPP Platform easier
+
 smppManager  
  A .Net WIndows Forms project to manage diffrent activities in the platform  
 
-tester  
- A .Net Windows Forms project that loads up the server logic to facilitate debuging
