@@ -127,7 +127,7 @@ Public Class sqlServer
             notify("RESETING CONNECTIONS " & ex1.Message)
         End Try
     End Sub
-    Public Function confirm(ByVal id As Integer, ByVal status As String, esmeResponse As String, esmeId As Integer) As String
+    Public Function confirm(ByVal id As Integer, ByVal status As String, esmeResponse As String, esmeId As Long) As String
         SyncLock connectionOne
             Dim SQL As String = ""
             Try
@@ -142,22 +142,19 @@ Public Class sqlServer
             End Try
         End SyncLock
     End Function
-    Public Function deliveryReceipt(ByVal id As Integer, ByVal status As String, esmeResponse As String, esmeId As String) As String
+    Public Function deliveryReceipt(ByVal id As Long, esmeResponse As String, status As String) As String
         SyncLock connectionOne
-            notify(String.Format("DLR CALL 0:{0} 1:{1} 2:{2} 3:{3}", id, status, esmeResponse, esmeId))
-            Return COMPLETED_SUCCESFULLY
-
-            'Dim SQL As String = ""
-            'Try
-            'If connectionOne.State <> ConnectionState.Open Then connectionOne.Open()
-            'sql = String.Format("UPDATE mensajes_pendientes SET confirmado={0}, respuesta_esme='{2}', fecha_confirmacion=NOW(), id_esme={3} WHERE id={1}", status, id, esmeResponse, esmeId)
-            'Dim updateCMD As New OdbcCommand(SQL, connectionOne)
-            'updateCMD.ExecuteNonQuery()
-            'Return COMPLETED_SUCCESFULLY
-            'Catch thiserror As OdbcException
-            'notify(CONFIRMATION & thiserror.Message & SQL)
-            'Return CONFIRMATION & thiserror.Message & SQL
-            'End Try
+            Dim SQL As String = ""
+            Try
+                If connectionOne.State <> ConnectionState.Open Then connectionOne.Open()
+                SQL = String.Format("INSERT INTO mensajes_confirmados (id, respuesta, estado) VALUES ({0}, '{1}', '{2}')", id, esmeResponse, status)
+                Dim updateCMD As New OdbcCommand(SQL, connectionOne)
+                updateCMD.ExecuteNonQuery()
+                Return COMPLETED_SUCCESFULLY
+            Catch thiserror As OdbcException
+                notify(CONFIRMATION & thiserror.Message & SQL)
+                Return CONFIRMATION & thiserror.Message & SQL
+            End Try
         End SyncLock
     End Function
     Public Function sanitizeString(originalString As String) As String

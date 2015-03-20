@@ -7,4 +7,7 @@ library
  A .Net class project containing all the logic to interact with the esme java app  
 
 service  
- A .Net windows service that acts as a loader to the library logic. Having the service logic separated facilitates debugin  
+ A .Net Windows service that acts as a loader to the library logic. Having the service logic separated facilitates debugin  
+
+smppMonitor  
+ A .Net Windows service that helps monitor the SMPP Instances and do corresponding restarts

@@ -102,6 +102,10 @@ Public Class listener
                 Dim parts() As String = data.Replace(vbNewLine, "").Replace(CONFINDICATOR, "@").Split("@")
                 'Normal message
                 Dim message As String = parts(2).Trim().Substring(0, 1)
+                Dim esmeId As Long = 0
+                If parts.Length >= 4 AndAlso parts(3).Trim <> "" AndAlso IsNumeric(parts(3).Trim) Then
+                    esmeId = parts(3).Trim
+                End If
                 Try
                     Dim result As Integer = 0
                     If Integer.TryParse(parts(2).Trim().Substring(0, 2), result) Then message = result
@@ -110,7 +114,7 @@ Public Class listener
                     If Integer.TryParse(parts(2).Trim().Substring(0, 5), result) Then message = result
                 Catch
                 End Try
-                mySQLServer.confirm(id:=parts(0).Trim(), status:=parts(1).Trim(), esmeResponse:=message, esmeId:=parts(3))
+                mySQLServer.confirm(id:=parts(0).Trim(), status:=parts(1).Trim(), esmeResponse:=message, esmeId:=esmeId)
             Catch e As Exception
                 eventLogWriter.write("Process ESME CONFIRMATION: " & e.Message & "", Application.ProductName)
             End Try
@@ -126,23 +130,20 @@ Public Class listener
                             Dim int As Integer = thisline.Substring(SEPARATOR.Length).Substring(0, thisline.Length - NEWLINE.Length)
                         Else
                             Dim lineParts() As String = thisline.Split({SEPARATOR}, StringSplitOptions.None)
-                            If lineParts.Length = 0 Or lineParts.Length = 1 Then
-                                'We ignore incomplete messages
-                            ElseIf lineParts.Length >= 4 Then
-                                If lineParts.Length >= 5 AndAlso lineParts(4) > 1 Then
-                                    'Not identified message, please ignore
-                                ElseIf lineParts.Length >= 5 AndAlso lineParts(4) = 1 Then
-                                    'Delivery Receipt
-                                    'mySQLServer.notify(String.Format("DLR CALL4 {0}", lineParts(4)))
-                                    'mySQLServer.notify(String.Format("DLR CALL3 {0}", lineParts(3)))
-                                    'mySQLServer.notify(String.Format("DLR CALL {0}", data))
-                                    'mySQLServer.deliveryReceipt(id:=lineParts(0).Trim(), status:=lineParts(1).Trim(), esmeResponse:=lineParts(2).Trim(), esmeId:=lineParts(3).Trim())
-                                Else
-                                    Dim data As String = mySQLServer.sanitizeString(lineParts(2).Trim)
-                                    Dim service_type As String = mySQLServer.sanitizeString(lineParts(3).Trim)
-                                    If service_type.Length > 5 Then service_type = service_type.Substring(0, 5)
+                            If lineParts.Length >= 5 Then
+                                Dim message As String = lineParts(2).Trim
+                                Dim service_type As String = mySQLServer.sanitizeString(lineParts(3).Trim)
+                                If service_type.Length > 5 Then service_type = service_type.Substring(0, 5)
 
-                                    mySQLServer.insert(number:=lineParts(0), source:=lineParts(1), data:=data, service_type:=service_type)
+                                If lineParts(4) = 0 Then 'We have a user message
+                                    message = mySQLServer.sanitizeString(message)
+                                    mySQLServer.insert(number:=lineParts(0), source:=lineParts(1), data:=message, service_type:=service_type)
+                                ElseIf lineParts(4) = 1 Then 'We have a delivery confirmation
+                                    Dim dlr() As String = message.Split({" "}, StringSplitOptions.RemoveEmptyEntries)
+                                    Dim id As Long = CLng(dlr(0).Split(":")(1))
+                                    Dim status As String = dlr(7).Split(":")(1)
+                                    mySQLServer.deliveryReceipt(id, esmeResponse:=message, status:=status)
+                                Else
                                 End If
                             End If
                         End If
