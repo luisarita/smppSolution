@@ -493,18 +493,18 @@ class rifa {
   
   $condition = ($this->numero  == "" ) ? "" : sprintf("AND rp.numero=%s", GetSQLValueString($this->numero,"text") );
   $condition .= ($this->mensaje == "" ) ? "" : sprintf("AND rp.mensaje LIKE %s", GetSQLValueString($this->mensaje . "%","text") );
-  $SQL = sprintf("SELECT rp.id, rp.numero, rp.fecha, rp.mensaje, rp.contestado, rp.variable1, rp.variable2, rp.variable3 FROM rifas r, rifas_participantes rp WHERE rp.estado=1 AND r.id=rp.idRifa AND rp.idRifa=%s AND fecha>=%s AND fecha<=%s %s ORDER BY rp.id DESC", GetSQLValueString($this->idRifa, "int"), GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $condition);
+  $SQL = sprintf("SELECT rp.id, rp.numero, rp.fecha, rp.mensaje, rp.contestado, rp.variable1, rp.variable2, rp.variable3, rp.variable4, rp.variable5 FROM rifas r, rifas_participantes rp WHERE rp.estado=1 AND r.id=rp.idRifa AND rp.idRifa=%s AND fecha>=%s AND fecha<=%s %s ORDER BY rp.id DESC", GetSQLValueString($this->idRifa, "int"), GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $condition);
   $cntSQL = sprintf ("SELECT COUNT(*) AS conteo FROM (%s) dt", $SQL);
   $rs = mysql_query($cntSQL, $conexion) or die(register_mysql_error("RR001", mysql_error()));
   $row = mysql_fetch_array($rs);
   $this->cntParticipantes = $row['conteo'];
   
-  $SQL = sprintf("%s LIMIT %s, %s", $SQL, $this->pagina * $this->limit, $this->limit );
-  $rs = mysql_query($SQL, $conexion) or die(register_mysql_error("RR002", mysql_error()));
+  $SQL2 = sprintf("%s LIMIT %s, %s", $SQL, $this->pagina * $this->limit, $this->limit );
+  $rs2 = mysql_query($SQL2, $conexion) or die(register_mysql_error("RR002", mysql_error()));
   
   $html = "";
   $i = $this->pagina * $this->limit;
-  while ($row = mysql_fetch_array( $rs )){
+  while ($row = mysql_fetch_array( $rs2 )){
    $contestado = ($row['contestado'] == 1) ? "checked disabled" : "";
    $style      = ($row['contestado'] == 1) ? "" : "color: #000000";
    $html .= "<tr>
@@ -517,6 +517,11 @@ class rifa {
    $html .= "</td>
     <td scope='row' class='content' style='max-width: 250px; overflow: hidden; " . $style . "'>" . $row['mensaje'] . "</td>
     <td scope='row' class='content'>" . $row['fecha'] . "</td>
+    <td scope='row' class='content'>" . $row['variable1'] . "</td>
+    <td scope='row' class='content'>" . $row['variable2'] . "</td>
+    <td scope='row' class='content'>" . $row['variable3'] . "</td>
+    <td scope='row' class='content'>" . $row['variable4'] . "</td>
+    <td scope='row' class='content'>" . $row['variable5'] . "</td>
    </tr>";
    ++$i;
   }
@@ -531,8 +536,8 @@ class rifa {
   $anterior  = (!$this->pagina == 0) ? "<a href='" . sprintf("%s?%s", $this->url, htmlentities(implode("&", $params))) . "&pagina=" . ($this->pagina - 1) . "'>&laquo; Anterior</a>" : "";
   $siguiente = "<a href='" . sprintf("%s?%s", $this->url, htmlentities(implode("&", $params))) . "&pagina=" . ($this->pagina + 1) . "'>Siguiente &raquo;</a>";
 
-  $html .= "<tr><td colspan='4'>&nbsp;</td></tr>";
-  $html .= sprintf("<tr><th colspan='4' style='text-align: right'>%s <a>-</a> %s</th></tr>", $anterior, $siguiente);
+  $html .= "<tr><td colspan='8'>&nbsp;</td></tr>";
+  $html .= sprintf("<tr><th colspan='8' style='text-align: right'>%s <a>-</a> %s</th></tr>", $anterior, $siguiente);
   return $html;
  }
  function printGraficos             (){
