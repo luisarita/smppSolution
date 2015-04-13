@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+   <meta http-equiv="Refresh">
+   <title>Manejar Horarios</title>
+   <link rel="stylesheet" type="text/css" href="../css/style.css" />
+   <script language="javascript" src="../scripts/rifas.js"></script>
+  </head>
+  <body @@ALERTA@@>
+   <table width="100%" cellpadding="0" cellspacing="0">
+    <tr><td>   
+     <form name="form1" method="post">
+      <table width="600" cellpadding="0" cellspacing="0">
+       <tr><th colspan="2">Horario</th></tr>
+       <tr><td colspan="2">&nbsp;</td></tr>     
+       <tr>  
+        <td>Nombre:</td>  
+        <td><input class="textbox" type="text" name="nombre" value="@@NOMBRE@@"></td>
+      </tr><tr>  
+       <td>Hora Inicial:</td>  
+       <td>@@SELECTINICIO@@</td>
+     </tr><tr>  
+      <td>Hora Final:</td>  
+      <td>@@SELECTFINAL@@</td>
+     </tr>
+     <tr>
+      <td>D&iacute;as:</td>      
+      <td>@@DIAS@@</td>
+     </tr>     
+     <tr><td colspan="2">&nbsp;</td></tr>     
+     <tr>
+      <td colspan="2" style="text-align: right">
+       <input type="submit" class="button" name="Submit" value="Guardar Datos" onClick="return validar(this.form)">
+       <input type="hidden" name="MM_ACTION" value="actualizarHorarios">
+       <input type="hidden" name="id" value="@@ID@@">
+      </td>
+     </tr>
+     <tr><td colspan="2">&nbsp;</td></tr>     
+     <tr><th colspan="2" style="text-align: right"><a href='?'>Regresar</a></th></tr>     
+     <tr><td colspan="2">&nbsp;</td></tr>     
+    </table>
+   </form>
+   <form id="formeliminar" name="formeliminar" method="post">
+    <table width="600" cellpadding="0" cellspacing="0">
+     <tr>
+      <th>Nombre</th>
+      <th>Dias</th>
+      <th>Hora Inicial</th>   
+      <th>Hora Final</th>   
+      <th colspan="2">Acción</th>
+     </tr>
+     <tr><td colspan="6">&nbsp;</td></tr>
+      @@DETALLE@@
+     <tr><td colspan="6">&nbsp;</td></tr>
+     <tr>
+      <td colspan="5" style="text-align: right; vertical-align: middle">
+       <input type="submit" class="button" onclick='javascript: if (confirm("¿Desea Eliminar los Horarios Seleccionados?")){ return true; }' value="Eliminar" /> 
+       <input type="hidden" name="MM_ACTION" value="eliminarHorarios">
+   	   <input type="hidden" name="accion" value="eliminar">
+      </td>
+     </tr>
+    </table>
+   </form>
+  </td></tr>
+ </table>
+</body>
+</html>
