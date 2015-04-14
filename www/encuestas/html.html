@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Refresh" content="@@URL@@">
+  <title>@@TITLE@@</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <style type="text/css">@import url(calendar/calendar-blue.css);</style>
+  <script type="text/javascript" language="javascript" src="calendar/calendar.js"></script>
+  <script type="text/javascript" language="javascript" src="calendar/lang/calendar-es.js"></script>
+  <script type="text/javascript" language="javascript" src="calendar/calendar-setup.js"></script>
+  <script type="text/javascript" language="javascript" src="scripts/colorpicker2.js"></script>
+  <script type="text/javascript" language="javascript" src="scripts/popup.js"></script>
+  <script type="text/javascript" language="javascript">
+   var cp = new ColorPicker(); // DIV style
+   var number;
+   function cpicker( num ){
+    number = num;
+    cp.select( document.getElementById("colorsgraph" + number ) , 'palleteviewer' + num );
+   }
+   function pickColor(color){
+    var a;
+    document.getElementById("palleteviewer" + number ).style.backgroundColor = color;
+    a = document.getElementById("colorsgraph" + number );
+    a.value = color;
+   }
+  </script>
+ </head>
+ <body>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td align="left">
+     <table border="0" cellpadding="0" cellspacing="0" width="600">
+      <tr><th colspan="5" scope="col" align="center">@@TITLE@@</th></tr>
+       <form id="formActualizar" name="formActualizar" method="post">
+        <tr><td colspan="5">&nbsp;</td></tr>     
+        <tr>
+         <td>Pregunta:</td>
+         <td colspan="4"><input type="text" class="textbox" value="@@PREGUNTA@@" name="pregunta" id="pregunta" /></td>
+        </tr>
+        @@CONTEOPARTICIPANTES@@	
+        <tr><td colspan="5">&nbsp;</td></tr>     
+          <tr>
+         <th colspan="2">Opción</th>
+         <th rowspan="2" style="width: 50px">Color</th>
+         <th rowspan="2" style="width: 50px">Votos</th>
+         <th rowspan="2" style="width: 50px">%</th>
+        </tr>
+        <tr>
+         <th>Descripci&oacute;n</th>
+         <th style="width: 85px">Clave</th>
+        </tr>
+        <tr><td colspan="5">&nbsp;</td></tr>     
+        @@OPCIONES@@
+        <tr><td colspan="5" style="text-align: right">
+         <script language="javascript1.2">
+          cp.writeDiv()
+         </script>
+         <input type="hidden" name="MM_ACTION" value="actualizarDatos"><br/>
+         <input class="button" type="submit" onclick='javascript: if (confirm("¿Desea modificar los datos existentes?")){ return true; }' value="Actualizar" />
+         <input type="submit" class="button" value="Reiniciar" onclick='javascript: if( confirm("¿Desea eliminar a todos los participantes?")) { this.form.MM_ACTION.value="eliminarParticipantes"; return true;}' />
+         <input type="submit" class="button" value="Reiniciar Conteo" onclick='javascript: if( confirm("¿Desea reiniciar el conteo de las opciones?")) { this.form.MM_ACTION.value="reiniciarConteos"; return true;}' />
+         <input type="submit" class="button" value="Cerrar Sesión" onclick='javascript: this.form.MM_ACTION.value="logout"; return true;' />
+        </td></tr>
+       </form>
+       <tr><td colspan="5">&nbsp;</td></tr>     
+       <tr><td colspan="5" style="text-align: center"><div align="center">
+        <table border="0" cellspacing="0" cellpadding="0">
+         @@REPORTEMENSUAL@@
+         <tr><td>&nbsp;</td></tr>
+         <tr><th>N&uacute;meros Seleccionados</th></tr>
+         @@GANADORES@@
+         <tr><td>&nbsp;</td></tr>
+         <tr><td style="text-align:right">
+          <form id="formLimpiar" name="formLimpiar" method="post">
+           <input type="submit" class="button" onclick='javascript: if (confirm("¿Desea limpiar a los ganadores existentes?")){ return true; }' value="Limpiar" />
+           <input type="hidden" name="MM_ACTION" value="cancelarGanadores">
+          </form>
+         </td></tr>
+         <tr><td>&nbsp;</td></tr>     
+         <tr><td>
+          <form id="formSortear" name="formSortear" method="post">
+           <table cellpadding="0" cellspacing="0" width="100%">
+            <tr><th colspan="3">Filtro y Sorteo</th></tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+            <tr>
+             <td>Fecha Desde:</td>
+             <td><input id="desde" name="desde" value="@@DESDE@@"></td><td><button id="desde_btn">...</button></td>
+            </tr><tr>
+             <td>Fecha Hasta:</td><td><input id="hasta" name="hasta" type="text" value="@@HASTA@@"></td>
+             <td><button id="hasta_btn">...</button></td>
+            </tr><tr>
+             <td>Número:</td><td colspan="2"><input id="numero" name="numero" type="text" maxlength="11" value="@@NUMERO@@"></td>
+            </tr><tr>
+             <td colspan="3">&nbsp;</td>
+            </tr>
+            <tr><td colspan="3" style="text-align: right">
+             <input type="button" class="button" onClick="javascript: popUp('encuestas/encuestas.sorteo.php',this.form.desde.value,this.form.hasta.value)" value="Sortear" />
+             <input type="submit" class="button" value="Filtrar" />
+            </td></tr>
+           </table>
+          </form>
+         </td></tr>
+        </table></div>
+       </td></tr>
+
+       <tr><td colspan="5">&nbsp;</td></tr>     
+       <tr><td colspan="5">@@PARTICIPANTES@@</td></tr>
+      </table>
+     </td>
+     <td valign="top" style="height: 452px; width: 320px;">&nbsp;<?php 
+        ?><table cellpadding="0" cellspacing="1" border="0">
+         <tr><td style="background-color: #FFFFFF; color:#000000; border: 1px #000000 solid; font-size: 18px"><?php echo $pregunta ?></td></tr>
+         <tr><td>
+          <a href='encuestas/encuestas.grafico.php?frame'>
+           <img src="encuestas/encuestas.grafico.php?height=240&width=320" border="0" align="top"/>
+          </a>
+        </td></tr>
+       </table>
+      </td></tr>
+   </table>
+  </font>
+ </body>
+ <script type="text/javascript">
+   Calendar.setup({
+    inputField     :    "desde",          // id of the input field
+    ifFormat       :    "%Y-%m-%d %H:%M", // format of the input field
+    showsTime      :    true,             // will display a time selector
+    button         :    "desde_btn",      // trigger for the calendar (button ID)
+    singleClick    :    true,             // double-click mode
+    step           :    1                 // show all years in drop-down boxes (instead of every other year as default)
+   });
+     
+   Calendar.setup({
+    date           :    "2006/01/11",
+    inputField     :    "hasta",          // id of the input field
+    ifFormat       :    "%Y-%m-%d %H:%M", // format of the input field
+    showsTime      :    true,             // will display a time selector
+    button         :    "hasta_btn",      // trigger for the calendar (button ID)
+    singleClick    :    true,             // double-click mode
+    step           :    1                 // show all years in drop-down boxes (instead of every other year as default)
+   });
+ </script>
+</html>
