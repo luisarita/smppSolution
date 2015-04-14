@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>@@TITLE@@</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <style type="text/css">@import url(calendar/calendar-brown.css);</style>
+  <script type="text/javascript" src="calendar/calendar.js"></script>
+  <script type="text/javascript" src="calendar/lang/calendar-es.js"></script>
+  <script type="text/javascript" src="calendar/calendar-setup.js"></script>
+  <script type="text/javascript" language="javascript" src='scripts/maxsize.js'></script>
+  <script type="text/javascript" language="javascript" src="scripts/popup.js"></script>
+  <script type="text/javascript" language="javascript" src="scripts/showhide.js"></script>
+  <script type="text/javascript" language="javascript" src="scripts/suscripciones.js"></script>
+  <script language="javascript">
+   function validar(myForm){
+    if (myForm.contenido.value.length == 0){
+     alert("Debe incluir un mensaje a enviar");
+    } else if (myForm.contenido.value.length > @@MAXLENGTH@@){
+     alert("El mensaje es demasiado largo");
+    } else if (!validarTexto(myForm.contenido.value)){
+     alert("El mensaje contiene algun caracter inválido");
+    } else if (warning(myForm.contenido.value)){
+     myForm.submit();
+     myForm.enviar.disabled = true;
+    }
+    return false;
+   }
+   function maxsize(ta){
+    if( ta.value.length >  @@MAXLENGTH@@ )
+     ta.value = ta.value.substr(0, @@MAXLENGTH@@);    
+   }
+   function warning(texto){
+    if ( texto.length <  @@WARNLENGTH@@ ) return true;
+    if ( confirm('Llego al numero maximo de caracteres permitidos, ¿esta seguro que el mensaje esta correcto?') )
+     return true;
+    return false;
+   }
+  </script>
+ </head>
+ <body>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+   <tr>
+    <td scope="col">
+     <table border="0" cellpadding="0" cellspacing="0" width="400px">
+      <tr><td>
+     <table border="0" cellpadding="0" cellspacing="0" width="400px">
+      <tr>
+       <td colspan='2' style="text-align: center">
+        <input id='fila_mostrar_0' type='submit' class='msg-button' value='Programación' style='display:none'
+         onclick="document.getElementById('fila_b_0').style.display='';  mostrar_detalles_fila('0'); ocultar_detalles_fila('1'); ocultar_detalles_fila('2'); return false;" />
+        <input id='fila_ocultar_0' type='submit' class='button' value='Programación' onclick="ocultar_detalles_fila('0'); return false;"  />
+        
+        <input id='fila_mostrar_1' type='submit' class='msg-button' value='Ultimos Mensajes' 
+         onclick="document.getElementById('fila_b_1').style.display=''; mostrar_detalles_fila('1'); ocultar_detalles_fila('0'); ocultar_detalles_fila('2'); return false;" />
+        <input id='fila_ocultar_1' type='submit' class='button' value='Ultimos Mensajes' onclick="ocultar_detalles_fila('1'); return false;"  style='display:none'/>
+        
+        <input id='fila_mostrar_2' type='submit' class='msg-button' value='Gráficos' 
+         onclick="document.getElementById('fila_b_2').style.display='';  mostrar_detalles_fila('2'); ocultar_detalles_fila('0'); ocultar_detalles_fila('1'); return false;" />
+        <input id='fila_ocultar_2' type='submit' class='button' value='Gráficos' onclick="ocultar_detalles_fila('2'); return false;"  style='display:none' />
+       </td>
+      </tr>
+     </table>
+     </td></tr>
+     <tr id='fila_b_0'><td>
+     <div style='overflow-x: hidden; overflow-y: hidden; padding: 0px;' id='div_detalle_0'>
+      <table border="0" cellpadding="0" cellspacing="0" width="400px">
+       <form method="POST">
+        @@MENSAJE@@
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr><th colspan="2" scope="col">Nuevo Mensaje</th></tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr>
+         <td scope="row" style="text-align: right">Número:</td>
+         <td>@@SHORTCODE@@</td>
+        </tr><tr>
+         <td scope="row" style="text-align: right">Cantidad de Suscriptores:</td>
+         <td>@@CONTEOPARTICIPANTES@@</td>
+        </tr><tr>
+         <td scope="row" style="text-align: right">Fecha (yy-mm-dd hh:mm:ss):</td>
+         <td><input name="fecha" id="fecha" value="@@FECHAENVIO@@" /><button id='btn'> ... </button></td>
+        </tr><tr>
+         <td scope="row" valign="top" style="text-align: right">Contenido:</td>
+         <td>
+          <textarea name="contenido" rows="5" class="fd_max_254" id="contenido" onkeyup="maxsize(this); this.form.count.value=this.value.length;"></textarea>
+          <input type="text" value="0" name="count" readonly="readonly" />
+         </td>
+        </tr>
+        <tr><td colspan="2">&nbsp;</td></tr>
+        <tr>
+         <td colspan="2" scope="row" style="text-align: right">
+          <input id='enviar' name="enviar" class="msg-button" type="submit" value="Enviar" onclick="return validar(this.form)" />
+          <input type="hidden" name="MM_ACTION" value="enviarMensaje">
+         </td>
+        </tr>
+       </form>
+       <tr><td colspan="2">&nbsp;</td></tr>
+       <form method="POST">
+        <tr><td colspan="2" style="text-align: right">
+         <input type="hidden" name="MM_ACTION" value="logout">
+         <input type="submit" class="button" value="Cerrar Sesión" onclick='javascript: this.form.MM_ACTION.value="logout"; return true;' />
+        </td></tr>
+       </form>
+       <tr><td colspan="2">&nbsp;</td></tr>
+      </table>
+      @@MEDIA@@
+      <table border="0" cellpadding="0" cellspacing="0" width="400px">
+       <tr><th colspan="3" scope="row">Ganadores</th></tr>
+       <tr><td colspan="3">&nbsp;</td></tr>
+       @@GANADORES@@
+       <tr><td colspan="3">&nbsp;</td></tr>
+       <form method="POST">
+        <tr><td colspan="3" style="text-align: right">
+         <input type="hidden" name="MM_ACTION" value="cancelarGanadores" />
+         <input type="submit" class="button" value="Limpiar" />
+        </td></tr>
+       </form>
+       <tr><td colspan="3">&nbsp;</td></tr>
+      </table>
+      <table cellpadding="0" cellspacing="0" border="0" width="400px">
+       <form>
+        <tr><th colspan="3">Filtro y Sorteo</th></tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr>
+         <td>Fecha Desde:</td><td style="text-align: right"><input id="desde" name="desde" value="@@DESDE@@"></td>
+         <td><button id="desde_btn">...</button></td>
+        </tr><tr>
+         <td>Fecha Hasta:</td><td style="text-align: right"><input id="hasta" name="hasta" type="text" value="@@HASTA@@"></td>
+         <td><button id="hasta_btn">...</button></td>
+        </tr><tr>
+         <td>Número:</td><td style="text-align: right"><input id="numero" name="numero" type="text" maxlength="11" value="@@NUMERO@@"></td>
+        </tr>
+        <tr><td>&nbsp;</td></tr>
+        <tr><td colspan="3" style="text-align: right">
+         <input id="listar" name="listar" type="button" class="button" onClick="javascript: popUpNumero('?MM_ACTION=printListado',this.form.desde.value,this.form.hasta.value,this.form.numero.value)" value="Listado">
+         <input id="sortear" name="sortear" type="button" class="button" onClick="javascript: if ( confirm('¿Desea agregar un ganador más?')) popUpNumero('?MM_ACTION=printSorteo',this.form.desde.value,this.form.hasta.value,this.form.numero.value)" value="Sortear" />
+        </td></tr>
+       </form>
+      </table>
+     </div>
+     </td></tr>
+     <tr id='fila_b_1' style="display: none"><td>
+     <div style='overflow-x: hidden; overflow-y: hidden; padding: 0px;' id='div_detalle_1'>       
+      <table border="0" cellpadding="0" cellspacing="0" width="400px">
+       <tr><td colspan="4">&nbsp;</td></tr>
+       <tr><th colspan="4" scope="col">Ultimos Mensajes</th></tr>
+       <tr><td colspan="4">&nbsp;</td></tr>
+       @@MENSAJES@@
+      </table>
+     </div>
+     </td></tr>
+     <tr id='fila_b_2' style="display: none"><td>
+     <div style='overflow-x: hidden; overflow-y: hidden; padding: 0px;' id='div_detalle_2'>       
+      <table border="0" cellpadding="0" cellspacing="0" width="400px">
+       <tr><td colspan="4">&nbsp;</td></tr>
+       <tr><th colspan="4">Gráficos</th></tr>
+       <tr><td colspan="4">&nbsp;</td></tr>
+       @@GRAFICOS@@
+       <tr><td colspan="4">&nbsp;</td></tr>
+      </table>
+     </div>
+    </td></tr>
+    </table>
+    <td scope="col" valign="top" align="right" width="10">
+     <table cellpadding="0" cellspacing="0" border="0">
+      <tr><td style="text-align: right">
+       <img src="?MM_ACTION=imagen" border="1" />
+      </td></tr>
+     </table>
+    </td>
+   </tr>
+  </table>
+  <script type="text/javascript">
+   Calendar.setup({
+    date        : "01/01/2011",
+    inputField  : "fecha",             // id of the input field
+    ifFormat    : "%Y-%m-%d %H:%M:%S", // format of the input field
+    showsTime   : false,               // will display a time selector
+    button      : "btn",               // trigger for the calendar (button ID)
+    singleClick : true,                // double-click mode
+    showsTime   : true,
+    step        : 1                    // show all years in drop-down boxes (instead of every other year as default)
+   });
+   Calendar.setup({
+    inputField  : "desde",          // id of the input field
+    ifFormat    : "%Y-%m-%d %H:%M", // format of the input field
+    showsTime   : true,             // will display a time selector
+    button      : "desde_btn",      // trigger for the calendar (button ID)
+    singleClick : true,             // double-click mode
+    step        : 1                 // show all years in drop-down boxes (instead of every other year as default)
+   });
+     
+   Calendar.setup({
+    date        : "2006/01/11",
+    inputField  : "hasta",          // id of the input field
+    ifFormat    : "%Y-%m-%d %H:%M", // format of the input field
+    showsTime   : true,             // will display a time selector
+    button      : "hasta_btn",      // trigger for the calendar (button ID)
+    singleClick : true,             // double-click mode
+    step        : 1                 // show all years in drop-down boxes (instead of every other year as default)
+   });
+   @@SCRIPTMEDIA@@
+  </script>
+ </body>
+</html>

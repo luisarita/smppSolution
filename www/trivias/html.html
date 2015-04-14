@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>@@TITLE@@</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <style type="text/css">@import url(calendar/calendar-brown.css);</style>
+  <script type="text/javascript" src="calendar/calendar.js"></script>
+  <script type="text/javascript" src="calendar/lang/calendar-es.js"></script>
+  <script type="text/javascript" src="calendar/calendar-setup.js"></script>
+  <script type="text/javascript" language="javascript" src="scripts/popup.js"></script>
+ </head>
+ <body>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+   <tr><td scope="col" rowspan="2">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <tr><th colspan="3" scope="col">@@TITLE@@</th></tr>
+     <tr><td colspan="3">&nbsp;</td></tr>
+     @@CONTEOPARTICIPANTES@@
+     <tr><td colspan="3">&nbsp;</td></tr>
+     <tr><td colspan="3" style="text-align: right">
+      <form method="POST">
+       <input type="hidden" name="MM_ACTION" value="logout">
+       <input type="submit" class="button" value="Cerrar Sesión" onclick='javascript: this.form.MM_ACTION.value="logout"; return true;' />
+      </form>
+     </td></tr>     
+     <tr><td colspan="3">&nbsp;</td></tr>         
+    </table><br/>
+    <form id="formActualizar" name="formActualizar" method="POST">
+     <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      @@OPCIONES@@
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td>Mejor Resultado:</td><td colspan="2">@@MAYORNUMERO@@</td></tr>
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td>Mayor Conteo:</td><td colspan="2">@@MEJORRESULTADO@@</td></tr>
+      <tr><td colspan="3" style="text-align:right">
+       <input type="hidden" name="MM_ACTION" value="actualizar">
+       <input name="Actualizar" value="Actualizar" class="button" type="button" onClick="this.form.submit()" />
+      </td></tr>
+     </table>
+    </form><br/>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <tr><th colspan="3">Top 5</th></tr>
+	 <tr><td colspan="3">&nbsp;</td></tr>
+     @@MAYORESPARTICIPANTES@@
+	 <tr><td colspan="3">&nbsp;</td></tr>
+     <tr><th colspan="3">Ganadores</th></tr>
+	 <tr><td colspan="3">&nbsp;</td></tr>
+     @@GANADORES@@
+	 <tr><td colspan="3">&nbsp;</td></tr>
+     <tr>
+      <td colspan="3" scope="row" style="text-align: right">
+       <form method="post">
+        <input type="hidden" name="MM_ACTION" value="cancelarGanadores" />
+        <input type="submit" class="button" value="Limpiar" />
+       </form>
+      </td>
+     </tr>
+    </table><br/>
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+     <form id="formSortear" name="formSortear" method="POST">
+      <tr><th colspan="2">Filtro y Sorteo</th></tr>
+      <tr><td colspan="2">&nbsp;</td></tr>
+       <tr>
+        <td>Fecha Desde:</td>
+        <td><input id="desde" name="desde" value="@@DESDE@@">&nbsp;<button id="desde_btn">...</button></td>
+       </tr><tr>
+        <td>Fecha Hasta:</td>
+        <td><input id="hasta" name="hasta" type="text" value="@@HASTA@@">&nbsp;<button id="hasta_btn">...</button></td>
+       </tr>
+       <tr><td>Número:</td><td><input id="numero" name="numero" type="text" maxlength="11" value="@@NUMERO@@"></td>
+       <tr><td colspan="2">&nbsp;</td></tr>
+       <tr>
+        <td style="text-align: right" colspan="2">
+         <input type="button" class="button" value="Sortear" onClick="javascript: popUpURL('?MM_ACTION=sorteo&desde=' + this.form.desde.value + '&hasta=' + this.form.hasta.value)" />
+         <input type="submit" class="button" value="Filtrar" />
+        </td>
+       </tr>
+      </form>
+      <tr><td colspan="3">&nbsp;</td></tr>
+     </table>
+     @@PARTICIPANTES@@
+    </td>
+    <td style="vertical-align:top; text-align:right">
+     <img src="?MM_ACTION=imagen" border="1" align="top"/><br/><br/>
+     <a href='?MM_ACTION=grafico&height=480&width=640'>
+      <img src='?MM_ACTION=grafico&height=240&width=320' border='1' align='top'/>
+     </a>
+    </td>
+   </tr>
+   <tr><td style="vertical-align: top; text-align: right">
+    <form method="post"  action="" id="formReset" name="formReset">
+     <input class="warning-button" type="submit" value="Reiniciar" onclick='javascript: return confirm("¿Desea eliminar todos los participantes de la actividad?")' />
+     <input type="hidden" name="MM_ACTION" value="reiniciar">
+    </form>
+   </td></tr> 
+  </table>
+ </body>
+  <script type="text/javascript">
+   Calendar.setup({
+    inputField     :    "desde",      // id of the input field
+    ifFormat       :    "%Y-%m-%d",   // format of the input field
+    showsTime      :    false,        // will display a time selector
+    button         :    "desde_btn",  // trigger for the calendar (button ID)
+    singleClick    :    true,         // double-click mode
+    step           :    1             // show all years in drop-down boxes (instead of every other year as default)
+   });
+     
+   Calendar.setup({
+    inputField     :    "hasta",      // id of the input field
+    ifFormat       :    "%Y-%m-%d",   // format of the input field
+    showsTime      :    false,        // will display a time selector
+    button         :    "hasta_btn",  // trigger for the calendar (button ID)
+    singleClick    :    true,         // double-click mode
+    step           :    1             // show all years in drop-down boxes (instead of every other year as default)
+   });
+ </script>
+</html>
