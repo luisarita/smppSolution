@@ -49,7 +49,7 @@
  }
 
  if ( $_IGNORED_WORDS != "" ){
-  $_QUERYI = sprintf("INSERT INTO mensajes_pendientes (numero,numero_salida,mensaje,prioridad,fecha_salida) SELECT m.numero, t.numero, 'Tu mensaje fue omitido por contener expresiones no válidas',2,NOW() FROM telechats_mensajes m, telechats t WHERE t.id=m.idTelechat AND m.estado IS NULL AND idTelechat=%s AND fecha >='%s' AND fecha <= '%s' AND (1=0 %s) ORDER BY fecha DESC;",  $idTelechat, $desde, $hasta ,$_IGNORED_WORDS);
+  $_QUERYI = sprintf("INSERT INTO mensajes_pendientes (numero,numero_salida,mensaje,prioridad,fecha_salida) SELECT m.numero, t.numero, 'Tu mensaje fue omitido por contener expresiones no vï¿½lidas',2,NOW() FROM telechats_mensajes m, telechats t WHERE t.id=m.idTelechat AND m.estado IS NULL AND idTelechat=%s AND fecha >='%s' AND fecha <= '%s' AND (1=0 %s) ORDER BY fecha DESC;",  $idTelechat, $desde, $hasta ,$_IGNORED_WORDS);
   mysql_query($_QUERYI, $conexion) or die();
   $_QUERYU = sprintf("UPDATE telechats_mensajes SET estado=1 WHERE estado IS NULL AND idTelechat=%s AND fecha>='%s' AND fecha <='%s' AND (1=0 %s) ORDER BY fecha DESC;",  $idTelechat, $desde, $hasta ,$_IGNORED_WORDS);
   mysql_query($_QUERYU, $conexion) or die();
@@ -127,11 +127,11 @@
    
    fillInputBoxes(parent.frames[3]);
   </script>
-  <script type="text/javascript" src="../calendar/calendar.js"></script>
-  <script type="text/javascript" src="../calendar/lang/calendar-es.js"></script>
-  <script type="text/javascript" src="../calendar/calendar-setup.js"></script>
+  <script type="text/javascript" src="../lib/calendar/calendar.js"></script>
+  <script type="text/javascript" src="../lib/calendar/lang/calendar-es.js"></script>
+  <script type="text/javascript" src="../lib/calendar/calendar-setup.js"></script>
   <style type="text/css">
-   @import url(../calendar/calendar-green.css);
+   @import url(../lib/calendar/calendar-green.css);
   </style>
   <style>
    body { font-family: Arial, Helvetica, sans-serif; font-size: 13px }
