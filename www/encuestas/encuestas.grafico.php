@@ -55,8 +55,8 @@ if ( isset($_GET['frame']) ){
  exit();
 }
 
-require_once ("../jpgraph/src/jpgraph.php");
-require_once ("../jpgraph/src/jpgraph_bar.php");
+require_once ("../lib/jpgraph/src/jpgraph.php");
+require_once ("../lib/jpgraph/src/jpgraph_bar.php");
 
 $result = mysql_query("SELECT SUM(cantidad) AS c FROM encuestas_opciones WHERE idEncuesta=$id AND descripcion<>''", $conexion) or die( mysql_error() );
 $row   = mysql_fetch_assoc($result);

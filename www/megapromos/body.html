@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style type="text/css">@import url(../../lib/calendar/calendar-brown.css);</style>
+  <script type="text/javascript" src="../../lib/calendar/calendar.js"></script>
+  <script type="text/javascript" src="../../lib/calendar/lang/calendar-es.js"></script>
+  <script type="text/javascript" src="../../lib/calendar/calendar-setup.js"></script>
+  <link type="text/css" rel="stylesheet" href="../../skins/tecmovil/css/style.css"  />
+  <title>@@TITLE@@</title>
+ </head>
+ <body>
+  <table border="0" cellpadding="0" cellspacing="0" width="780" align="center">
+   <tr><td>
+    <form method="post" action="">
+     <table cellpadding="0" cellspacing="0" border="0" width="700">
+      <tr><th colspan="3">Filtro</th></tr>
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr>
+       <td style="text-align: right">Fecha Desde:</td>
+       <td style="text-align: right; width: 200px"><input id="desde" name="desde" value="@@DESDE@@" /></td>
+       <td style="width: 50px"><input type='button' class='date-button' id='desde_btn' value='...' /></td>
+      </tr><tr>
+       <td style="text-align: right">Fecha Hasta:</td>
+       <td style="text-align: right; width: 200px"><input id="hasta" name="hasta" type="text" value="@@HASTA@@" /></td>
+       <td style="width: 50px"><input type='button' class='date-button' id='hasta_btn' value='...' /></td>
+      </tr>
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td colspan="3" style="text-align: right">
+       <input type="hidden" name="MM_ACTION" value="" />
+       <input id="sortear" name="sortear" type="submit" class="button" value="Filtrar" />
+       <input type="submit" class="button" value="Cerrar Sesi&oacute;n" onclick='javascript: this.form.MM_ACTION.value="logout"; return true;' />
+      </td></tr>
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr><th colspan="3">Gráfico</th></tr>
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr><td colspan="3"><img width='100%' border="0" src="?MM_ACTION=grafico&tipo=1" /></td></tr>
+     </table>
+    </form>
+   </td></tr>
+  </table>
+  <script type="text/javascript">
+
+   Calendar.setup({
+    inputField  : "desde",             // id of the input field
+    ifFormat    : "%Y-%m-%d %H:%M:%I", // format of the input field
+    showsTime   : true,                // will display a time selector
+    button      : "desde_btn",         // trigger for the calendar (button ID)
+    singleClick : true,                // double-click mode
+    step        : 1                    // show all years in drop-down boxes (instead of every other year as default)
+   });
+     
+   Calendar.setup({
+    date        : "2006/01/11",
+    inputField  : "hasta",             // id of the input field
+    ifFormat    : "%Y-%m-%d %h:%M:%I", // format of the input field
+    showsTime   : true,                // will display a time selector
+    button      : "hasta_btn",         // trigger for the calendar (button ID)
+    singleClick : true,                // double-click mode
+    step        : 1                    // show all years in drop-down boxes (instead of every other year as default)
+   });
+  </script>
+ </body>
+</html>

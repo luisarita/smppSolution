@@ -13,8 +13,8 @@ larita - 2009-07-26
 */
 
 require_once ('../connections/conexion.php');
-include ('../jpgraph/src/jpgraph.php');
-include ('../jpgraph/src/jpgraph_bar.php');
+include ('../lib/jpgraph/src/jpgraph.php');
+include ('../lib/jpgraph/src/jpgraph_bar.php');
 
 
 /* Parametros: */

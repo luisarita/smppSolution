@@ -2,8 +2,8 @@
 require_once('../connections/conexion.php');
 require_once('../functions/date.php');
 require_once('../functions/db.php');
-require_once('../jpgraph/src/jpgraph.php'); 
-require_once('../jpgraph/src/jpgraph_bar.php'); 
+require_once('../lib/jpgraph/src/jpgraph.php'); 
+require_once('../lib/jpgraph/src/jpgraph_bar.php'); 
 
 session_start();
 if (!isset($_SESSION['idEncuesta'])){
