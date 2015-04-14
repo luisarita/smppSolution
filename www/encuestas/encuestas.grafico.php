@@ -1,6 +1,7 @@
 <?php
 require_once ("../connections/conexion.php"); 
-require_once ('../configuracion/parametros.php');
+require_once ('../conf.php');
+
 
 $title    = "Encuestas";
 $initPage = "encuestas.html";

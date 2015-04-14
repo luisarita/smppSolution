@@ -9,9 +9,9 @@ require_once('jpgraph/src/jpgraph.php');
 require_once('jpgraph/src/jpgraph_bar.php');
 require_once('medias/medias.php'); 
 require_once('configuracion/parametros.php');
+require_once('conf.php');
 
 if (!isset($extended) || !$extended){
  $r = new medias();
  $r->action();
 }
-?>
