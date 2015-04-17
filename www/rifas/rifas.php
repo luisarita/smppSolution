@@ -7,6 +7,7 @@ class rifa {
  private $templateHorario   = "rifas/horario.html";
  private $templateSorteo    = "rifas/sorteo.html";
  private $templateHistorial = "rifas/historial.html";
+ private $template          = "skins/default/rifas/";
  
  private $title       = "Rifas";
  private $table       = "rifas";
@@ -54,61 +55,64 @@ class rifa {
   }
  }
  function action(){
-  $action = isset($_POST['MM_ACTION']) ? $_POST['MM_ACTION'] : (isset($_GET['MM_ACTION']) ? $_GET['MM_ACTION'] : "");
-  switch ($action){
-   case "actualizarDatos":
-    $this->actualizarDatos();
-    break;
-   case "logout":
-    $this->doLogout();
-    $this->printLogin();
-    break;
-   case "cancelarGanadores":
-    $this->cancelarGanadores();
-    break;
-   case "marcarContestado":
-    $this->marcarContestado();
-    break;
-   case "reiniciarRifa":
-    $this->reiniciarRifa();
-    break;
-   case "imagen":
-    $this->printImagen();
-    break;
-   case "grafico":
-    $this->printGrafico();
-    break;
-   case "graficoHorario":
-    $this->printGraficoHorario();
-    break;
-   case "graficoMensual":
-    $this->printGraficoMensual();
-    break;
-   case "insertarRespuesta":
-    $this->insertarRespuesta();
-    break;	
-   case "respuestaMensaje":
-    $this->printFormularioRespuesta();
-    break;	
-   case "sorteo":
-    $this->printSorteo();
-    break;	
-   case "manejarHorario":
-    $this->printManejarHorario();
-    break;	
-   case "actualizarHorarios":
-    $this->actualizarHorarios();
-    break;		
-   case "eliminarHorarios":
-    $this->eliminarHorarios();
-    break;			
-   case "historialSorteo":
-    $this->printHistorialSorteo();
-    break;			
-   default:
-    $this->printDetail();
-    break;
-  }
+    $action = isset($_POST['MM_ACTION']) ? $_POST['MM_ACTION'] : (isset($_GET['MM_ACTION']) ? $_GET['MM_ACTION'] : "");
+    switch ($action){
+        case "actualizarDatos":
+             $this->actualizarDatos();
+             break;
+        case "logout":
+            $this->doLogout();
+            $this->printLogin();
+            break;
+        case "cancelarGanadores":
+            $this->cancelarGanadores();
+            break;
+        case "marcarContestado":
+            $this->marcarContestado();
+            break;
+        case "reiniciarRifa":
+            $this->reiniciarRifa();
+            break;
+        case "imagen":
+            $this->printImagen();
+            break;
+        case "grafico":
+            $this->printGrafico();
+            break;
+        case "graficoHorario":
+            $this->printGraficoHorario();
+            break;
+        case "graficoMensual":
+            $this->printGraficoMensual();
+            break;
+        case "graficoVariable":
+            $this->printGraficoVariable();
+            break;
+        case "insertarRespuesta":
+            $this->insertarRespuesta();
+            break;	
+        case "respuestaMensaje":
+            $this->printFormularioRespuesta();
+            break;	
+        case "sorteo":
+            $this->printSorteo();
+            break;	
+        case "manejarHorario":
+            $this->printManejarHorario();
+            break;	
+        case "actualizarHorarios":
+            $this->actualizarHorarios();
+            break;		
+        case "eliminarHorarios":
+            $this->eliminarHorarios();
+            break;			
+        case "historialSorteo":
+            $this->printHistorialSorteo();
+            break;			
+        default:
+            $this->printDetail();
+            break;
+    }
  }
  function constructor(){
   global $conexion, $database_conexion;
@@ -223,15 +227,6 @@ class rifa {
  function reiniciarRifa           (){ // Reiniciar la Rifa                         */ 
   global $conexion;
   
-  /*$SQL = array();
-  $SQL[sizeof($SQL)] = sprintf("UPDATE rifas_ganadores SET estado=0 WHERE idRifa=%s;", GetSQLValueString($this->idRifa, "int"));
-  $SQL[sizeof($SQL)] = sprintf("UPDATE rifas SET estado=1 WHERE id=%s", GetSQLValueString($this->idRifa, "int"));
-  $SQL[sizeof($SQL)] = sprintf("UPDATE rifas_participantes SET estado=0, fecha_reinicio=NOW() WHERE estado=1 AND idRifa=%s", GetSQLValueString($this->idRifa, "int"));
-   
-  foreach ($SQL as $key => $value){
-   $rs = mysql_query($value, $conexion) or die(register_mysql_error("RR00" . $key, mysql_error()));
-  }*/
-  
   $SQL = sprintf("CALL sp_rifas_reiniciar(%s)", GetSQLValueString($this->idRifa, "int"));  
   mysql_query($SQL, $conexion) or die(register_mysql_error("RR00" . $key, mysql_error()));
    
@@ -244,12 +239,12 @@ class rifa {
   if (isset($_POST['mensaje']) && isset($_POST['id'])){
    $SQL = array();
 
-   $SQL[sizeof($SQL)] = sprintf("UPDATE rifas_participantes SET contestado=1 WHERE id=%s;", GetSQLValueString($_POST['id'], "int"));   
-   $SQL[sizeof($SQL)] = sprintf("INSERT INTO rifas_respuestas (idParticipante,mensaje,estado) VALUES (%s,%s,1);", GetSQLValueString($_POST['id'], "int"), GetSQLValueString($_POST['mensaje'], "text"));
-   $SQL[sizeof($SQL)] = sprintf("INSERT INTO mensajes_pendientes (numero,numero_salida,mensaje,fecha_salida,prioridad,tipo_servicio) SELECT p.numero, r.numero, rr.mensaje, NOW(), 2, '' FROM rifas r, rifas_respuestas rr, rifas_participantes p WHERE p.idrifa=r.id AND idParticipante=p.id AND rr.id=@@LASTID@@;");
+   $SQL[] = sprintf("UPDATE rifas_participantes SET contestado=1 WHERE id=%s;", GetSQLValueString($_POST['id'], "int"));   
+   $SQL[] = sprintf("INSERT INTO rifas_respuestas (idParticipante,mensaje,estado) VALUES (%s,%s,1);", GetSQLValueString($_POST['id'], "int"), GetSQLValueString($_POST['mensaje'], "text"));
+   $SQL[] = sprintf("INSERT INTO mensajes_pendientes (numero,numero_salida,mensaje,fecha_salida,prioridad,tipo_servicio) SELECT p.numero, r.numero, rr.mensaje, NOW(), 2, '' FROM rifas r, rifas_respuestas rr, rifas_participantes p WHERE p.idrifa=r.id AND idParticipante=p.id AND rr.id=@@LASTID@@;");
    
    foreach ($SQL as $key => $value){
-	$value = str_replace("@@LASTID@@", mysql_insert_id(), $value);
+    $value = str_replace("@@LASTID@@", mysql_insert_id(), $value);
     $rs = mysql_query($value, $conexion) or die(register_mysql_error("RR00" . $key, mysql_error()));
    }
   }
@@ -265,10 +260,7 @@ class rifa {
   $rowR = mysql_fetch_array( $rsR );
   if ( $rowR[ 'estado' ] == 1 ){
    $cantidad = $rowR[ 'cantidad_ganadores' ];
-   //$sql = sprintf("SELECT numero FROM rifas_participantes WHERE estado=1 AND fecha>=%s AND fecha<=%s AND numero NOT IN (SELECT DISTINCT numero FROM rifas_ganadores WHERE estado=1 AND idRifa=%s) AND idRifa=%s AND mensaje LIKE %s ORDER BY RAND() LIMIT %s;", GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->idRifa, $this->idRifa, GetSQLValueString($this->mensaje . "%", "text"), $cantidad); 
    $sql = sprintf("SELECT numero FROM rifas_participantes WHERE estado=1 AND fecha>=%s AND fecha<=%s AND idRifa=%s AND mensaje LIKE %s ORDER BY RAND() LIMIT %s;", GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->idRifa, GetSQLValueString($this->mensaje . "%", "text"), $cantidad); 
-   //$sql = sprintf("SELECT p.numero FROM rifas_participantes p LEFT OUTER JOIN rifas_ganadores g ON g.idRifa=p.idRifa WHERE p.estado=1 AND p.fecha>=%s AND p.fecha<=%s AND p.idRifa=%s AND p.mensaje LIKE %s ORDER BY RAND() LIMIT %s;", GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->idRifa, GetSQLValueString($this->mensaje . "%", "text"), $cantidad); 
-   //echo $sql;
    $rsJ = mysql_query($sql, $conexion) or die(register_mysql_error("RR003", mysql_error()));
    if ( mysql_num_rows($rsJ) > 0 ){
     while ( $rowJ = mysql_fetch_array( $rsJ )){
@@ -324,7 +316,6 @@ class rifa {
  function verificacionHorario       (){
   global $conexion;
 
-  $encontro = 0;
   $hora_i = intval($_POST['hora_inicio']);
   $hora_f = intval($_POST['hora_final']);
   $dia_l  = intval((!isset($_POST['dia_l']) || $_POST['dia_l']  == 0) ? -1 : 1);
@@ -338,8 +329,7 @@ class rifa {
   $sql = sprintf("SELECT COUNT(*) AS encontro FROM rifas_horario WHERE idRifa=%s AND ((hora_inicio=$hora_i OR hora_final=$hora_f) OR (hora_inicio<=$hora_i AND hora_final>$hora_i) OR (hora_inicio<$hora_f AND hora_final>=$hora_f)) AND (dia_lunes=$dia_l OR dia_martes=$dia_ma OR dia_miercoles=$dia_mi OR dia_jueves=$dia_j OR dia_viernes=$dia_v OR dia_sabado=$dia_s OR dia_domingo=$dia_d);", $this->idRifa);
   $res_ficharep = mysql_query($sql,$conexion);
   $row_ficharep = mysql_fetch_array($res_ficharep); 
-  $encontro =$row_ficharep['encontro']; 
-  return $encontro;
+  return $row_ficharep['encontro']; 
  }
   
  function printMensajeRespuesta     (){
@@ -349,18 +339,17 @@ class rifa {
     <tr><th colspan='3' style='text-align: center'>Mensaje(s) de Respuesta</th></tr>
     <tr><td colspan='3'>&nbsp;</td></tr>
      <form method='post'>
-     <tr>
-	  <td>Respuesta #1:</td>
-      <td colspan='2'><input class='textbox-half' type='text' name='mensaje_a' value='" . $this->mensaje_a . "' maxlength='254' /></td>
-     </tr><tr>
-	  <td>Respuesta #2:</td>
-	  <td><input type='text' class='textbox-half'  name='mensaje_b' value='" . $this->mensaje_b . "' maxlength='254' /></td>
-	 </tr><tr><td colspan='3'>&nbsp;</td></tr><tr>
-	  <td colspan='3' style='text-align: right'>
-       <input type='hidden' name='MM_ACTION' value='actualizarDatos' />
-       <input type='submit' class='button' value='Actualizar'>
-      </td>
-	 </tr>
+        <tr>
+            <td>Respuesta #1:</td>
+            <td colspan='2'><input class='textbox-half' type='text' name='mensaje_a' value='" . $this->mensaje_a . "' maxlength='254' /></td>
+        </tr><tr>
+            <td>Respuesta #2:</td>
+            <td><input type='text' class='textbox-half'  name='mensaje_b' value='" . $this->mensaje_b . "' maxlength='254' /></td>
+        </tr><tr><td colspan='3'>&nbsp;</td></tr><tr>
+            <td colspan='3' style='text-align: right'>
+                <input type='hidden' name='MM_ACTION' value='actualizarDatos' /><input type='submit' class='button' value='Actualizar'>
+            </td>
+        </tr>
     </form>";
    }
    return $html;
@@ -395,8 +384,7 @@ class rifa {
   return $html;
  }
  function printHistorialSorteo      (){
-  global $conexion;
-  global $_CONF;
+  global $conexion, $_CONF;
   
   $sql = sprintf( "SELECT numero, fecha, desde, hasta FROM rifas_ganadores WHERE idRifa=%s ORDER BY fecha DESC;", $this->idRifa );
   $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RR005", mysql_error()));
@@ -541,72 +529,52 @@ class rifa {
   return $html;
  }
  function printGraficos             (){
-  $html = "";
-  if ( isset( $_SESSION['su'] )){
-   $g = getdate();
-   if ( isset( $_GET['month'] ) && isset( $_GET['anio'] )){
-    $m = $_GET['month'];
-    $y = $_GET['anio'];
-   } elseif ( isset( $_POST['month'] ) && isset( $_POST['anio'] )){
-    $m = $_POST['month'];
-    $y = $_POST['anio'];
-   } else {
-    $m = $g['mon'];
-    $y = $g['year'];
-   }
-   $html = "
-    <form id='form' name='form' method='get' action='?MM_ACTION=grafico'>
-    <tr><td style='text-align: center'>
-     <a href='?MM_ACTION=grafico&height=480&width=640&month=$m&anio=$y'>
-      <img src='?MM_ACTION=grafico&height=240&width=320&month=$m&anio=$y' border='1' align='top'/>
-     </a>
-    </td><td style='text-align: center'>
-     <a href='?MM_ACTION=graficoHorario&height=480&width=640&month=$m&anio=$y'>
-      <img src='?MM_ACTION=graficoHorario&height=240&width=320&month=$m&anio=$y' border='1' align='top'/>
-     </a>
-    </td></tr>
-    <tr><td colspan='2'>&nbsp;</td></tr>
-    <tr>
-	 <td colspan='2' style='text-align: right'>Mes:
-      <select name='month' style='width: 220px'>";
-   foreach (monthArray() as $key => $name ){
-    $selected = ($key == $m) ? "selected" : "";
-    $html .= "<option value='$key' $selected>$name</option>";
-   }
-   $html .="</select>
-     </td>
-    </tr><tr>
-     <td colspan='2' style='text-align: right'>A&ntilde;o:
-      <select name='anio' style='width: 220px'>";
-   for( $i = $g['year']; $i > 2004; --$i){
-    $selected = ($i == $y) ? "selected" : "";
-    $html .= "<option value='$i' $selected >$i</option>";
-   } 
-   $html .="</select>
-     </td>
-    </tr>
-    <tr><td colspan='2'>&nbsp;</td></tr>
-    <tr><td colspan='2' style='text-align: right'>
-     <input type='hidden' name='height' value='480' />
-     <input type='hidden' name='width' value='640' />
-     <input class='button' type='button' onClick='this.form.submit()' value='Mostrar' />
-    </td></tr>
-    <tr><td colspan='2'>&nbsp;</td></tr>
-    </form>";
-  }
-  return $html;
+    $html = "";
+    if ( isset( $_SESSION['su'] )){
+        $g = getdate();
+        if ( isset( $_GET['month'] ) && isset( $_GET['anio'] )){
+         $m = $_GET['month'];
+         $y = $_GET['anio'];
+        } elseif ( isset( $_POST['month'] ) && isset( $_POST['anio'] )){
+         $m = $_POST['month'];
+         $y = $_POST['anio'];
+        } else {
+         $m = $g['mon'];
+         $y = $g['year'];
+        }
+
+        $options1 = ""; $options2 = "";
+        foreach (monthArray() as $key => $name ){
+            $selected = ($key == $m) ? "selected" : "";
+            $options1 .= "<option value='$key' $selected>$name</option>";
+        }
+        for( $i = $g['year']; $i > 2004; --$i){
+            $selected = ($i == $y) ? "selected" : "";
+            $options2 .= "<option value='$i' $selected >$i</option>";
+        } 
+
+        $smarty = new Smarty();
+        $smarty->assign("month", $m);
+        $smarty->assign("year", $y);
+        $smarty->assign("options1", $options1);
+        $smarty->assign("options2", $options2);
+        $html = $smarty->fetch($this->template . "graficos.tpl");
+    }
+    return $html;
  } 
  function printLogin                (){
-  global $_CONF;
-  if ($this->templateLogin  == ""){ /* No se ha configurado que plantilla de inicio de sesion utilizar */
-   $this->templateLogin = "templates/login.html";
-   if (isset($_CONF['skin']) && $_CONF['skin'] != "") $this->templateLogin = "skins/" . $_CONF['skin'] . "/login.html";
-  }
+    global $_CONF;
+    if ($this->templateLogin  == ""){ /* No se ha configurado que plantilla de inicio de sesion utilizar */
+        $this->templateLogin = "templates/login.html";
+        if (isset($_CONF['skin']) && $_CONF['skin'] != ""){
+            $this->templateLogin = "skins/" . $_CONF['skin'] . "/login.html";
+        }
+    }
 
-  $html = file_get_contents($this->templateLogin);
-  $html = str_replace("@@TITLE@@",$this->title,$html);
-  echo $html;
-  exit();
+    $html = file_get_contents($this->templateLogin);
+    $html = str_replace("@@TITLE@@",$this->title,$html);
+    echo $html;
+    exit();
  }
  function printImagen               (){
   global $conexion;
@@ -691,91 +659,118 @@ class rifa {
   $graph->Stroke();
  }
  function printGraficoHorario       (){
-  global $conexion, $_CONF;
+    global $conexion, $_CONF;
 
-  $colors = array();
-  $datax = array(); $datay = array();
+    $colors = array();
+    $datax = array(); $datay = array();
 
-  $i = 0;
-  $num_rifas_h = 0;
-  $title       = "";
+    $i = 0;
+    $num_rifas_h = 0;
+    $title       = "";
 
-  $this->desde  = (isset($_GET['month']) && isset($_GET['anio'])) ? $_GET['anio'] . "-" . $_GET['month'] . "-01" : date("Y-m-01");
-  $this->hasta  = (isset($_GET['month']) && isset($_GET['anio'])) ? date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime($_GET['month'] . '/01/' . $_GET['anio'] .' 00:00:00')))) : date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime(date('m') . '/01/' . date('Y') .' 00:00:00'))));
+    $this->desde  = (isset($_GET['month']) && isset($_GET['anio'])) ? $_GET['anio'] . "-" . $_GET['month'] . "-01" : date("Y-m-01");
+    $this->hasta  = (isset($_GET['month']) && isset($_GET['anio'])) ? date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime($_GET['month'] . '/01/' . $_GET['anio'] .' 00:00:00')))) : date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime(date('m') . '/01/' . date('Y') .' 00:00:00'))));
 
-  $sql   = sprintf( "SELECT a.id, a.nombre AS descripcion, SUM(CASE WHEN (dia_lunes=1 AND dia=1) OR (dia_martes=1 AND dia=2) OR (dia_miercoles=1 AND dia=3) OR (dia_jueves=1 AND dia=4) OR (dia_viernes=1 AND dia=5) OR (dia_sabado=1 AND dia=6) OR
-(dia_domingo=1 AND dia=0) THEN b.conteo ELSE 0 END) AS cantidad, '#%s' AS color FROM rifas_horario a LEFT OUTER JOIN (SELECT DATE_FORMAT(fecha,'%%w') as dia, DATE_FORMAT(fecha,'%%k') AS hora,COUNT(*) AS conteo FROM rifas_participantes WHERE estado=1 AND idRifa=%s AND fecha>=%s AND fecha<%s GROUP BY DATE_FORMAT(fecha,'%%w'), DATE_FORMAT(fecha,'%%k')) b ON a.hora_inicio <= b.hora AND IF(a.hora_final=0,24,a.hora_final) > b.hora WHERE idRifa=%s GROUP BY a.id, a.nombre ORDER BY a.nombre;", $_CONF['bargraph-color'], $this->idRifa, GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->idRifa); 
-  $result = mysql_query($sql, $conexion) or die();
-  while ($row = mysql_fetch_assoc($result)){
-   $datax[$i]   = $row['descripcion'];
-   $datay[$i]   = $row['cantidad'];
-   $colors[$i]  = $row['color'];
-   $num_rifas_h = $num_rifas_h  + $row['cantidad'];
-   ++$i;
-  }
- 
-  $sql = sprintf("SELECT COUNT(*) AS conteo, '#%s' AS color FROM rifas_participantes WHERE estado=1 AND idRifa=%s AND fecha>=%s AND fecha<%s", $_CONF['bargraph-color'], $this->idRifa, GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"));
-  $result = mysql_query($sql, $conexion) or die();
-  $row = mysql_fetch_assoc($result);
-  if ($row['conteo'] > 0 && $row['conteo'] > $num_rifas_h){
-   $datax [$i] = 'Otros';
-   $datay [$i] = $row['conteo'] - $num_rifas_h;
-   $colors[$i] = $row['color'];
-   ++$i;
-  }
+    $sql   = sprintf( "SELECT a.id, a.nombre AS descripcion, SUM(CASE WHEN (dia_lunes=1 AND dia=1) OR (dia_martes=1 AND dia=2) OR (dia_miercoles=1 AND dia=3) OR (dia_jueves=1 AND dia=4) OR (dia_viernes=1 AND dia=5) OR (dia_sabado=1 AND dia=6) OR
+  (dia_domingo=1 AND dia=0) THEN b.conteo ELSE 0 END) AS cantidad, '#%s' AS color FROM rifas_horario a LEFT OUTER JOIN (SELECT DATE_FORMAT(fecha,'%%w') as dia, DATE_FORMAT(fecha,'%%k') AS hora,COUNT(*) AS conteo FROM rifas_participantes WHERE estado=1 AND idRifa=%s AND fecha>=%s AND fecha<%s GROUP BY DATE_FORMAT(fecha,'%%w'), DATE_FORMAT(fecha,'%%k')) b ON a.hora_inicio <= b.hora AND IF(a.hora_final=0,24,a.hora_final) > b.hora WHERE idRifa=%s GROUP BY a.id, a.nombre ORDER BY a.nombre;", $_CONF['bargraph-color'], $this->idRifa, GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->idRifa); 
+    $result = mysql_query($sql, $conexion) or die();
+    while ($row = mysql_fetch_assoc($result)){
+     $datax[$i]   = $row['descripcion'];
+     $datay[$i]   = $row['cantidad'];
+     $colors[$i]  = $row['color'];
+     $num_rifas_h = $num_rifas_h  + $row['cantidad'];
+     ++$i;
+    }
 
-  if ( $i == 0){
-   $datax [$i] = "";
-   $datay [$i] = 0;
-  }
+    $sql = sprintf("SELECT COUNT(*) AS conteo, '#%s' AS color FROM rifas_participantes WHERE estado=1 AND idRifa=%s AND fecha>=%s AND fecha<%s", $_CONF['bargraph-color'], $this->idRifa, GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"));
+    $result = mysql_query($sql, $conexion) or die();
+    $row = mysql_fetch_assoc($result);
+    if ($row['conteo'] > 0 && $row['conteo'] > $num_rifas_h){
+     $datax [$i] = 'Otros';
+     $datay [$i] = $row['conteo'] - $num_rifas_h;
+     $colors[$i] = $row['color'];
+     ++$i;
+    }
 
-  $dataxR=array(); $datayR=array();
-  foreach ( $datax as $key => $index ){
-   $dataxR[sizeof($dataxR)] = $index; 
-  }
-  
-  foreach ( $datay as $key => $index ){
-   $datayR[sizeof($datayR)] = $index;
-  }
+    if ( $i == 0){
+     $datax [$i] = "";
+     $datay [$i] = 0;
+    }
 
-  $width  = ( isset( $_GET['width'] )) ? $_GET['width'] : 640;
-  $height = ( isset( $_GET['height'] )) ? $_GET['height'] : 480;
-  $font = $width / 320 * 5;
+    $this->printGraph($datax, $datay, "", $colors);
+ }
+ function printGraficoVariable       (){
+    global $conexion, $_CONF;
 
-  $graph = new Graph($width,$height,"auto");     
-  $graph->SetScale("textlin");
-  $graph->img->SetMargin(20, 20, 20, intval($height / 2.5));
-  $graph->SetMarginColor('white');
-  $graph->xaxis->SetFont(FF_VERDANA,FS_NORMAL,$font);
-  $graph->yaxis->SetFont(FF_VERDANA,FS_NORMAL,$font);
-  $graph->yaxis->SetLabelMargin(25);
-  $graph->xaxis->SetLabelMargin(25);
-  $graph->xaxis->SetLabelAngle(90);
+    $colors = array();
+    $datax = array(); $datay = array();
 
-  $graph->title->Set($title);
-  $graph->title->SetFont(FF_VERDANA,FS_NORMAL,$font);
-  $graph->subtitle->Set(" ");
-  $graph->xaxis->SetTickLabels($dataxR);
+    $this->desde    = (isset($_GET['month']) && isset($_GET['anio'])) ? $_GET['anio'] . "-" . $_GET['month'] . "-01" : date("Y-m-01");
+    $this->hasta    = (isset($_GET['month']) && isset($_GET['anio'])) ? date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime($_GET['month'] . '/01/' . $_GET['anio'] .' 00:00:00')))) : date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime(date('m') . '/01/' . date('Y') .' 00:00:00'))));
+    $variable       = intval((isset($_GET['variable']) && isset($_GET['variable'])) ? $_GET['variable'] : 1);
 
-  $graph->xaxis->title->SetFont(FF_VERDANA,FS_NORMAL,$font);
-  $graph->yaxis->title->SetFont(FF_VERDANA,FS_NORMAL,$font);
-  $graph->xaxis->title->Set("");
-  $graph->yaxis->title->Set("");
+    $query1   = sprintf("SELECT p.variable%s AS descripcion, COUNT(*) AS cantidad, '#%s' AS color FROM rifas_participantes p WHERE estado=1 AND idRifa=%s AND fecha>=%s AND fecha<%s GROUP BY p.variable%s ORDER BY p.variable%s;", $variable, $_CONF['bargraph-color'], $this->idRifa, GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $variable, $variable); 
+    $result = mysql_query($query1, $conexion) or die();
+    while ($row = mysql_fetch_assoc($result)){
+        $datax[]   = $row['descripcion'];
+        $datay[]   = $row['cantidad'];
+        $colors[]  = $row['color'];
+    }
 
-  $bplot = new BarPlot($datay);
+    if ( sizeof($datax) == 0){
+        $datax [] = "";
+        $datay [] = 0;
+    }
+    $this->printGraph($datax, $datay, "", $colors);
+ }
+ function printGraph($datax, $datay, $title, $colors){
+    $dataxR = array(); $datayR = array();
+    foreach ( $datax as $key => $index ){
+     $dataxR[] = $index; 
+    }
 
-  $bplot->value->Show();
-  $bplot->value->SetFormat('%d');
-  $bplot->value->SetFont(FF_FONT1,FS_NORMAL);
+    foreach ( $datay as $key => $index ){
+     $datayR[] = $index;
+    }
 
-  $bplot->SetValuePos('top');
-  $bplot->SetWidth(0.7);
+    $width  = ( isset( $_GET['width'] )) ? $_GET['width'] : 640;
+    $height = ( isset( $_GET['height'] )) ? $_GET['height'] : 480;
+    $font = $width / 320 * 5;
 
-  $bplot->SetFillColor( $colors );
-  $bplot->SetColor("white");
+    $graph = new Graph($width, $height, "auto");     
+    $graph->SetScale("textlin");
+    $graph->img->SetMargin(20, 20, 20, intval($height / 2.5));
+    $graph->SetMarginColor('white');
+    $graph->xaxis->SetFont(FF_VERDANA,FS_NORMAL,$font);
+    $graph->yaxis->SetFont(FF_VERDANA,FS_NORMAL,$font);
+    $graph->yaxis->SetLabelMargin(25);
+    $graph->xaxis->SetLabelMargin(25);
+    $graph->xaxis->SetLabelAngle(90);
 
-  $graph->Add($bplot);
-  $graph->Stroke(); 
+    $graph->title->Set($title);
+    $graph->title->SetFont(FF_VERDANA,FS_NORMAL,$font);
+    $graph->subtitle->Set(" ");
+    $graph->xaxis->SetTickLabels($dataxR);
+
+    $graph->xaxis->title->SetFont(FF_VERDANA,FS_NORMAL,$font);
+    $graph->yaxis->title->SetFont(FF_VERDANA,FS_NORMAL,$font);
+    $graph->xaxis->title->Set("");
+    $graph->yaxis->title->Set("");
+
+    $bplot = new BarPlot($datay);
+
+    $bplot->value->Show();
+    $bplot->value->SetFormat('%d');
+    $bplot->value->SetFont(FF_FONT1,FS_NORMAL);
+
+    $bplot->SetValuePos('top');
+    $bplot->SetWidth(0.7);
+
+    $bplot->SetFillColor( $colors );
+    $bplot->SetColor("white");
+
+    $graph->Add($bplot);
+    $graph->Stroke();
  }
  function printGraficoMensual       (){
   global $conexion;
@@ -921,7 +916,9 @@ class rifa {
   $html = str_replace("@@DIAS@@" , $dias,  $html);
   $html = str_replace("@@ID@@"   , $id,  $html);
   $html = str_replace("@@DETALLE@@"   , $detalle,  $html);
-  if (isset($_CONF['skin']) && $_CONF['skin'] != "") $html = str_replace("@@SKIN@@", $_CONF['skin'], $html);
+  if (isset($_CONF['skin']) && $_CONF['skin'] != ""){
+      $html = str_replace("@@SKIN@@", $_CONF['skin'], $html);
+  }
   
   echo $html;
   exit();
@@ -962,7 +959,9 @@ class rifa {
   $this->selfService   = ($row['selfservice'] == 1);
   $this->autoRefresh   = ($row['autoRefresh'] == 1);
   
-  if (isset($_CONF['skin']) && $_CONF['skin'] != "") $this->templateHTML = "skins/" . $_CONF['skin'] . "/rifas.html";
+  if (isset($_CONF['skin']) && $_CONF['skin'] != ""){
+      $this->templateHTML = "skins/" . $_CONF['skin'] . "/rifas.html";
+  }
   $html = file_get_contents($this->templateHTML);
   $html = str_replace("@@TITLE@@", $this->title,$html);
   $html = str_replace("@@WAV@@",   $this->printSound(),$html);

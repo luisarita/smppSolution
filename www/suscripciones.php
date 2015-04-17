@@ -8,8 +8,8 @@ require_once('functions/date.php');
 require_once('functions/horarios.php');
 require_once('functions/email.php');
 require_once('suscripciones/suscripciones.php'); 
-require_once('jpgraph/src/jpgraph.php');
-require_once('jpgraph/src/jpgraph_bar.php');
+require_once('lib/jpgraph/src/jpgraph.php');
+require_once('lib/jpgraph/src/jpgraph_bar.php');
  require_once("functions/PHPExcel.php");
 
 if (!isset($extended) || !$extended){
