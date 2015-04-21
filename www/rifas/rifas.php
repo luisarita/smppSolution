@@ -200,12 +200,6 @@ class rifa {
   if ((isset($_POST["MM_ACTION"])) && ($_POST["MM_ACTION"] == "cancelarGanadores")) {
    $SQL = sprintf("CALL sp_rifas_cancelar_ganadores(%s)", GetSQLValueString($this->idRifa, "int"));   
    mysql_query($SQL, $conexion) or die(register_mysql_error("RCG00" . $key, mysql_error()));
-   
-   /*$SQL[sizeof($SQL)] = sprintf("UPDATE rifas_ganadores SET estado=0 WHERE idRifa=%s;", GetSQLValueString($this->idRifa, "int"));
-   $SQL[sizeof($SQL)] = sprintf("UPDATE rifas SET estado=1 WHERE id=%s;", GetSQLValueString($this->idRifa, "int"));
-   foreach ($SQL as $key => $value){
-    $rs = mysql_query($value, $conexion) or die(register_mysql_error("RCG00" . $key, mysql_error()));
-   }*/
   }
    
   header("Location: " . $_SERVER['PHP_SELF']);
@@ -228,7 +222,7 @@ class rifa {
   global $conexion;
   
   $SQL = sprintf("CALL sp_rifas_reiniciar(%s)", GetSQLValueString($this->idRifa, "int"));  
-  mysql_query($SQL, $conexion) or die(register_mysql_error("RR00" . $key, mysql_error()));
+  mysql_query($SQL, $conexion) or die(mysql_error() . register_mysql_error("RR001", mysql_error()));
    
   header("Location: " . $_SERVER['PHP_SELF']);
   exit();
@@ -280,7 +274,7 @@ class rifa {
    $sql = sprintf("DELETE FROM rifas_horario WHERE idRifa=%s AND id=%s;", $this->idRifa, $value);
    mysql_query($sql, $conexion)  or die ();
   }
-  header("location: ?MM_ACTION=manejarHorario");
+  header("Location: ?MM_ACTION=manejarHorario");
   exit(); 
  }
  function actualizarHorarios        (){ // Actualiza un horario de una rifa          */ 
@@ -308,7 +302,7 @@ class rifa {
   } else {
    $sql = sprintf("UPDATE rifas_horario SET nombre=%s, hora_inicio=%s, hora_final=%s, dia_lunes=%s, dia_martes=%s, dia_miercoles=%s, dia_jueves=%s, dia_viernes=%s, dia_sabado=%s, dia_domingo=%s WHERE id=%s AND idRifa=%s;", GetSQLValueString($nombre, "text"), $hora_inicio, $hora_final, $dia_lunes, $dia_martes, $dia_miercoles, $dia_jueves, $dia_viernes, $dia_sabado, $dia_domingo, $_POST["id"], $this->idRifa);
   }
-  mysql_query($sql, $conexion)  or die ($sql . mysql_error()); 
+  mysql_query($sql, $conexion)  or die (); 
   header("Location: ?MM_ACTION=manejarHorario");
   exit();
  }
@@ -431,7 +425,9 @@ class rifa {
  }
  function printReporteMensual       (){
   $html = "";	 
-  if ( !isset( $_SESSION['su'] )) return $html;
+  if ( !isset( $_SESSION['su'] )){
+      return $html;
+  }
   
   $g = getdate(); 
   $html = "
@@ -445,20 +441,20 @@ class rifa {
         <td>Mes:</td>
         <td>
          <select name='month' style='width: 100%'>";
-   foreach (monthArray() as $key => $name ){
-    $selected = ($key == $g['mon']) ? "selected" : "";
-    $html .= "<option value='$key' $selected>$name</option>";
-   }
-   $html .="</select>
-        </td>
-       </tr><tr>
-      <td>A&ntilde;o:</td>
-      <td>
-       <select name='anio' style='width: 100%'>";
-   for( $i = $g['year']; $i > 2004; --$i){
-    $selected = ($i == $g['year']) ? "selected" : "";
-    $html .= "<option value='$i' $selected >$i</option>";
-   } 
+    foreach (monthArray() as $key => $name ){
+        $selected = ($key == $g['mon']) ? "selected" : "";
+        $html .= "<option value='$key' $selected>$name</option>";
+    }
+    $html .="</select>
+         </td>
+        </tr><tr>
+       <td>A&ntilde;o:</td>
+       <td>
+        <select name='anio' style='width: 100%'>";
+    for( $i = $g['year']; $i > 2004; --$i){
+         $selected = ($i == $g['year']) ? "selected" : "";
+         $html .= "<option value='$i' $selected >$i</option>";
+    } 
    $html .="</select>
       </td>
      </tr>
@@ -572,8 +568,7 @@ class rifa {
     }
 
     $html = file_get_contents($this->templateLogin);
-    $html = str_replace("@@TITLE@@",$this->title,$html);
-    echo $html;
+    echo str_replace("@@TITLE@@",$this->title,$html);
     exit();
  }
  function printImagen               (){
@@ -612,11 +607,11 @@ class rifa {
 
   $dataxR = array(); $datayR = array();
   foreach ( $datax as $key => $index ){
-   $dataxR[sizeof($dataxR)] = $index; 
+   $dataxR[] = $index; 
   }
 
   foreach ( $datay as $key => $index ){
-   $datayR[sizeof($datayR)] = $index;
+   $datayR[] = $index;
   }
 
   $width  = $_GET['width'];
@@ -666,7 +661,6 @@ class rifa {
 
     $i = 0;
     $num_rifas_h = 0;
-    $title       = "";
 
     $this->desde  = (isset($_GET['month']) && isset($_GET['anio'])) ? $_GET['anio'] . "-" . $_GET['month'] . "-01" : date("Y-m-01");
     $this->hasta  = (isset($_GET['month']) && isset($_GET['anio'])) ? date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime($_GET['month'] . '/01/' . $_GET['anio'] .' 00:00:00')))) : date('Y-m-d 23:59:59', strtotime('-1 second', strtotime('+1 month', strtotime(date('m') . '/01/' . date('Y') .' 00:00:00'))));
@@ -726,11 +720,11 @@ class rifa {
  function printGraph($datax, $datay, $title, $colors){
     $dataxR = array(); $datayR = array();
     foreach ( $datax as $key => $index ){
-     $dataxR[] = $index; 
+        $dataxR[] = $index; 
     }
 
     foreach ( $datay as $key => $index ){
-     $datayR[] = $index;
+        $datayR[] = $index;
     }
 
     $width  = ( isset( $_GET['width'] )) ? $_GET['width'] : 640;
@@ -790,15 +784,15 @@ class rifa {
   $dm = DaysInMonth( $anio, $mes );
 
   for( $i = 0; $i <= $dm+1 ; $i++ ){
-   $dx[$i] = ($i%2 == 1) ? "" : $i+1;
-   $dy[$i] = 0;
+    $dx[$i] = ($i%2 == 1) ? "" : $i+1;
+    $dy[$i] = 0;
   }
 
   $sum = 0;
   for( $i = 0; $i < $num; ++$i){
-   $r = mysql_fetch_array($rs);
-   $dy[$r[0]-1] = $r[1];
-   $sum += $r[1];
+    $r = mysql_fetch_array($rs);
+    $dy[$r[0]-1] = $r[1];
+    $sum += $r[1];
   }
 
   $width  = ( isset( $_GET['width'] ))  ? $_GET['width' ] : 450;
@@ -857,8 +851,7 @@ class rifa {
     </div></td></tr>", $_GET['id']);
   }
   $html = file_get_contents($this->templateResponse);
-  $html = str_replace("@@CONTENIDO@@", $response, $html);
-  echo $html;
+  echo str_replace("@@CONTENIDO@@", $response, $html);
  }
  function printSorteo               (){
   $html = file_get_contents($this->templateSorteo);
