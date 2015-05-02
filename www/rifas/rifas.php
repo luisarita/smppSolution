@@ -239,7 +239,7 @@ class rifa {
    
    foreach ($SQL as $key => $value){
     $value = str_replace("@@LASTID@@", mysql_insert_id(), $value);
-    $rs = mysql_query($value, $conexion) or die(register_mysql_error("RR00" . $key, mysql_error()));
+    $rs = mysql_query($value, $conexion) or die(register_mysql_error("RIR0" . $key, mysql_error()));
    }
   }
   header(sprintf("Location: %s?MM_ACTION=respuestaMensaje&contestado&id=%s", $_SERVER['PHP_SELF'], GetSQLValueString($_POST['id'], "int")));
@@ -250,18 +250,18 @@ class rifa {
   $numero = "    NO HAY ";
   
   $sql = sprintf("SELECT estado, cantidad_ganadores FROM rifas WHERE id=%s;", $this->idRifa);
-  $rsR = mysql_query($sql, $conexion) or die(register_mysql_error("RR002", mysql_error()));
+  $rsR = mysql_query($sql, $conexion) or die(register_mysql_error("RIG02", mysql_error()));
   $rowR = mysql_fetch_array( $rsR );
   if ( $rowR[ 'estado' ] == 1 ){
    $cantidad = $rowR[ 'cantidad_ganadores' ];
    $sql = sprintf("SELECT numero FROM rifas_participantes WHERE estado=1 AND fecha>=%s AND fecha<=%s AND idRifa=%s AND mensaje LIKE %s ORDER BY RAND() LIMIT %s;", GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->idRifa, GetSQLValueString($this->mensaje . "%", "text"), $cantidad); 
-   $rsJ = mysql_query($sql, $conexion) or die(register_mysql_error("RR003", mysql_error()));
+   $rsJ = mysql_query($sql, $conexion) or die(register_mysql_error("RIG03", mysql_error()));
    if ( mysql_num_rows($rsJ) > 0 ){
     while ( $rowJ = mysql_fetch_array( $rsJ )){
      $numero = $rowJ[ 'numero' ];
      $insertSQL = sprintf("INSERT INTO rifas_ganadores (idRifa, numero, estado, fecha, desde, hasta, mensaje) VALUES (%s, %s, 1, NOW(), %s, %s, '%s');", GetSQLValueString($this->idRifa, "int"), GetSQLValueString($numero, "text"), GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $this->mensaje);
      $numero = substr($numero,0,strlen($numero)-2) . "??";
-     mysql_query($insertSQL, $conexion) or die(register_mysql_error("RR004", mysql_error()));
+     mysql_query($insertSQL, $conexion) or die(register_mysql_error("RIG04", mysql_error()));
     }
    }
   }
@@ -381,7 +381,7 @@ class rifa {
   global $conexion, $_CONF;
   
   $sql = sprintf( "SELECT numero, fecha, desde, hasta FROM rifas_ganadores WHERE idRifa=%s ORDER BY fecha DESC;", $this->idRifa );
-  $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RR005", mysql_error()));
+  $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RHS05", mysql_error()));
   
   $contents = "";
   while ($row = mysql_fetch_assoc($rs)){
@@ -414,7 +414,7 @@ class rifa {
  function printDetalleGanadores     (){
   global $conexion;
   $sql = sprintf( "SELECT numero, fecha, desde, hasta FROM rifas_ganadores WHERE idRifa=%s AND estado=1 ORDER BY fecha DESC;", $this->idRifa );
-  $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RR005", mysql_error()));
+  $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RDG05", mysql_error()));
   
   $html = "<tr><th colspan='4'>Historial</th></tr>
    <tr><th>Numero</th><th>Fecha</th><th>Desde</th><th>Hasta</th></tr>";
@@ -478,13 +478,13 @@ class rifa {
   $condition = ($this->numero  == "" ) ? "" : sprintf("AND rp.numero=%s", GetSQLValueString($this->numero,"text") );
   $condition .= ($this->mensaje == "" ) ? "" : sprintf("AND rp.mensaje LIKE %s", GetSQLValueString($this->mensaje . "%","text") );
   $SQL = sprintf("SELECT rp.id, rp.numero, rp.fecha, rp.mensaje, rp.contestado, rp.variable1, rp.variable2, rp.variable3, rp.variable4, rp.variable5 FROM rifas r, rifas_participantes rp WHERE rp.estado=1 AND r.id=rp.idRifa AND rp.idRifa=%s AND fecha>=%s AND fecha<=%s %s ORDER BY rp.id DESC", GetSQLValueString($this->idRifa, "int"), GetSQLValueString($this->desde, "date"), GetSQLValueString($this->hasta, "date"), $condition);
-  $cntSQL = sprintf ("SELECT COUNT(*) AS conteo FROM (%s) dt", $SQL);
-  $rs = mysql_query($cntSQL, $conexion) or die(register_mysql_error("RR001", mysql_error()));
+  $cntSQL = sprintf ("SELECT COUNT(*) AS conteo FROM (%s) dt", $SQL); 
+  $rs = mysql_query($cntSQL, $conexion) or die(register_mysql_error("RP002", mysql_error()));
   $row = mysql_fetch_array($rs);
   $this->cntParticipantes = $row['conteo'];
   
   $SQL2 = sprintf("%s LIMIT %s, %s", $SQL, $this->pagina * $this->limit, $this->limit );
-  $rs2 = mysql_query($SQL2, $conexion) or die(register_mysql_error("RR002", mysql_error()));
+  $rs2 = mysql_query($SQL2, $conexion) or die(register_mysql_error("RP003", mysql_error()));
   
   $html = "";
   $i = $this->pagina * $this->limit;
