@@ -1,0 +1,61 @@
+<?php
+ //date_default_timezone_set('UTC');
+ date_default_timezone_set('America/Tegucigalpa');
+ $_CONF = array (
+  /* Configuración del Sitio */
+  'bargraph-color'           => 'D66320',
+  'bargraph-expanded-width'  => '1152',
+  'bargraph-expanded-height' => '640',
+  'country-code'             => '504',
+  'skin'                     => 'default',
+  
+  /* Mensajes */
+  'msg_max_length'      => 254,
+  'msg_warning_length'  => 181,
+  
+  /* Suscripciones */
+  'msg_count'           => 60, // cantidad de mensajes a mostrar en suscripciones
+  'opc_max_count'       => 10,
+  
+  /* Números */
+  'num_length'          => 11,
+  'area_code'           => '504' ,
+  
+  /* SMTP */
+  "smtp_user"           => "user@example.com",
+  "smtp_pass"           => "password",
+  "smtp_host"           => "smtp.gmail.com",
+  "smtp_port"           => "465",
+  "smtp_name"           => "Plataforma SMPP",
+     
+  /* Seguridad */
+  "hash_salt"           => 'hashsalt',
+     
+  /* URL Apps */
+  "url_suscripciones"   => 'url.example.com',
+  
+  /* Cuenta default para aprobaciones de mensajes de suscripcion*/
+  "correo_aprobaciones" => 'user@example.com',
+ );
+ 
+ 
+$FONDOS_PATH = "media/walls/";
+$PROG_PATH   = "media/progs/";
+$RINGM_PATH  = "media/ringmp3/";
+$RINGP_PATH  = "media/ringpoli/";
+$SCREEN_PATH = "media/screen/";
+$LOGO_PATH   = "media/logos/";
+$TEMA_PATH   = "media/themes/";
+$THUMBNAILS  = "media/thumbnails/";
+$SURVEY_WALL = "media/survey_walls/";
+
+$tipos_path[1] = "media/logos/";
+$tipos_path[2] = "media/progs/";
+$tipos_path[3] = "media/ringmp3/";
+$tipos_path[4] = "media/ringpoli/";
+$tipos_path[5] = "media/screen/";
+$tipos_path[6] = "media/themes/";
+$tipos_path[7] = "media/walls/";
+$tipos_path[8] = "media/survey_walls/";
+
+$root = "c:/inetpub/wwwroot/";
