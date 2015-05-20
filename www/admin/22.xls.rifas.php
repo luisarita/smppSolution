@@ -4,6 +4,7 @@ require_once ('../lib/phpexcel/PHPExcel.php');
 require_once ('../lib/phpexcel/PHPExcel.php');
 require_once ('../lib/phpexcel/PHPExcel/Writer/Excel2007.php');
 require_once ('../lib/phpframework/databases/databases.php');
+require_once ('../lib/phpframework/databases/arrays.php');
 require_once ('../lib/phpframework/xls/xls.php');
 
 require_once ('../conf.php');
@@ -90,13 +91,4 @@ if (isset($_POST['dateFrom']) && isset ($_POST['dateTo'])){
     $smarty->assign("dateFromLabel", "Desde");
     $smarty->assign("dateToLabel", "Hasta");
     $smarty->display(sprintf("../skins/%s/admin/22.tpl", $_CONF['skin']));
-}
-
-function queryToArray($query, $conexion){
-    $array = array();
-    $rs = mysql_query($query, $conexion) or die();
-    while ($row = mysql_fetch_array($rs)){
-        $array[$row[0]] = $row[1];
-    }
-    return $array;
 }
