@@ -1,6 +1,5 @@
 <?php
-
-require_once('conf.php'); 
+require_once('conf.php');
 require_once('connections/conexion.php'); 
 require_once('functions/functions.php');
 require_once('functions/db.php');

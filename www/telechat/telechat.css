@@ -1,0 +1,29 @@
+body { font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF; font-size: 14px; text-align: center; background-color: #000000;  }
+
+a        { font-size: 10px; font-weight: bold; color: #CC0000; text-decoration: none }
+a.button { background-color:#BBBBBB; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px; width: 100px }
+
+th   { font-size: 12px; text-align: center; vertical-align: middle; font-weight: bold; border: solid 1px #FFFFFF; background-color:#003399; padding-left: 3px; padding-right: 3px }
+td   { font-size: 10px; padding-left: 3px; padding-right: 3px; text-align: left; vertical-align: top; }
+
+td.menuitem            { background-color: #FFFFFF; border: 1px solid #CC0000; text-align: center }
+td.content             { padding-bottom: 5px; padding-top: 5px; border-bottom: 1px solid #FFFFFF; text-align: left }
+td.centered            { text-align: center }
+input                  { font-size: 10px; width: 180px }
+textarea               { font-size: 10px; width: 180px }
+textarea.textbox-large { font-size: 10px; width: 260px }
+textarea.textbox-small { width: 100px }
+select                 { font-size: 10px; width: 180px }
+select.textbox-small   { width: 100px }
+input.textbox          { width: 400px }
+input.textbox-small    { width: 100px }
+input.textbox-medium   { width: 180px }
+input.checkbox         { width: 20px }
+
+input.button           { background-color:#BBBBBB; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px; width: 100px }
+input.msg-button       { background-color:#AAAA00; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px; width: 100px }
+input.warning-button   { background-color:#FF0000; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px; width: 100px }
+
+button                { background-color:#BBBBBB; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px }
+button.msg-button     { background-color:#AAAA00; }
+button.warning-button { background-color:#FF0000; }

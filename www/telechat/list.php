@@ -44,7 +44,7 @@
   <title></title>
   <meta http-equiv="Refresh" content="60;<?php echo $url; ?>" />
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link type="text/css" rel="stylesheet" href="../css/telechat.css"  />
+  <link type="text/css" rel="stylesheet" href="../telechat/telechat.css"  />
   <script type="text/javascript" language="javascript" src="../scripts/popup.js"></script>
  </head>
  <body>

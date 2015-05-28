@@ -418,7 +418,7 @@ class telebingo {
     <head>
      <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
      <title>Telebingo</title>
-     <link rel='stylesheet' type='text/css' href='css/telebingo.css' />
+     <link rel='stylesheet' type='text/css' href='telebingos/telebingo.css' />
     </head>
     <script src='scripts/telebingo.js' language='javascript1.2'></script>
     <script>

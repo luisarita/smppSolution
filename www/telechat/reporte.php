@@ -27,7 +27,7 @@ if( isset( $_GET['mes'] )){
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link type="text/css" rel="stylesheet" href="../css/telechat.css"  />
+  <link type="text/css" rel="stylesheet" href="../telechat/telechat.css"  />
  </head>
  <body>
   <form id="form" name="form" method="get" action="<?php echo $_SERVER['PHP_SELF'] ?>">  
