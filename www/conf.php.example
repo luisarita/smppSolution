@@ -1,42 +1,47 @@
 <?php
- //date_default_timezone_set('UTC');
- date_default_timezone_set('America/Tegucigalpa');
- $_CONF = array (
-  /* Configuración del Sitio */
-  'bargraph-color'           => 'D66320',
-  'bargraph-expanded-width'  => '1152',
-  'bargraph-expanded-height' => '640',
-  'country-code'             => '504',
-  'skin'                     => 'default',
-  
-  /* Mensajes */
-  'msg_max_length'      => 254,
-  'msg_warning_length'  => 181,
-  
-  /* Suscripciones */
-  'msg_count'           => 60, // cantidad de mensajes a mostrar en suscripciones
-  'opc_max_count'       => 10,
-  
-  /* Números */
-  'num_length'          => 11,
-  'area_code'           => '504' ,
-  
-  /* SMTP */
-  "smtp_user"           => "user@example.com",
-  "smtp_pass"           => "password",
-  "smtp_host"           => "smtp.gmail.com",
-  "smtp_port"           => "465",
-  "smtp_name"           => "Plataforma SMPP",
+
+$_CONF = array (
+    /* Configuración del Sitio */
+    'bargraph-color'           => 'D66320',
+    'bargraph-expanded-width'  => '1152',
+    'bargraph-expanded-height' => '640',
+    'country-code'             => '504',
+    'skin'                     => 'default',
+
+    /* Mensajes */
+    'msg_max_length'      => 254,
+    'msg_warning_length'  => 181,
+
+    /* Suscripciones */
+    'msg_count'           => 60, // cantidad de mensajes a mostrar en suscripciones
+    'opc_max_count'       => 10,
+
+    /* Números */
+    'num_length'          => 11,
+    'area_code'           => '504' ,
+
+    /* SMTP */
+    "smtp_user"           => "user@example.com",
+    "smtp_pass"           => "password",
+    "smtp_host"           => "smtp.gmail.com",
+    "smtp_port"           => "465",
+    "smtp_name"           => "Plataforma SMPP",
+
+    /* MySQL */
+    "mysql_host"            => "localhost",
+    "mysql_database"        => "smpp",
+    "mysql_user"            => "root",
+    "mysql_pass"            => "root",
      
-  /* Seguridad */
-  "hash_salt"           => 'hashsalt',
-     
-  /* URL Apps */
-  "url_suscripciones"   => 'url.example.com',
-  
-  /* Cuenta default para aprobaciones de mensajes de suscripcion*/
-  "correo_aprobaciones" => 'user@example.com',
- );
+    /* Seguridad */
+    "hash_salt"           => 'hashsalt',
+
+    /* URL Apps */
+    "url_suscripciones"   => 'url.example.com',
+
+    /* Cuenta default para aprobaciones de mensajes de suscripcion*/
+    "correo_aprobaciones" => 'user@example.com',
+);
  
  
 $FONDOS_PATH = "media/walls/";
