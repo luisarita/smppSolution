@@ -18,7 +18,7 @@ class admin{
         $this->erroneos = "";
         $this->cargados = 0;
 
-        if (!isset($_SESSION['idAdmin'])){
+        if (!isset($_SESSION['idAdmin']) || !isset($_SESSION['usuario'])){
             header("Location: " . initPage());
             exit();
         } else if ( !permission( 17 ) ){
@@ -39,61 +39,61 @@ class admin{
         global $conexion;
         global $database_conexion;
         mysql_select_db($database_conexion, $conexion);
-
+        
         if(isset($_POST['id'])){
-         $tamano = $_FILES["fileExcel"]['size'];
-         $tipo = $_FILES["fileExcel"]['type'];
-         $archivo = $this->directorio . $this->idSuscripcion."_".date("YmdHis").".".substr(strrchr($_FILES["fileExcel"]['name'], '.'), 1);
-         $version = (substr(strrchr($archivo, '.'), 1) == "xlsx" ) ? "Excel2007" : "Excel5";
-         $cont = 1;
-         $registro = array("","","","","","");
+            $archivo = $this->directorio . $this->idSuscripcion."_".date("YmdHis").".".substr(strrchr($_FILES["fileExcel"]['name'], '.'), 1);
+            $version = (substr(strrchr($archivo, '.'), 1) == "xlsx" ) ? "Excel2007" : "Excel5";
+            $cont = 1;
+            $registro = array("","","","","","");
 
-         if ($archivo != "") {
-          if (copy($_FILES['fileExcel']['tmp_name'], $archivo)) {
-           error_reporting(E_ALL);
-           $reader = PHPExcel_IOFactory::createReader($version);
-           $reader->setReadDataOnly(true);
-           $phpExcel = $reader->load($archivo);
-           $workSheet = $phpExcel->getActiveSheet();
+            if ($archivo != "") {
+                if (copy($_FILES['fileExcel']['tmp_name'], $archivo)) {
+                    error_reporting(E_ALL);
+                    $reader = PHPExcel_IOFactory::createReader($version);
+                    $reader->setReadDataOnly(true);
+                    $phpExcel = $reader->load($archivo);
+                    $workSheet = $phpExcel->getActiveSheet();
 
-           foreach($workSheet->getRowIterator() as $row){ 
-            $registro[1] = $phpExcel->getActiveSheet()->getCell('A'.$cont)->getValue(); 
-            $registro[2] = $phpExcel->getActiveSheet()->getCell('B'.$cont)->getValue();
-            $registro[3] = $phpExcel->getActiveSheet()->getCell('C'.$cont)->getValue(); 
-            $registro[4] = $phpExcel->getActiveSheet()->getCell('D'.$cont)->getValue(); 
-            $registro[5] = $phpExcel->getActiveSheet()->getCell('E'.$cont)->getValue();
-            $registro[6] = $phpExcel->getActiveSheet()->getCell('F'.$cont)->getValue();
-            $variable = 0;
+                    foreach($workSheet->getRowIterator() as $row){ 
+                     $registro[1] = $phpExcel->getActiveSheet()->getCell('A'.$cont)->getValue(); 
+                     $registro[2] = $phpExcel->getActiveSheet()->getCell('B'.$cont)->getValue();
+                     $registro[3] = $phpExcel->getActiveSheet()->getCell('C'.$cont)->getValue(); 
+                     $registro[4] = $phpExcel->getActiveSheet()->getCell('D'.$cont)->getValue(); 
+                     $registro[5] = $phpExcel->getActiveSheet()->getCell('E'.$cont)->getValue();
+                     $registro[6] = $phpExcel->getActiveSheet()->getCell('F'.$cont)->getValue();
+                     $variable = 0;
 
-            foreach ($registro as $key => $value){
-             if ($key > 1){
-              if(strlen(($value)) > 0 ){
-               $variable = $key-1;
-              }
-              $value = get_magic_quotes_gpc() ? stripslashes($value) : $value;
-              $value = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($value) : mysql_escape_string($value);
-              $value = "'" . $value . "'";
-              $registro[ $key ] = $value;
-             }
+                     foreach ($registro as $key => $value){
+                      if ($key > 1){
+                       if(strlen(($value)) > 0 ){
+                        $variable = $key-1;
+                       }
+                       $value = get_magic_quotes_gpc() ? stripslashes($value) : $value;
+                       $value = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($value) : mysql_escape_string($value);
+                       $value = "'" . $value . "'";
+                       $registro[ $key ] = $value;
+                      }
+                     }
+
+                     if($this->validarNumero($registro[1])){ 	    
+                      $query = sprintf("REPLACE INTO suscripciones_participantes (idsuscripcion, numero, fecha, estado, variable1, variable2, variable3, variable4, variable5, variableEnviada, variableLlenada) VALUES (%s, %s, NOW(), 1, %s, %s, %s, %s, %s, %s, %s)", GetSQLValueString($this->idSuscripcion,"text"), $registro[1], $registro[2], $registro[3], $registro[4], $registro[5], $registro[6], GetSQLValueString($variable,"int"), GetSQLValueString($variable,"int"));
+                      mysql_query($query, $conexion) or die(register_mysql_error("SCL0001", mysql_error()));
+                      $this->cargados += 1;
+                     } else {
+                      if($this->erroneos != ""){
+                          $this->erroneos .= "<br/>";
+                      }
+                      $this->erroneos .= $registro[1];
+                     }
+                     $cont++;
+                    }
+                    mysql_query("UPDATE suscripciones_participantes p, suscripciones_bloqueos b SET p.estado=0 WHERE p.numero=b.numero;", $conexion) or die(register_mysql_error("SCL0002", mysql_error()));
+                    $sql = sprintf("INSERT INTO suscripciones_carga_lote(id, idSuscripcion, fecha, usuario, conteo_carga, nombre_archivo) VALUES(NULL, %s, NOW(), %s, %s, %s)", GetSQLValueString($this->idSuscripcion,"int"), GetSQLValueString($_SESSION['usuario'], "text"), GetSQLValueString($cont-1, "int"), GetSQLValueString($archivo,"text"));
+                    mysql_query($sql, $conexion) or die(register_mysql_error("SCL0004", mysql_error()));	  
+                } else {
+                    echo "<script>alert('Error al cargar archivo');</script>";
+                }
             }
-
-            if($this->validarNumero($registro[1])){ 	    
-             $query = sprintf("REPLACE INTO suscripciones_participantes (idsuscripcion, numero, fecha, estado, variable1, variable2, variable3, variable4, variable5, variableEnviada, variableLlenada) VALUES (%s, %s, NOW(), 1, %s, %s, %s, %s, %s, %s, %s)", GetSQLValueString($this->idSuscripcion,"text"), $registro[1], $registro[2], $registro[3], $registro[4], $registro[5], $registro[6], GetSQLValueString($variable,"int"), GetSQLValueString($variable,"int"));
-             mysql_query($query, $conexion) or die(register_mysql_error("SCL0001", mysql_error()));
-             $this->cargados += 1;
-            } else {
-             if($this->erroneos != "") $this->erroneos .= "<br/>";
-             $this->erroneos .= $registro[1];
-            }
-            $cont++;
-           }
-           mysql_query("UPDATE suscripciones_participantes p, suscripciones_bloqueos b SET p.estado=0 WHERE p.numero=b.numero;", $conexion) or die(register_mysql_error("SCL0002", mysql_error()));
-           $sql = sprintf("INSERT INTO suscripciones_carga_lote(id, idSuscripcion, fecha, usuario, conteo_carga, nombre_archivo) VALUES(NULL, %s, NOW(), %s, %s, %s)", GetSQLValueString($this->idSuscripcion,"int"), GetSQLValueString($_SESSION['usuario'], "text"), GetSQLValueString($cont-1, "int"), GetSQLValueString($archivo,"text"));
-           mysql_query($sql, $conexion) or die(register_mysql_error("SCL0004", mysql_error()));	  
-          } else {
-           echo "<script>alert('Error al cargar archivo');</script>";
-          }
-         }
         }
     }
 
