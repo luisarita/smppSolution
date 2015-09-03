@@ -40,7 +40,13 @@ $_CONF = array (
     "url_suscripciones"   => 'url.example.com',
 
     /* Cuenta default para aprobaciones de mensajes de suscripcion*/
-    "correo_aprobaciones" => 'user@example.com',
+    "correo_aprobaciones"   => 'user@example.com',
+    
+    /* Configuracion de ATP */
+
+    'atp_username'          => 'user@example.com',
+    'atp_password'          => "password",
+    'atp_url'               => "http://176.9.177.177/bulksms/bulksend.go?username=%s&password=%s&originator=mycompany&phone=%s&msgtext=%s",
 );
  
  
