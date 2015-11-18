@@ -1,0 +1,27 @@
+Los estandares de desarrollo de un skin son los siguientes:
+
+1. Todas las hojas deben pasar Validación W3C tanto en html como en css
+2. Todos los estilos deben ir en un archivo separado
+3. No debe haber tabulaciones en los archivos, deben ir con espacios
+4. Todo tag que vaya dentro de un tag debe ir con un espacio de identacion cuando se coloca en una línea inferior
+5. Todos los forms deben tener un action, aunque sea vacio
+6. Todos los tag tipo input deben cerrarse con "/>"
+7. Los iconos deben llevar por nombre favicon.ico
+8. El titulo de las hojas debe llevar una variablle llamada @@TITLE@@; la misma es reemplazada por el texto apropiado
+9. Existen diferentes placeholders para cada archivo. Estos deben respetarse
+
+La estructura de archivos es:
+
+skin/
+ <nombre del skin>/
+  css/ 
+   <directorio donde incluir todos los archivos de stylesheets
+  images/
+   <directorio donde incluir todas las imagenes>
+  js/
+   <directorio donde incluir todos los javascripts>
+  swf/
+   <directorio donde incluir todos los archivos de tipo flash>
+  favicon.ico
+  login.html
+ 

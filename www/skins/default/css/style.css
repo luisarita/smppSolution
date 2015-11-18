@@ -1,0 +1,55 @@
+body                       { font-family: Verdana, Arial, Helvetica, sans-serif; color: #FFFFFF; font-size: 14px; text-align: center; 
+                             background-color: #000000; background-repeat: repeat-y; 
+							 background-attachment: fixed; background-position: center }
+
+a                          { font-size: 10px; font-weight: bold; color: #CC0000; text-decoration: none }
+a.button                   { background-color:#BBBBBB; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px; width: 100px }
+
+th                         { background: url('../images/bg_title_table_700.gif') no-repeat top left; color:#FFF; font-size:12px; height: 30px; padding-left: 5px;
+                             text-align: left; padding-right: 9px;
+                             /*font-size: 12px; text-align: center; vertical-align: middle; font-weight: bold; border: solid 1px #FFFFFF; 
+                             background-color:#FF8811;  padding-right: 3px*/ }
+th.subtitulo               { background: url('../images/bgtables_subtitulos.png') repeat-x; color:#FFF; font-size:12px; height: 30px; padding-left: 5px;
+                             text-align: left; }
+							 
+td                         { font-size: 10px; padding-left: 3px; padding-right: 3px; text-align: left; vertical-align: top; }
+
+td.menuitem                { background-color: #FFFFFF; border: 1px solid #CC0000; text-align: center }
+td.content                 { padding-bottom: 5px; padding-top: 5px; border-bottom: 1px solid #FFFFFF; text-align: left }
+td.centered                { text-align: center }
+input                      { font-size: 10px; width: 180px }
+textarea                   { font-size: 10px; width: 180px }
+textarea.textbox-large     { font-size: 10px; width: 260px }
+textarea.textbox-440       { font-size: 10px; width: 440px }
+textarea.textbox-small     { width: 100px }
+select                     { font-size: 10px; width: 180px }
+select.textbox-tiny        { width: 50px }
+select.textbox-small       { width: 100px }
+input.textbox              { width: 400px }
+input.textbox-small        { width: 100px }
+input.textbox-medium       { width: 180px }
+input.textbox-large        { width: 460px }
+input.checkbox             { width: 20px }
+input.warning-button-small { color: #FFFFFF; background-color:#FF0000; border: 1px solid #FFFFFF; width: 100px }
+
+input.button               { border: none; background: url('../images/normal_button_bg.gif') no-repeat top left; width: 120px; height: 25px; 
+                             color:#FFF; text-align:center; font-size:11px; font-weight:bold; padding-bottom:2px; }
+input.button:hover         { border: none; background: url('../images/normal_button_bg_hover.gif') no-repeat top left }
+
+input.date-button          { border: none; background: url('../images/small_button_bg.gif') no-repeat top left; width: 35px; height: 25px; 
+                             color:#FFF; text-align:center; font-size:11px; font-weight:bold; padding-bottom:2px; }
+input.date-button:hover    { border: none; background: url('../images/small_button_hover_bg.gif') no-repeat top left }
+
+input.msg-button           { border: none; background: url('../images/msg_button_bg.gif') no-repeat top left; width: 120px; height: 25px; 
+                             color:#FFF; text-align:center; font-size:11px; font-weight:bold; padding-bottom:2px; }
+input.msg-button:hover     { border: none; background: url('../images/msg_button_bg_hover.gif') no-repeat top left }
+
+input.warning-button       { border: none; background: url('../images/msg_button_bg.gif') no-repeat top left; width: 120px; height: 25px; 
+                             color:#FFF; text-align:center; font-size:11px; font-weight:bold; padding-bottom:2px; }
+input.warning-button:hover { border: none; background: url('../images/msg_button_bg_hover.gif') no-repeat top left }
+
+
+button                     { background-color:#BBBBBB; color: #FFFFFF; border: 1px solid #FFFFFF; font-size: 10px }
+button.msg-button          { background-color:#AAAA00; }
+button.warning-button      { background-color:#FF0000; }
+
