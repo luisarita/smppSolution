@@ -30,7 +30,7 @@ Public Class agrSuscripcion
         pTitle = "Modificar Suscripción"
         cmdCrear.Text = "Modificar"
         If CNX.State <> ConnectionState.Open Then CNX.Open()
-        Dim dr As MySqlDataReader = New MySqlCommand("SELECT s.nombre, s.nombreComercial, s.numero, s.numeroAdicional, s.duracion, s.respuesta, s.respuestaAdicional, s.renovacionA, s.renovacionB, s.renovacionC, s.usuario, s.clave, s.numeroRecepcion, s.numeroUsuario, c.clave AS claveRecepcion, s.numeroSalida, s.numeroEscalonado, s.respuestaCancelacion, s.rutaShell, s.priorizado, s.activa, s.habilitar_media, s.aplicarHorario, s.aplicarLlenadoVariables, s.monitoreable, s.requiereAprobacion, s.correoAprobacion, s.limiteMensajesDiarios, s.claveServicio FROM suscripciones s LEFT OUTER JOIN claves c ON s.id=c.idSuscripcionRecepcion WHERE s.id=" & id, CNX).ExecuteReader
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT s.nombre, s.nombreComercial, s.numero, s.numeroAdicional, s.duracion, s.respuesta, s.respuestaAdicional, s.renovacionA, s.renovacionB, s.renovacionC, s.usuario, s.clave, s.numeroRecepcion, s.numeroUsuario, c.clave AS claveRecepcion, s.numeroSalida, s.numeroEscalonado, s.respuestaCancelacion, s.rutaShell, s.priorizado, s.activa, s.habilitar_media, s.aplicarHorario, s.aplicarLlenadoVariables, s.monitoreable, s.requiereAprobacion, s.correoAprobacion, s.limiteMensajesDiarios, s.costo, s.claveServicio FROM suscripciones s LEFT OUTER JOIN claves c ON s.id=c.idSuscripcionRecepcion WHERE s.id=" & id, CNX).ExecuteReader
         If dr.Read Then
             nombre.Text = dr!nombre
             nombreComercial.Text = dr!nombreComercial
@@ -52,6 +52,7 @@ Public Class agrSuscripcion
             usuario.Text = dr!usuario
             clave.Text = dr!clave
             limiteMensajesDiario.Text = dr!limiteMensajesDiarios
+            costo.Text = dr!costo
             seleccionar(cbNumeroRecepcion, dr!numeroRecepcion)
             If Not dr!claveRecepcion Is NULL Then claveRecepcion.Text = dr!claveRecepcion
             If Not dr!rutaShell Is NULL Then rutaShell.Text = dr!rutaShell
@@ -104,8 +105,6 @@ Public Class agrSuscripcion
     Friend WithEvents Label7 As Label
     Friend WithEvents usuario As TextBox
     Friend WithEvents clave As TextBox
-    Friend WithEvents Label8 As Label
-    Friend WithEvents renovacionA As TextBox
     Friend WithEvents Label9 As Label
     Friend WithEvents logo As TextBox
     Friend WithEvents GroupBox3 As GroupBox
@@ -115,30 +114,18 @@ Public Class agrSuscripcion
     Friend WithEvents Label10 As Label
     Friend WithEvents Label11 As Label
     Friend WithEvents cbNumeroRecepcion As ComboBox
-    Friend WithEvents Label14 As Label
-    Friend WithEvents renovacionC As TextBox
-    Friend WithEvents Label13 As Label
-    Friend WithEvents renovacionB As TextBox
     Friend WithEvents GroupBox4 As GroupBox
     Friend WithEvents cbNumerosSalida As ComboBox
     Friend WithEvents Label17 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents respuestaCancelacion As TextBox
     Friend WithEvents Label16 As Label
-    Friend WithEvents chkPriorizado As CheckBox
-    Friend WithEvents Label18 As Label
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents Label20 As Label
     Friend WithEvents rutaShell As TextBox
     Friend WithEvents cmdDelCancel As Button
     Friend WithEvents cmdAgrCancel As Button
     Friend WithEvents lbClavesCancelacion As ListBox
-    Friend WithEvents chkActiva As CheckBox
-    Friend WithEvents Label19 As Label
-    Friend WithEvents chkMedia As CheckBox
-    Friend WithEvents Label21 As Label
-    Friend WithEvents chkAplicarHorario As CheckBox
-    Friend WithEvents Label22 As Label
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents Label23 As Label
     Friend WithEvents cbSuscripciones As ComboBox
@@ -148,12 +135,8 @@ Public Class agrSuscripcion
     Friend WithEvents lblSuscripcion As Label
     Friend WithEvents Label24 As Label
     Friend WithEvents nombreComercial As TextBox
-    Friend WithEvents chkAplicarLlenadoVariables As CheckBox
-    Friend WithEvents lblAplicarLlenadoVariables As Label
     Friend WithEvents Label25 As Label
     Friend WithEvents respuestaAdicional As TextBox
-    Friend WithEvents chkMonitoreable As CheckBox
-    Friend WithEvents Label26 As Label
     Friend WithEvents Label27 As System.Windows.Forms.Label
     Friend WithEvents limiteMensajesDiario As System.Windows.Forms.TextBox
     Friend WithEvents chkRequiereAprobacion As System.Windows.Forms.CheckBox
@@ -167,40 +150,46 @@ Public Class agrSuscripcion
     Friend WithEvents Label31 As System.Windows.Forms.Label
     Friend WithEvents Label32 As System.Windows.Forms.Label
     Friend WithEvents claveServicio As System.Windows.Forms.TextBox
+    Friend WithEvents Label33 As Label
+    Friend WithEvents costo As TextBox
+    Friend WithEvents GroupBox9 As GroupBox
+    Friend WithEvents Label14 As Label
+    Friend WithEvents renovacionC As TextBox
+    Friend WithEvents Label13 As Label
+    Friend WithEvents renovacionB As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents renovacionA As TextBox
+    Friend WithEvents GroupBox8 As GroupBox
+    Friend WithEvents chkMonitoreable As CheckBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents chkAplicarLlenadoVariables As CheckBox
+    Friend WithEvents lblAplicarLlenadoVariables As Label
+    Friend WithEvents chkAplicarHorario As CheckBox
+    Friend WithEvents Label22 As Label
+    Friend WithEvents chkMedia As CheckBox
+    Friend WithEvents Label21 As Label
+    Friend WithEvents chkActiva As CheckBox
+    Friend WithEvents Label19 As Label
+    Friend WithEvents chkPriorizado As CheckBox
+    Friend WithEvents Label18 As Label
     Friend WithEvents Button1 As Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Label32 = New System.Windows.Forms.Label()
+        Me.claveServicio = New System.Windows.Forms.TextBox()
         Me.cbNumeroEscalonado = New System.Windows.Forms.ComboBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.cbNumeroAdicional = New System.Windows.Forms.ComboBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.limiteMensajesDiario = New System.Windows.Forms.TextBox()
-        Me.chkMonitoreable = New System.Windows.Forms.CheckBox()
-        Me.Label26 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.respuestaAdicional = New System.Windows.Forms.TextBox()
-        Me.chkAplicarLlenadoVariables = New System.Windows.Forms.CheckBox()
-        Me.lblAplicarLlenadoVariables = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.nombreComercial = New System.Windows.Forms.TextBox()
-        Me.chkAplicarHorario = New System.Windows.Forms.CheckBox()
-        Me.Label22 = New System.Windows.Forms.Label()
-        Me.chkMedia = New System.Windows.Forms.CheckBox()
-        Me.Label21 = New System.Windows.Forms.Label()
-        Me.chkActiva = New System.Windows.Forms.CheckBox()
-        Me.Label19 = New System.Windows.Forms.Label()
-        Me.chkPriorizado = New System.Windows.Forms.CheckBox()
-        Me.Label18 = New System.Windows.Forms.Label()
         Me.cbNumerosSalida = New System.Windows.Forms.ComboBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.renovacionC = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.renovacionB = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.renovacionA = New System.Windows.Forms.TextBox()
         Me.cmdDel = New System.Windows.Forms.Button()
         Me.cmdAgr = New System.Windows.Forms.Button()
         Me.lbclaves = New System.Windows.Forms.ListBox()
@@ -252,8 +241,28 @@ Public Class agrSuscripcion
         Me.GroupBox7 = New System.Windows.Forms.GroupBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.txtCorreoAprobacion = New System.Windows.Forms.TextBox()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.claveServicio = New System.Windows.Forms.TextBox()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.chkMonitoreable = New System.Windows.Forms.CheckBox()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.chkAplicarLlenadoVariables = New System.Windows.Forms.CheckBox()
+        Me.lblAplicarLlenadoVariables = New System.Windows.Forms.Label()
+        Me.chkAplicarHorario = New System.Windows.Forms.CheckBox()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.chkMedia = New System.Windows.Forms.CheckBox()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.chkActiva = New System.Windows.Forms.CheckBox()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.chkPriorizado = New System.Windows.Forms.CheckBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.renovacionC = New System.Windows.Forms.TextBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.renovacionB = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.renovacionA = New System.Windows.Forms.TextBox()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.costo = New System.Windows.Forms.TextBox()
         CType(Me.pbUpper, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmdPanel.SuspendLayout()
         CType(Me.imgLinea, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -265,28 +274,32 @@ Public Class agrSuscripcion
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
         Me.GroupBox7.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
         Me.SuspendLayout()
         '
         'cmdPanel
         '
         Me.cmdPanel.Controls.Add(Me.cmdCrear)
-        Me.cmdPanel.Location = New System.Drawing.Point(0, 594)
-        Me.cmdPanel.Size = New System.Drawing.Size(789, 37)
+        Me.cmdPanel.Location = New System.Drawing.Point(0, 471)
+        Me.cmdPanel.Size = New System.Drawing.Size(1195, 37)
         Me.cmdPanel.Controls.SetChildIndex(Me.cmdCrear, 0)
         Me.cmdPanel.Controls.SetChildIndex(Me.cmdCerrar, 0)
         Me.cmdPanel.Controls.SetChildIndex(Me.imgLinea, 0)
         '
         'cmdCerrar
         '
-        Me.cmdCerrar.Location = New System.Drawing.Point(684, 9)
+        Me.cmdCerrar.Location = New System.Drawing.Point(1090, 9)
         Me.cmdCerrar.TabIndex = 1
         '
         'imgLinea
         '
-        Me.imgLinea.Size = New System.Drawing.Size(779, 8)
+        Me.imgLinea.Size = New System.Drawing.Size(1185, 8)
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label33)
+        Me.GroupBox1.Controls.Add(Me.costo)
         Me.GroupBox1.Controls.Add(Me.Label32)
         Me.GroupBox1.Controls.Add(Me.claveServicio)
         Me.GroupBox1.Controls.Add(Me.cbNumeroEscalonado)
@@ -295,30 +308,12 @@ Public Class agrSuscripcion
         Me.GroupBox1.Controls.Add(Me.Label30)
         Me.GroupBox1.Controls.Add(Me.Label27)
         Me.GroupBox1.Controls.Add(Me.limiteMensajesDiario)
-        Me.GroupBox1.Controls.Add(Me.chkMonitoreable)
-        Me.GroupBox1.Controls.Add(Me.Label26)
         Me.GroupBox1.Controls.Add(Me.Label25)
         Me.GroupBox1.Controls.Add(Me.respuestaAdicional)
-        Me.GroupBox1.Controls.Add(Me.chkAplicarLlenadoVariables)
-        Me.GroupBox1.Controls.Add(Me.lblAplicarLlenadoVariables)
         Me.GroupBox1.Controls.Add(Me.Label24)
         Me.GroupBox1.Controls.Add(Me.nombreComercial)
-        Me.GroupBox1.Controls.Add(Me.chkAplicarHorario)
-        Me.GroupBox1.Controls.Add(Me.Label22)
-        Me.GroupBox1.Controls.Add(Me.chkMedia)
-        Me.GroupBox1.Controls.Add(Me.Label21)
-        Me.GroupBox1.Controls.Add(Me.chkActiva)
-        Me.GroupBox1.Controls.Add(Me.Label19)
-        Me.GroupBox1.Controls.Add(Me.chkPriorizado)
-        Me.GroupBox1.Controls.Add(Me.Label18)
         Me.GroupBox1.Controls.Add(Me.cbNumerosSalida)
         Me.GroupBox1.Controls.Add(Me.Label17)
-        Me.GroupBox1.Controls.Add(Me.Label14)
-        Me.GroupBox1.Controls.Add(Me.renovacionC)
-        Me.GroupBox1.Controls.Add(Me.Label13)
-        Me.GroupBox1.Controls.Add(Me.renovacionB)
-        Me.GroupBox1.Controls.Add(Me.Label8)
-        Me.GroupBox1.Controls.Add(Me.renovacionA)
         Me.GroupBox1.Controls.Add(Me.cmdDel)
         Me.GroupBox1.Controls.Add(Me.cmdAgr)
         Me.GroupBox1.Controls.Add(Me.lbclaves)
@@ -334,10 +329,28 @@ Public Class agrSuscripcion
         Me.GroupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
         Me.GroupBox1.Location = New System.Drawing.Point(3, 59)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(387, 521)
+        Me.GroupBox1.Size = New System.Drawing.Size(387, 402)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "General"
+        '
+        'Label32
+        '
+        Me.Label32.Location = New System.Drawing.Point(9, 166)
+        Me.Label32.Name = "Label32"
+        Me.Label32.Size = New System.Drawing.Size(159, 21)
+        Me.Label32.TabIndex = 57
+        Me.Label32.Text = "Clave Servicio:"
+        Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'claveServicio
+        '
+        Me.claveServicio.BackColor = System.Drawing.Color.White
+        Me.claveServicio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.claveServicio.Location = New System.Drawing.Point(168, 166)
+        Me.claveServicio.Name = "claveServicio"
+        Me.claveServicio.Size = New System.Drawing.Size(208, 21)
+        Me.claveServicio.TabIndex = 6
         '
         'cbNumeroEscalonado
         '
@@ -377,7 +390,7 @@ Public Class agrSuscripcion
         '
         'Label27
         '
-        Me.Label27.Location = New System.Drawing.Point(9, 406)
+        Me.Label27.Location = New System.Drawing.Point(9, 334)
         Me.Label27.Name = "Label27"
         Me.Label27.Size = New System.Drawing.Size(153, 21)
         Me.Label27.TabIndex = 51
@@ -388,30 +401,12 @@ Public Class agrSuscripcion
         '
         Me.limiteMensajesDiario.BackColor = System.Drawing.Color.White
         Me.limiteMensajesDiario.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.limiteMensajesDiario.Location = New System.Drawing.Point(168, 406)
+        Me.limiteMensajesDiario.Location = New System.Drawing.Point(168, 334)
         Me.limiteMensajesDiario.Name = "limiteMensajesDiario"
         Me.limiteMensajesDiario.Size = New System.Drawing.Size(208, 21)
         Me.limiteMensajesDiario.TabIndex = 15
         Me.limiteMensajesDiario.Text = "5"
         Me.limiteMensajesDiario.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-        '
-        'chkMonitoreable
-        '
-        Me.chkMonitoreable.AutoSize = True
-        Me.chkMonitoreable.Location = New System.Drawing.Point(362, 477)
-        Me.chkMonitoreable.Name = "chkMonitoreable"
-        Me.chkMonitoreable.Size = New System.Drawing.Size(15, 14)
-        Me.chkMonitoreable.TabIndex = 21
-        Me.chkMonitoreable.UseVisualStyleBackColor = True
-        '
-        'Label26
-        '
-        Me.Label26.Location = New System.Drawing.Point(203, 474)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(112, 21)
-        Me.Label26.TabIndex = 49
-        Me.Label26.Text = "Monitoreable:"
-        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label25
         '
@@ -432,24 +427,6 @@ Public Class agrSuscripcion
         Me.respuestaAdicional.Size = New System.Drawing.Size(208, 21)
         Me.respuestaAdicional.TabIndex = 10
         '
-        'chkAplicarLlenadoVariables
-        '
-        Me.chkAplicarLlenadoVariables.AutoSize = True
-        Me.chkAplicarLlenadoVariables.Location = New System.Drawing.Point(168, 483)
-        Me.chkAplicarLlenadoVariables.Name = "chkAplicarLlenadoVariables"
-        Me.chkAplicarLlenadoVariables.Size = New System.Drawing.Size(15, 14)
-        Me.chkAplicarLlenadoVariables.TabIndex = 18
-        Me.chkAplicarLlenadoVariables.UseVisualStyleBackColor = True
-        '
-        'lblAplicarLlenadoVariables
-        '
-        Me.lblAplicarLlenadoVariables.Location = New System.Drawing.Point(9, 480)
-        Me.lblAplicarLlenadoVariables.Name = "lblAplicarLlenadoVariables"
-        Me.lblAplicarLlenadoVariables.Size = New System.Drawing.Size(153, 21)
-        Me.lblAplicarLlenadoVariables.TabIndex = 44
-        Me.lblAplicarLlenadoVariables.Text = "Aplicar Llenado Variables:"
-        Me.lblAplicarLlenadoVariables.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'Label24
         '
         Me.Label24.Location = New System.Drawing.Point(9, 141)
@@ -468,78 +445,6 @@ Public Class agrSuscripcion
         Me.nombreComercial.Size = New System.Drawing.Size(208, 21)
         Me.nombreComercial.TabIndex = 5
         '
-        'chkAplicarHorario
-        '
-        Me.chkAplicarHorario.AutoSize = True
-        Me.chkAplicarHorario.Location = New System.Drawing.Point(168, 462)
-        Me.chkAplicarHorario.Name = "chkAplicarHorario"
-        Me.chkAplicarHorario.Size = New System.Drawing.Size(15, 14)
-        Me.chkAplicarHorario.TabIndex = 17
-        Me.chkAplicarHorario.UseVisualStyleBackColor = True
-        '
-        'Label22
-        '
-        Me.Label22.Location = New System.Drawing.Point(9, 459)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(112, 21)
-        Me.Label22.TabIndex = 40
-        Me.Label22.Text = "Aplicar Horario:"
-        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'chkMedia
-        '
-        Me.chkMedia.AutoSize = True
-        Me.chkMedia.Location = New System.Drawing.Point(168, 441)
-        Me.chkMedia.Name = "chkMedia"
-        Me.chkMedia.Size = New System.Drawing.Size(15, 14)
-        Me.chkMedia.TabIndex = 16
-        Me.chkMedia.UseVisualStyleBackColor = True
-        '
-        'Label21
-        '
-        Me.Label21.Location = New System.Drawing.Point(9, 438)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(112, 21)
-        Me.Label21.TabIndex = 38
-        Me.Label21.Text = "Habilitar Media:"
-        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'chkActiva
-        '
-        Me.chkActiva.AutoSize = True
-        Me.chkActiva.Location = New System.Drawing.Point(362, 456)
-        Me.chkActiva.Name = "chkActiva"
-        Me.chkActiva.Size = New System.Drawing.Size(15, 14)
-        Me.chkActiva.TabIndex = 20
-        Me.chkActiva.UseVisualStyleBackColor = True
-        '
-        'Label19
-        '
-        Me.Label19.Location = New System.Drawing.Point(203, 453)
-        Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(153, 21)
-        Me.Label19.TabIndex = 36
-        Me.Label19.Text = "Activa:"
-        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'chkPriorizado
-        '
-        Me.chkPriorizado.AutoSize = True
-        Me.chkPriorizado.Location = New System.Drawing.Point(362, 434)
-        Me.chkPriorizado.Name = "chkPriorizado"
-        Me.chkPriorizado.Size = New System.Drawing.Size(15, 14)
-        Me.chkPriorizado.TabIndex = 19
-        Me.chkPriorizado.UseVisualStyleBackColor = True
-        '
-        'Label18
-        '
-        Me.Label18.Location = New System.Drawing.Point(203, 431)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(112, 21)
-        Me.Label18.TabIndex = 34
-        Me.Label18.Text = "Priorizado:"
-        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'cbNumerosSalida
         '
         Me.cbNumerosSalida.BackColor = System.Drawing.Color.White
@@ -557,63 +462,6 @@ Public Class agrSuscripcion
         Me.Label17.TabIndex = 32
         Me.Label17.Text = "Número de Salida:"
         Me.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label14
-        '
-        Me.Label14.Location = New System.Drawing.Point(8, 353)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(160, 21)
-        Me.Label14.TabIndex = 30
-        Me.Label14.Text = "Mensaje de Renovación C:"
-        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'renovacionC
-        '
-        Me.renovacionC.BackColor = System.Drawing.Color.White
-        Me.renovacionC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.renovacionC.Location = New System.Drawing.Point(168, 353)
-        Me.renovacionC.MaxLength = 254
-        Me.renovacionC.Name = "renovacionC"
-        Me.renovacionC.Size = New System.Drawing.Size(208, 21)
-        Me.renovacionC.TabIndex = 13
-        '
-        'Label13
-        '
-        Me.Label13.Location = New System.Drawing.Point(8, 329)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(160, 21)
-        Me.Label13.TabIndex = 28
-        Me.Label13.Text = "Mensaje de Renovación B:"
-        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'renovacionB
-        '
-        Me.renovacionB.BackColor = System.Drawing.Color.White
-        Me.renovacionB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.renovacionB.Location = New System.Drawing.Point(168, 329)
-        Me.renovacionB.MaxLength = 254
-        Me.renovacionB.Name = "renovacionB"
-        Me.renovacionB.Size = New System.Drawing.Size(208, 21)
-        Me.renovacionB.TabIndex = 12
-        '
-        'Label8
-        '
-        Me.Label8.Location = New System.Drawing.Point(8, 305)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(160, 21)
-        Me.Label8.TabIndex = 26
-        Me.Label8.Text = "Mensaje de Renovación A:"
-        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'renovacionA
-        '
-        Me.renovacionA.BackColor = System.Drawing.Color.White
-        Me.renovacionA.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.renovacionA.Location = New System.Drawing.Point(168, 305)
-        Me.renovacionA.MaxLength = 254
-        Me.renovacionA.Name = "renovacionA"
-        Me.renovacionA.Size = New System.Drawing.Size(208, 21)
-        Me.renovacionA.TabIndex = 11
         '
         'cmdDel
         '
@@ -662,7 +510,7 @@ Public Class agrSuscripcion
         '
         'Label4
         '
-        Me.Label4.Location = New System.Drawing.Point(9, 379)
+        Me.Label4.Location = New System.Drawing.Point(9, 307)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(112, 21)
         Me.Label4.TabIndex = 19
@@ -673,7 +521,7 @@ Public Class agrSuscripcion
         '
         Me.duracion.BackColor = System.Drawing.Color.White
         Me.duracion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.duracion.Location = New System.Drawing.Point(168, 379)
+        Me.duracion.Location = New System.Drawing.Point(168, 307)
         Me.duracion.Name = "duracion"
         Me.duracion.Size = New System.Drawing.Size(208, 21)
         Me.duracion.TabIndex = 14
@@ -748,9 +596,9 @@ Public Class agrSuscripcion
         Me.GroupBox2.Controls.Add(Me.Label7)
         Me.GroupBox2.Controls.Add(Me.clave)
         Me.GroupBox2.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.GroupBox2.Location = New System.Drawing.Point(395, 58)
+        Me.GroupBox2.Location = New System.Drawing.Point(395, 60)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(387, 87)
+        Me.GroupBox2.Size = New System.Drawing.Size(387, 92)
         Me.GroupBox2.TabIndex = 11
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "Acceso Web"
@@ -827,7 +675,7 @@ Public Class agrSuscripcion
         Me.GroupBox3.Controls.Add(Me.Label10)
         Me.GroupBox3.Controls.Add(Me.Label11)
         Me.GroupBox3.Controls.Add(Me.cbNumeroRecepcion)
-        Me.GroupBox3.Location = New System.Drawing.Point(396, 146)
+        Me.GroupBox3.Location = New System.Drawing.Point(788, 60)
         Me.GroupBox3.Name = "GroupBox3"
         Me.GroupBox3.Size = New System.Drawing.Size(387, 92)
         Me.GroupBox3.TabIndex = 14
@@ -896,9 +744,9 @@ Public Class agrSuscripcion
         Me.GroupBox4.Controls.Add(Me.Label15)
         Me.GroupBox4.Controls.Add(Me.respuestaCancelacion)
         Me.GroupBox4.Controls.Add(Me.Label16)
-        Me.GroupBox4.Location = New System.Drawing.Point(396, 238)
+        Me.GroupBox4.Location = New System.Drawing.Point(395, 158)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(386, 102)
+        Me.GroupBox4.Size = New System.Drawing.Size(386, 104)
         Me.GroupBox4.TabIndex = 15
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Cancelación"
@@ -961,9 +809,9 @@ Public Class agrSuscripcion
         '
         Me.GroupBox5.Controls.Add(Me.Label20)
         Me.GroupBox5.Controls.Add(Me.rutaShell)
-        Me.GroupBox5.Location = New System.Drawing.Point(397, 532)
+        Me.GroupBox5.Location = New System.Drawing.Point(789, 268)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(386, 48)
+        Me.GroupBox5.Size = New System.Drawing.Size(386, 69)
         Me.GroupBox5.TabIndex = 16
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Aplicación"
@@ -995,7 +843,7 @@ Public Class agrSuscripcion
         Me.GroupBox6.Controls.Add(Me.cmdAgrReplicacion)
         Me.GroupBox6.Controls.Add(Me.lbReplicacion)
         Me.GroupBox6.Controls.Add(Me.lblSuscripcion)
-        Me.GroupBox6.Location = New System.Drawing.Point(396, 346)
+        Me.GroupBox6.Location = New System.Drawing.Point(788, 158)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(386, 104)
         Me.GroupBox6.TabIndex = 17
@@ -1079,7 +927,7 @@ Public Class agrSuscripcion
         Me.GroupBox7.Controls.Add(Me.Label28)
         Me.GroupBox7.Controls.Add(Me.Label29)
         Me.GroupBox7.Controls.Add(Me.txtCorreoAprobacion)
-        Me.GroupBox7.Location = New System.Drawing.Point(396, 456)
+        Me.GroupBox7.Location = New System.Drawing.Point(395, 267)
         Me.GroupBox7.Name = "GroupBox7"
         Me.GroupBox7.Size = New System.Drawing.Size(386, 70)
         Me.GroupBox7.TabIndex = 29
@@ -1105,28 +953,232 @@ Public Class agrSuscripcion
         Me.txtCorreoAprobacion.Size = New System.Drawing.Size(208, 21)
         Me.txtCorreoAprobacion.TabIndex = 2
         '
-        'Label32
+        'GroupBox8
         '
-        Me.Label32.Location = New System.Drawing.Point(9, 166)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(159, 21)
-        Me.Label32.TabIndex = 57
-        Me.Label32.Text = "Clave Servicio:"
-        Me.Label32.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.GroupBox8.Controls.Add(Me.chkMonitoreable)
+        Me.GroupBox8.Controls.Add(Me.Label26)
+        Me.GroupBox8.Controls.Add(Me.chkAplicarLlenadoVariables)
+        Me.GroupBox8.Controls.Add(Me.lblAplicarLlenadoVariables)
+        Me.GroupBox8.Controls.Add(Me.chkAplicarHorario)
+        Me.GroupBox8.Controls.Add(Me.Label22)
+        Me.GroupBox8.Controls.Add(Me.chkMedia)
+        Me.GroupBox8.Controls.Add(Me.Label21)
+        Me.GroupBox8.Controls.Add(Me.chkActiva)
+        Me.GroupBox8.Controls.Add(Me.Label19)
+        Me.GroupBox8.Controls.Add(Me.chkPriorizado)
+        Me.GroupBox8.Controls.Add(Me.Label18)
+        Me.GroupBox8.Location = New System.Drawing.Point(395, 343)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(386, 118)
+        Me.GroupBox8.TabIndex = 54
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Comportamiento"
         '
-        'claveServicio
+        'chkMonitoreable
         '
-        Me.claveServicio.BackColor = System.Drawing.Color.White
-        Me.claveServicio.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.claveServicio.Location = New System.Drawing.Point(168, 166)
-        Me.claveServicio.Name = "claveServicio"
-        Me.claveServicio.Size = New System.Drawing.Size(208, 21)
-        Me.claveServicio.TabIndex = 6
+        Me.chkMonitoreable.AutoSize = True
+        Me.chkMonitoreable.Location = New System.Drawing.Point(361, 62)
+        Me.chkMonitoreable.Name = "chkMonitoreable"
+        Me.chkMonitoreable.Size = New System.Drawing.Size(15, 14)
+        Me.chkMonitoreable.TabIndex = 55
+        Me.chkMonitoreable.UseVisualStyleBackColor = True
+        '
+        'Label26
+        '
+        Me.Label26.Location = New System.Drawing.Point(202, 59)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(112, 21)
+        Me.Label26.TabIndex = 61
+        Me.Label26.Text = "Monitoreable:"
+        Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkAplicarLlenadoVariables
+        '
+        Me.chkAplicarLlenadoVariables.AutoSize = True
+        Me.chkAplicarLlenadoVariables.Location = New System.Drawing.Point(167, 63)
+        Me.chkAplicarLlenadoVariables.Name = "chkAplicarLlenadoVariables"
+        Me.chkAplicarLlenadoVariables.Size = New System.Drawing.Size(15, 14)
+        Me.chkAplicarLlenadoVariables.TabIndex = 52
+        Me.chkAplicarLlenadoVariables.UseVisualStyleBackColor = True
+        '
+        'lblAplicarLlenadoVariables
+        '
+        Me.lblAplicarLlenadoVariables.Location = New System.Drawing.Point(8, 60)
+        Me.lblAplicarLlenadoVariables.Name = "lblAplicarLlenadoVariables"
+        Me.lblAplicarLlenadoVariables.Size = New System.Drawing.Size(153, 21)
+        Me.lblAplicarLlenadoVariables.TabIndex = 60
+        Me.lblAplicarLlenadoVariables.Text = "Aplicar Llenado Variables:"
+        Me.lblAplicarLlenadoVariables.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkAplicarHorario
+        '
+        Me.chkAplicarHorario.AutoSize = True
+        Me.chkAplicarHorario.Location = New System.Drawing.Point(167, 42)
+        Me.chkAplicarHorario.Name = "chkAplicarHorario"
+        Me.chkAplicarHorario.Size = New System.Drawing.Size(15, 14)
+        Me.chkAplicarHorario.TabIndex = 51
+        Me.chkAplicarHorario.UseVisualStyleBackColor = True
+        '
+        'Label22
+        '
+        Me.Label22.Location = New System.Drawing.Point(8, 39)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(112, 21)
+        Me.Label22.TabIndex = 59
+        Me.Label22.Text = "Aplicar Horario:"
+        Me.Label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkMedia
+        '
+        Me.chkMedia.AutoSize = True
+        Me.chkMedia.Location = New System.Drawing.Point(167, 21)
+        Me.chkMedia.Name = "chkMedia"
+        Me.chkMedia.Size = New System.Drawing.Size(15, 14)
+        Me.chkMedia.TabIndex = 50
+        Me.chkMedia.UseVisualStyleBackColor = True
+        '
+        'Label21
+        '
+        Me.Label21.Location = New System.Drawing.Point(8, 18)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(112, 21)
+        Me.Label21.TabIndex = 58
+        Me.Label21.Text = "Habilitar Media:"
+        Me.Label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkActiva
+        '
+        Me.chkActiva.AutoSize = True
+        Me.chkActiva.Location = New System.Drawing.Point(361, 41)
+        Me.chkActiva.Name = "chkActiva"
+        Me.chkActiva.Size = New System.Drawing.Size(15, 14)
+        Me.chkActiva.TabIndex = 54
+        Me.chkActiva.UseVisualStyleBackColor = True
+        '
+        'Label19
+        '
+        Me.Label19.Location = New System.Drawing.Point(202, 38)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(153, 21)
+        Me.Label19.TabIndex = 57
+        Me.Label19.Text = "Activa:"
+        Me.Label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'chkPriorizado
+        '
+        Me.chkPriorizado.AutoSize = True
+        Me.chkPriorizado.Location = New System.Drawing.Point(361, 19)
+        Me.chkPriorizado.Name = "chkPriorizado"
+        Me.chkPriorizado.Size = New System.Drawing.Size(15, 14)
+        Me.chkPriorizado.TabIndex = 53
+        Me.chkPriorizado.UseVisualStyleBackColor = True
+        '
+        'Label18
+        '
+        Me.Label18.Location = New System.Drawing.Point(202, 16)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(112, 21)
+        Me.Label18.TabIndex = 56
+        Me.Label18.Text = "Priorizado:"
+        Me.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'GroupBox9
+        '
+        Me.GroupBox9.Controls.Add(Me.Label14)
+        Me.GroupBox9.Controls.Add(Me.renovacionC)
+        Me.GroupBox9.Controls.Add(Me.Label13)
+        Me.GroupBox9.Controls.Add(Me.renovacionB)
+        Me.GroupBox9.Controls.Add(Me.Label8)
+        Me.GroupBox9.Controls.Add(Me.renovacionA)
+        Me.GroupBox9.Location = New System.Drawing.Point(788, 343)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(386, 118)
+        Me.GroupBox9.TabIndex = 62
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "Renovacion"
+        '
+        'Label14
+        '
+        Me.Label14.Location = New System.Drawing.Point(9, 66)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(160, 21)
+        Me.Label14.TabIndex = 36
+        Me.Label14.Text = "Mensaje de Renovación C:"
+        Me.Label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'renovacionC
+        '
+        Me.renovacionC.BackColor = System.Drawing.Color.White
+        Me.renovacionC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.renovacionC.Location = New System.Drawing.Point(169, 66)
+        Me.renovacionC.MaxLength = 254
+        Me.renovacionC.Name = "renovacionC"
+        Me.renovacionC.Size = New System.Drawing.Size(208, 21)
+        Me.renovacionC.TabIndex = 33
+        '
+        'Label13
+        '
+        Me.Label13.Location = New System.Drawing.Point(9, 42)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(160, 21)
+        Me.Label13.TabIndex = 35
+        Me.Label13.Text = "Mensaje de Renovación B:"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'renovacionB
+        '
+        Me.renovacionB.BackColor = System.Drawing.Color.White
+        Me.renovacionB.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.renovacionB.Location = New System.Drawing.Point(169, 42)
+        Me.renovacionB.MaxLength = 254
+        Me.renovacionB.Name = "renovacionB"
+        Me.renovacionB.Size = New System.Drawing.Size(208, 21)
+        Me.renovacionB.TabIndex = 32
+        '
+        'Label8
+        '
+        Me.Label8.Location = New System.Drawing.Point(9, 18)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(160, 21)
+        Me.Label8.TabIndex = 34
+        Me.Label8.Text = "Mensaje de Renovación A:"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'renovacionA
+        '
+        Me.renovacionA.BackColor = System.Drawing.Color.White
+        Me.renovacionA.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.renovacionA.Location = New System.Drawing.Point(169, 18)
+        Me.renovacionA.MaxLength = 254
+        Me.renovacionA.Name = "renovacionA"
+        Me.renovacionA.Size = New System.Drawing.Size(208, 21)
+        Me.renovacionA.TabIndex = 31
+        '
+        'Label33
+        '
+        Me.Label33.Location = New System.Drawing.Point(9, 361)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(153, 21)
+        Me.Label33.TabIndex = 59
+        Me.Label33.Text = "Costo:"
+        Me.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'costo
+        '
+        Me.costo.BackColor = System.Drawing.Color.White
+        Me.costo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.costo.Location = New System.Drawing.Point(168, 361)
+        Me.costo.Name = "costo"
+        Me.costo.Size = New System.Drawing.Size(208, 21)
+        Me.costo.TabIndex = 58
+        Me.costo.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'agrSuscripcion
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(6, 14)
-        Me.ClientSize = New System.Drawing.Size(789, 631)
+        Me.ClientSize = New System.Drawing.Size(1195, 508)
+        Me.Controls.Add(Me.GroupBox9)
+        Me.Controls.Add(Me.GroupBox8)
         Me.Controls.Add(Me.GroupBox6)
         Me.Controls.Add(Me.GroupBox7)
         Me.Controls.Add(Me.GroupBox1)
@@ -1146,6 +1198,8 @@ Public Class agrSuscripcion
         Me.Controls.SetChildIndex(Me.GroupBox7, 0)
         Me.Controls.SetChildIndex(Me.cmdPanel, 0)
         Me.Controls.SetChildIndex(Me.GroupBox6, 0)
+        Me.Controls.SetChildIndex(Me.GroupBox8, 0)
+        Me.Controls.SetChildIndex(Me.GroupBox9, 0)
         CType(Me.pbUpper, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cmdPanel.ResumeLayout(False)
         CType(Me.imgLinea, System.ComponentModel.ISupportInitialize).EndInit()
@@ -1163,6 +1217,10 @@ Public Class agrSuscripcion
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox7.ResumeLayout(False)
         Me.GroupBox7.PerformLayout()
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox8.PerformLayout()
+        Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox9.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1274,9 +1332,9 @@ Public Class agrSuscripcion
 
         Dim strCMD As String
         If vID = -1 Then
-            strCMD = String.Format("INSERT INTO suscripciones (numero, nombre, nombreComercial, respuesta, respuestaAdicional, renovacionA, renovacionB, renovacionC, duracion, usuario, clave, numeroUsuario, numeroRecepcion, numeroSalida, respuestaCancelacion, priorizado, activa, habilitar_media, monitoreable, aplicarHorario, aplicarLlenadoVariables, limiteMensajesDiarios, requiereAprobacion, correoAprobacion, numeroAdicional, numeroEscalonado, claveServicio, rutaShell, logo_tipo, logo_archivo) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',{8},'{9}','{10}','{11}','{12}','{13}','{14}',{15},{16},{17},{18},{19},{20},{21},{22},'{23}','{24}',{25},'{26}','{27}','{28}',@logo_archivo)", numero, nombre.Text, nombreComercial.Text, respuesta.Text, respuestaAdicional.Text, renovacionA.Text, renovacionB.Text, renovacionC.Text, duracion.Text, usuario.Text, clave.Text, numeroUsuario.Text, v_numeroRecepcion, v_numeroSalida, respuestaCancelacion.Text, IIf(chkPriorizado.Checked, 1, 0), IIf(chkActiva.Checked, 1, 0), IIf(chkMedia.Checked, 1, 0), IIf(chkMonitoreable.Checked, 1, 0), IIf(chkAplicarHorario.Checked, 1, 0), IIf(chkAplicarLlenadoVariables.Checked, 1, 0), CInt(limiteMensajesDiario.Text), IIf(chkRequiereAprobacion.Checked, 1, 0), txtCorreoAprobacion.Text, v_numeroAdicional, v_numeroEscalonado, claveServicio.Text, rutaShell.Text, tipo)
+            strCMD = String.Format("INSERT INTO suscripciones (numero, nombre, nombreComercial, respuesta, respuestaAdicional, renovacionA, renovacionB, renovacionC, duracion, usuario, clave, numeroUsuario, numeroRecepcion, numeroSalida, respuestaCancelacion, priorizado, activa, habilitar_media, monitoreable, aplicarHorario, aplicarLlenadoVariables, limiteMensajesDiarios, costo, requiereAprobacion, correoAprobacion, numeroAdicional, numeroEscalonado, claveServicio, rutaShell, logo_tipo, logo_archivo) VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}',{8},'{9}','{10}','{11}','{12}','{13}','{14}',{15},{16},{17},{18},{19},{20},'{21}','{22}','{23}','{24}',{25},'{26}','{27}','{28}','{29}',@logo_archivo)", numero, nombre.Text, nombreComercial.Text, respuesta.Text, respuestaAdicional.Text, renovacionA.Text, renovacionB.Text, renovacionC.Text, duracion.Text, usuario.Text, clave.Text, numeroUsuario.Text, v_numeroRecepcion, v_numeroSalida, respuestaCancelacion.Text, IIf(chkPriorizado.Checked, 1, 0), IIf(chkActiva.Checked, 1, 0), IIf(chkMedia.Checked, 1, 0), IIf(chkMonitoreable.Checked, 1, 0), IIf(chkAplicarHorario.Checked, 1, 0), IIf(chkAplicarLlenadoVariables.Checked, 1, 0), CInt(limiteMensajesDiario.Text), costo.Text, IIf(chkRequiereAprobacion.Checked, 1, 0), txtCorreoAprobacion.Text, v_numeroAdicional, v_numeroEscalonado, claveServicio.Text, rutaShell.Text, tipo)
         Else
-            strCMD = String.Format("UPDATE suscripciones SET numero='{0}', nombre='{1}', nombreComercial='{2}', duracion={3}, respuesta='{4}', respuestaAdicional='{5}', renovacionA='{6}', renovacionB='{7}', renovacionC='{8}', usuario='{9}', clave='{10}', numeroUsuario='{11}', numeroRecepcion='{12}', numeroSalida='{13}', respuestaCancelacion='{14}', priorizado={15}, activa={16}, habilitar_media={17}, monitoreable={18}, aplicarHorario={19}, aplicarLlenadoVariables={20}, limiteMensajesDiarios={21}, requiereAprobacion={22}, correoAprobacion='{23}', numeroAdicional='{24}', numeroEscalonado={25}, claveServicio='{26}', rutaShell='{27}'", numero, nombre.Text, nombreComercial.Text, duracion.Text, respuesta.Text, respuestaAdicional.Text, renovacionA.Text, renovacionB.Text, renovacionC.Text, usuario.Text, clave.Text, numeroUsuario.Text, v_numeroRecepcion, v_numeroSalida, respuestaCancelacion.Text, IIf(chkPriorizado.Checked, 1, 0), IIf(chkActiva.Checked, 1, 0), IIf(chkMedia.Checked, 1, 0), IIf(chkMonitoreable.Checked, 1, 0), IIf(chkAplicarHorario.Checked, 1, 0), IIf(chkAplicarLlenadoVariables.Checked, 1, 0), CInt(limiteMensajesDiario.Text), IIf(chkRequiereAprobacion.Checked, 1, 0), txtCorreoAprobacion.Text, v_numeroAdicional, v_numeroEscalonado, claveServicio.Text, rutaShell.Text)
+            strCMD = String.Format("UPDATE suscripciones SET numero='{0}', nombre='{1}', nombreComercial='{2}', duracion={3}, respuesta='{4}', respuestaAdicional='{5}', renovacionA='{6}', renovacionB='{7}', renovacionC='{8}', usuario='{9}', clave='{10}', numeroUsuario='{11}', numeroRecepcion='{12}', numeroSalida='{13}', respuestaCancelacion='{14}', priorizado={15}, activa={16}, habilitar_media={17}, monitoreable={18}, aplicarHorario={19}, aplicarLlenadoVariables={20}, limiteMensajesDiarios={21}, costo='{22}', requiereAprobacion={23}, correoAprobacion='{24}', numeroAdicional='{25}', numeroEscalonado={26}, claveServicio='{27}', rutaShell='{28}'", numero, nombre.Text, nombreComercial.Text, duracion.Text, respuesta.Text, respuestaAdicional.Text, renovacionA.Text, renovacionB.Text, renovacionC.Text, usuario.Text, clave.Text, numeroUsuario.Text, v_numeroRecepcion, v_numeroSalida, respuestaCancelacion.Text, IIf(chkPriorizado.Checked, 1, 0), IIf(chkActiva.Checked, 1, 0), IIf(chkMedia.Checked, 1, 0), IIf(chkMonitoreable.Checked, 1, 0), IIf(chkAplicarHorario.Checked, 1, 0), IIf(chkAplicarLlenadoVariables.Checked, 1, 0), CInt(limiteMensajesDiario.Text), costo.Text, IIf(chkRequiereAprobacion.Checked, 1, 0), txtCorreoAprobacion.Text, v_numeroAdicional, v_numeroEscalonado, claveServicio.Text, rutaShell.Text)
             If useLogo Then strCMD &= String.Format(",logo_tipo='{0}', logo_archivo=@logo_archivo", tipo)
             strCMD &= " WHERE id = " & vID
         End If
