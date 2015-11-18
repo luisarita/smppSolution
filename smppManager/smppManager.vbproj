@@ -39,7 +39,7 @@
     <SignManifests>false</SignManifests>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-    <PublishUrl>z:\dropbox\tecmovil\publish\manager\</PublishUrl>
+    <PublishUrl>C:\Users\admin\Dropbox\tecmovil\publish\manager\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -55,14 +55,14 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>167</ApplicationRevision>
+    <ApplicationRevision>168</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\..\..\builds\smpp\manager\bin\</OutputPath>
+    <OutputPath>..\..\..\..\builds\smpp\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
     <BaseAddress>285212672</BaseAddress>
@@ -107,7 +107,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="formControl">
-      <HintPath>..\..\fa\sincronizador\codigo\bin\formControl.dll</HintPath>
+      <HintPath>..\..\..\tecmovil\formControl.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -511,7 +511,7 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\vnframework\vnframework.vbproj">
+    <ProjectReference Include="..\..\..\vnframework\vnframework.vbproj">
       <Project>{2ec67aa0-d204-4ca3-83f7-39c272edb1b0}</Project>
       <Name>vnframework</Name>
     </ProjectReference>

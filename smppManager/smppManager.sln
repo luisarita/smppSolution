@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22310.1
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "smppManager", "smppManager.vbproj", "{02AB9706-CBC9-42B8-AA46-A7B2C4581AE7}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "vnframework", "..\..\vnframework\vnframework.vbproj", "{2EC67AA0-D204-4CA3-83F7-39C272EDB1B0}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "vnframework", "..\..\..\vnframework\vnframework.vbproj", "{2EC67AA0-D204-4CA3-83F7-39C272EDB1B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
