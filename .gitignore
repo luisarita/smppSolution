@@ -207,3 +207,5 @@ www/webservices/cliente/
 www/process.php
 www/index.php
 www/sulaverano.php
+www/_crons/bajas.php
+www/_crons/transparencia.php
