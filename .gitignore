@@ -181,3 +181,29 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+/www/conf.php
+/www/_repositorio/
+/www/custom/
+/www/skins/appland/
+/www/skins/tecmovil/
+/www/favicon.ico
+
+#NetBeans Folders
+/www/nbproject/
+
+#Libraries
+/www/lib/
+/www/functions/PHPExcel/
+www/functions/PHPExcel.php
+
+#Custom Tools
+www/webservices/cdrexport/
+www/oneapi/userprofile/v1/
+www/webservices/pinestigo/
+www/webservices/trance/
+www/webservices/epin/
+www/webservices/tigomoney/
+www/webservices/cliente/
+www/process.php
+www/index.php
+www/sulaverano.php

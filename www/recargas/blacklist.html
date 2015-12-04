@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <title>@@TITLE@@ - BlackList</title>
+  <link type="text/css" rel="stylesheet" href="../css/style.css"  />
+  <script type="text/javascript" language="javascript" src="recargas/js/recargas.js"></script>
+  <script>
+   function validar(form){
+	if ( form.numero.value.length != @@LONGITUD@@ ){
+	 alert('El número debe tener @@LONGITUD@@ dígitos. Asegúrese de incluir el código de area.');
+	 return false;
+	}
+	return true;
+   }
+  </script>
+ </head>
+ <body>
+  <form method="POST">
+   <table border="0" cellpadding="0" cellspacing="0" width="800px">
+    <tr><th colspan="4">@@TITLE@@ - BlackList</th></tr>
+    <tr><td colspan="4">&nbsp;</td></tr>
+    <tr>
+     <th colspan="2" style="text-align: left">N&uacute;mero:</th>
+     <td><input type="text" name="numero" maxlength="11" /></td>
+    </tr>
+    <tr><td colspan="4">&nbsp;</td></tr>
+    <tr>
+     <td colspan="4" style="text-align: right">
+      <input type="hidden" name="MM_ACTION" />
+      <input type="submit" class="button" onclick="javascript: if (validar(this.form)){ this.form.MM_ACTION.value='agregarBlackList'; return true;}" value="Agregar" />
+      <input type="submit" class="button" onclick="javascript: this.form.MM_ACTION.value='manejar'; return true;" value="Regresar" />
+     </td>
+    </tr>
+    <tr><td colspan="4">&nbsp;</td></tr>
+    <tr>
+     <th style="width: 20px">&nbsp;</th><th style="width: 90px">N&uacute;mero</th><th>Fecha</th><th style="width: 90px">&nbsp;</th>
+    </tr>
+    <tr><td colspan="4">&nbsp;</td></tr>
+    @@LISTADO@@
+   </table>
+  </form>
+ </body>
+</html
