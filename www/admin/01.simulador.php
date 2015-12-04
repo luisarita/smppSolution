@@ -47,14 +47,14 @@ $row_rsNumeros = mysql_fetch_assoc($rsNumeros);
                     <td>Número Receptor:</td>
                     <td><select name="numero_salida" id="numero_salida" class="textbox-small"><?php
                         do {
-                            ?><option value="<?php echo $row_rsNumeros['numero']; ?>" <?php if (isset($_POST['numero_salida']) && $row_rsNumeros['numero'] == $_POST['numero_salida']) echo "selected"; ?>><?php echo $row_rsNumeros['numero'] ?></option><?php
-                        } while ($row_rsNumeros = mysql_fetch_assoc($rsNumeros));
-                        $rows = mysql_num_rows($rsNumeros);
-                        if ($rows > 0) {
-                            mysql_data_seek($rsNumeros, 0);
-                            $row_rsNumeros = mysql_fetch_assoc($rsNumeros);
-                        }
-                        ?></select>
+    ?><option value="<?php echo $row_rsNumeros['numero']; ?>" <?php if (isset($_POST['numero_salida']) && $row_rsNumeros['numero'] == $_POST['numero_salida']) echo "selected"; ?>><?php echo $row_rsNumeros['numero'] ?></option><?php
+} while ($row_rsNumeros = mysql_fetch_assoc($rsNumeros));
+$rows = mysql_num_rows($rsNumeros);
+if ($rows > 0) {
+    mysql_data_seek($rsNumeros, 0);
+    $row_rsNumeros = mysql_fetch_assoc($rsNumeros);
+}
+?></select>
                     </td>
                 </tr>
                 <tr>

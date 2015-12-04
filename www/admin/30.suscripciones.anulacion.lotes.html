@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <title>Desuscripción por Lote</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <script language="javascript">
+            function validar(forma) {
+                var archivo = document.getElementById('flExcel').value;
+                extension = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
+                if (extension == ".xls" || extension == ".xlsx" || extension == ".txt") {
+                    return true;
+                } else {
+                    alert("Solo se permiten archivos de excel en formato .xls (Excel 2003), .xlsx (Excel 2007) y text (.txt)");
+                    document.getElementById('flExcel').value = '';
+                    return false;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <form  id="formactualizar" name="formactualizar" method="post" enctype="multipart/form-data" >
+            <table width="220px" cellpadding="0" cellspacing="0">
+                <tr><th colspan="2">Desuscripci&oacute;n por Lotes</th></tr>
+                <tr><td colspan="0">&nbsp;</td></tr>          
+                <tr><td colspan="2">&nbsp;</td></tr>  
+                <tr>
+                    <td>Archivo:</td>
+                    <td><input type="file" name="flExcel" id="flExcel"/></td>
+                </tr>
+                <tr><td colspan="2">&nbsp;</td></tr>    
+                <tr><td colspan="2" style="text-align: right">
+                        <input name = 'actualizar' type="submit" class="button" value="Enviar" onClick="return validar(this.form)" />
+                    </td></tr>
+                <tr><td colspan="2">&nbsp;</td></tr>      
+                @@RESULT@@
+                <tr><th colspan="2" style="text-align: center"><a href="menu.php">Menu</a></th></tr>
+            </table>
+        </form>
+    </body>
+</html>
