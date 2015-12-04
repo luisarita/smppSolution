@@ -52,7 +52,7 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "guardar") {
     <body <?php if (isset($alert) && $alert != "") echo "onLoad='javascript: alert(\"$alert\")'"; ?>>
         <form name="form1" method="post">
             <table width="220px" cellpadding="0" cellspacing="0">
-                <tr><th colspan="2">Cambio de Contrase�a</th></tr>
+                <tr><th colspan="2">Cambio de Contraseña</th></tr>
                 <tr><td colspan="2">&nbsp;</td></tr>     
                 <tr>  
                     <td>Clave Anterior:</td>  

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@@TITLE@@</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <script language="javascript" type='text/javascript'>
+            function validar(id) {
+                var campo = document.getElementById(id);
+                var codigos = document.getElementById("txtListaIPs");
+                if (campo.value.replace(/^\s+/g, '').replace(/\s+$/g, '').length > 0) {
+                    if (codigos.value.replace(/^\s+/g, '').replace(/\s+$/g, '').length > 0) {
+                        document.formCliente.submit();
+                    } else {
+                        alert("Debe asignar al menos un codigo y una IP.");
+                    }
+                } else {
+                    alert("El campo \"Nombre\" no puede estar vacio.");
+                    campo.focus();
+                }
+            }
+
+            function agregarIP() {
+                var ip = prompt("Ingresa la direccion IP")
+                var patron = new RegExp('^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$');
+
+                if (ip.search(patron) == 0) {
+                    var lista = document.getElementById("sltIps");
+                    var listaCodigos = document.getElementById("sltCodigos");
+                    var codigoActual = listaCodigos.selectedIndex;
+                    var ultimo = lista.options.length;
+                    lista.options[ultimo] = new Option(listaCodigos.options[codigoActual].value + " - " + ip, listaCodigos.options[codigoActual].value + "@" + ip);
+                    armarListado();
+                }
+            }
+
+            function eliminarIP() {
+                var lista = document.getElementById("sltIps");
+                var actual = lista.selectedIndex;
+                if (actual != -1) {
+                    lista.options[actual] = null;
+                    armarListado();
+                } else {
+                    alert("No has seleccionado la IP a eliminar.");
+                }
+            }
+
+            function armarListado() {
+                var lista = document.getElementById("sltIps");
+                var txt = document.getElementById("txtListaIPs");
+                var conteo = lista.options.length;
+                txt.value = "";
+                for (i = 0; i < conteo; i++) {
+                    txt.value = txt.value + lista.options[i].value + ",";
+                }
+                txt.value = txt.value.slice(0, txt.value.length - 1);
+            }
+
+        </script>
+    </head>
+    <body style="text-align: left" onload="armarListado();">
+        <form method='POST' name='formCliente'>
+            <table  style="width:300px;">
+                <tr><th colspan = '2'>@@tituloForm@@</th></tr>
+                <tr>
+                    <td style='text-align:right'>Nombre:</td>
+                    <td style='text-align:right'>
+                        @@campoId@@
+                        <input type='text' name='@@name1@@' value='@@value1@@' id='@@name1@@' onkeydown="if (event.which === 13)
+                  return false;"/>
+                    </td>
+                </tr><tr>
+                    <td style='text-align:right'>Shortcode:</td>
+                    <td style='text-align:right;'>
+                        <select name="sltCodigos" id = "sltCodigos" style="width:105px">@@codigos@@</select>&nbsp;
+                    </td>
+                </tr><tr>
+                    <td style='text-align:right'>IP's:</td>
+                    <td style='text-align:right;'>
+                        <input type="button" class="msg-button" style="width:30px" value="+" onclick ="agregarIP()" />&nbsp;
+                        <input type="button" onclick="eliminarIP()" class="warning-button" style="width:30px" value="-"/><br /><br />
+                        <select size="5" name="sltIps" id='sltIps'>@@listaCodigos@@</select>
+                        <input type="hidden" name="txtListaIPs" id = "txtListaIPs"/>
+                    </td>
+                </tr><tr>
+                    <td colspan='2' style='text-align:right'>
+                        <input type='button' class='button' value='@@value2@@' onclick='validar("@@name1@@")'/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <table style="width: 300px">
+            @@CONTENT1@@
+        </table>
+    </body>
+</html>

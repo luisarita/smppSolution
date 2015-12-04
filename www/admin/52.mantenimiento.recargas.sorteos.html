@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@@TITLE@@</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <style type="text/css">@import url(../lib/calendar/calendar-brown.css);</style>
+        <script type="text/javascript" src="../lib/calendar/calendar.js"></script>
+        <script type="text/javascript" src="../lib/calendar/lang/calendar-es.js"></script>
+        <script type="text/javascript" src="../lib/calendar/calendar-setup.js"></script>
+        <script>
+            function validarFecha() {
+                var fecha = document.getElementById("txtFecha");
+                var dt = new Date();
+                var year = dt.getFullYear()
+                var mes = dt.getMonth() + 1;
+                var dia = dt.getDate();
+                var datos = fecha.value.split("-");
+
+                if (year <= parseInt(datos[0])) {
+                    if (year < parseInt(datos[0]) || mes <= parseInt(datos[1])) {
+                        if (year < parseInt(datos[0]) || mes < parseInt(datos[1]) || dia <= parseInt(datos[2])) {
+                        } else {
+                            fecha.value = year + "-" + ((mes < 10) ? ("0" + mes) : mes) + "-" + ((dia < 10) ? ("0" + dia) : dia);
+                            alert("La fecha indicada debe ser mayor o igual a la fecha actual.");
+                        }
+                    } else {
+                        fecha.value = year + "-" + ((mes < 10) ? ("0" + mes) : mes) + "-" + ((dia < 10) ? ("0" + dia) : dia);
+                        alert("La fecha indicada debe ser mayor o igual a la fecha actual.");
+                    }
+                } else {
+                    fecha.value = year + "-" + ((mes < 10) ? ("0" + mes) : mes) + "-" + ((dia < 10) ? ("0" + dia) : dia);
+                    alert("La fecha indicada debe ser mayor o igual a la fecha actual.");
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+        <table>
+            <tr><th>Mantenimiento de Sorteos</th></tr>
+            <tr><td>
+                    <form method="POST" name="frmRecarga"><br />
+                        Recarga: <select name = "sltRecarga" style='width: 400px'>@@OPTION@@</select><br /><br />
+                        <!-- Fecha: <br /> --><input type="hidden" value="@@FECHA@@" name="txtFecha" id="txtFecha" style="text-align:center" onchange="validarFecha()"/><!--<br /><br />-->
+                        <input type="submit" class="button" value="Enviar"/><br /><br />
+                    </form>
+                    <script type="text/javascript">
+                        Calendar.setup({
+                            inputField: "txtFecha",
+                            ifFormat: "%Y-%m-%d",
+                            showsTime: true,
+                            singleClick: true,
+                            step: 1
+                        });
+                    </script>
+                </td></tr>
+            <tr><td>
+                    @@SORTEO@@
+                </td></tr>
+        </table>
+
+    </body>
+</html>

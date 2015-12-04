@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@@TITLE@@</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <script>
+            function verificar() {
+                var archivo = document.getElementById("flExcel").value;
+                var ext = (archivo.substring(archivo.lastIndexOf("."))).toLowerCase();
+                if (ext == ".xls" || ext == ".xlsx") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            function enviar() {
+                var file = document.getElementById("flExcel").value;
+                if (file.replace(/^\s+/g, '').replace(/\s+$/g, '').length > 0 && verificar()) {
+                    document.formExcel.submit();
+                } else {
+                    alert("Seleccione un archivo de excel valido");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <form method="POST" name="formExcel" enctype="multipart/form-data">
+            <table>
+                <tr><th>Consulta Excel</th></tr>
+                <tr>
+                    <td  style="text-align:right"><input type="file" name="flExcel" id="flExcel"/></td>
+                </tr><tr>
+                    <td style="text-align:right"><input type="button" class="button" value="Enviar" onclick="enviar()"/></td>
+                </tr>
+            </table>
+        </form>
+        @@CONTENT1@@
+    </body>
+</html>

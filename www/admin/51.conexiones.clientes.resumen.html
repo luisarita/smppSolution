@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>@@TITLE@@</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <style type="text/css">@import url(../lib/calendar/calendar-brown.css);</style>
+        <script type="text/javascript" src="../lib/calendar/calendar.js"></script>
+        <script type="text/javascript" src="../lib/calendar/lang/calendar-es.js"></script>
+        <script type="text/javascript" src="../lib/calendar/calendar-setup.js"></script>
+    </head>
+    <body style="text-align: left">
+        <form method="POST" name="formClientes" action="">
+            <table>
+                <tr>
+                    <th colspan="2">Resumen de clientes</th>
+                </tr><tr>
+                    <td style="text-align:right">Cliente:</td>
+                    <td style="text-align:right"><select name="sltCliente" style="padding:2px;">@@listaClientes@@</select></td>
+                </tr><tr>
+                    <td style="text-align:right">Desde:</td>
+                    <td style="text-align:right">
+                        <input class="textbox-small" type="text" name="txtDesde" id="txtDesde" value="@@desde@@" style="text-align: right"/>
+                        &nbsp;<button name="desde_btn" id="desde_btn">..</button>
+                    </td>
+                </tr><tr>
+                    <td style="text-align:right">Hasta:</td>
+                    <td style="text-align:right">
+                        <input class="textbox-small" type="text" name="txtHasta" id="txtHasta" value="@@hasta@@" style="text-align: right"/>
+                        &nbsp;<button name="hasta_btn" id="hasta_btn">..</button>
+                    </td>
+                </tr><tr>
+                    <td colspan = "2" style="text-align:right">
+                        <input type="submit" value="Descargar" class="button"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <script type="text/javascript">
+            Calendar.setup({
+                inputField: "txtDesde",
+                ifFormat: "%Y-%m-%d %H:%M:%S",
+                showsTime: true,
+                button: "desde_btn",
+                singleClick: true,
+                step: 1
+            });
+
+            Calendar.setup({
+                inputField: "txtHasta",
+                ifFormat: "%Y-%m-%d %H:%M:%S",
+                showsTime: true,
+                button: "hasta_btn",
+                singleClick: true,
+                step: 1
+            });
+        </script>
+    </body>
+</html>
