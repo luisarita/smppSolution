@@ -24,8 +24,6 @@ if (isset($_POST['desde']) && isset($_POST['hasta']) && isset($_POST['idChat']))
     $hasta = $_POST['hasta'];
     $idChat = $_POST['idChat'];
 
-    mysql_select_db($database_conexion, $conexion);
-
     $_SQL = sprintf("SELECT r.nombre AS chat, rr.numero, rr.mensaje AS msgOriginal, rr.mensaje AS msgRespuesta, rr.fecha FROM chats r, chats_respuestas rr WHERE r.id=rr.idChat AND r.id=%s AND rr.fecha>=%s AND rr.fecha<=%s ORDER BY rr.fecha DESC", GetSQLValueString($idChat, "int"), GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
     $rs = mysql_query($_SQL, $conexion) or die(mysql_error()); //die(register_mysql_error("CRC001", mysql_error()));
 }

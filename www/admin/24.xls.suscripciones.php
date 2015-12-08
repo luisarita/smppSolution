@@ -42,7 +42,6 @@ class admin extends suscripciones {
         require_once ('../functions/PHPExcel/Writer/Excel2007.php');
 
         global $conexion;
-        global $database_conexion;
 
         if (isset($_POST['desde']) && isset($_POST['hasta'])) {
             ini_set('max_execution_time', 0);
@@ -52,7 +51,6 @@ class admin extends suscripciones {
             $hasta = $_POST['hasta'];
             $condition = (isset($_POST['id']) && $_POST['id'] != -1) ? sprintf(" AND r.id=%s", GetSQLValueString($_POST['id'], "int")) : "";
 
-            mysql_select_db($database_conexion, $conexion);
             $sql = sprintf("SELECT r.id, r.nombre, p.fecha, p.numero, '' AS mensaje, estado FROM suscripciones r, suscripciones_participantes p WHERE p.fecha>=%s AND p.fecha<=%s AND p.idSuscripcion=r.id %s ORDER BY r.nombre, p.fecha;", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"), $condition);
             $rs = mysql_query($sql, $conexion) or die(register_mysql_error("XS001", mysql_error()));
 

@@ -16,7 +16,6 @@ if (!isset($_SESSION['idAdmin'])) {
 $desde = (isset($_POST['desde'])) ? $_POST['desde'] : strftime("%Y-%m-%d 00:00:00", time());
 $hasta = (isset($_POST['hasta'])) ? $_POST['hasta'] : strftime("%Y-%m-%d 23:59:00", time());
 
-mysql_select_db($database_conexion, $conexion);
 $sql = sprintf("SELECT p.numero, s.nombre, p.usr_anl as usuario, p.obs_anl as observacion, p.fec_anl as fecha FROM suscripciones_participantes p, suscripciones s WHERE p.idSuscripcion=s.id AND p.fec_anl>=%s AND p.fec_anl<=%s;", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
 $rs = mysql_query($sql, $conexion) or die(register_mysql_error("CS0002", mysql_error()));
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

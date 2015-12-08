@@ -11,7 +11,6 @@ if (!isset($_SESSION['idAdmin'])) {
     header("Location: " . initPage());
 }
 
-mysql_select_db($database_conexion, $conexion);
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "updateForm")) {
     $text = trim($_POST['numero']);
     $textAr = explode("\r\n", $text);

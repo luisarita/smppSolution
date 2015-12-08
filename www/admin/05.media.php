@@ -17,8 +17,6 @@ if (!isset($_SESSION['idAdmin'])) {
 $desde = (isset($_POST['desde'])) ? $_POST['desde'] : strftime("%Y-%m-%d 00:00:00", time());
 $hasta = (isset($_POST['hasta'])) ? $_POST['hasta'] : strftime("%Y-%m-%d 23:59:00", time());
 
-mysql_select_db($database_conexion, $conexion);
-
 if (isset($_POST['MM_ACTION']) && $_POST['MM_ACTION'] == "Eliminar") {
     $query = sprintf("UPDATE ws_media SET estado=0 WHERE id=%s;", GetSQLValueString($_POST['id'], "int"));
     $rs = mysql_query($query, $conexion) or die(mysql_error()); //die(register_mysql_error("MC0001", mysql_error()));

@@ -11,7 +11,6 @@ if (!isset($_SESSION['idAdmin'])) {
     header("Location: " . initPage());
 }
 
-mysql_select_db($database_conexion, $conexion);
 if ((isset($_POST["MM_delete"])) && ($_POST["MM_delete"] == "deleteForm")) {
     $numero = trim($_POST['numero']);
     if (strlen($numero) == numLength()) { //echo $numero;

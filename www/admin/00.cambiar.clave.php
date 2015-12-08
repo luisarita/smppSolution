@@ -9,7 +9,6 @@ if (!isset($_SESSION['idAdmin'])) {
 }
 
 $id = $_SESSION['idAdmin'];
-mysql_select_db($database_conexion, $conexion);
 
 if (isset($_POST["accion"]) && $_POST["accion"] == "guardar") {
     $res_opcion = mysql_query("SELECT COUNT(*) AS existe FROM mantenimiento_usuarios WHERE id=" . $id . " AND clave=MD5('" . $_POST['claveanterior'] . "')", $conexion);

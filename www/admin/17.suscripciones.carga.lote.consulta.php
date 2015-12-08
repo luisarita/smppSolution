@@ -31,10 +31,8 @@ class admin {
 
     function getLinks() {
         global $conexion;
-        global $database_conexion;
         $links = "<tr><th colspan=\"4\">Archivos cargados</th></tr>
              <tr><td style=\"text-align:center\">Fecha</td><td style=\"text-align:center\">Usuario</td><td style=\"text-align:center\">Conteo</td><td style=\"text-align:center\">Link</td></tr>";
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT fecha, usuario, conteo_carga, nombre_archivo FROM suscripciones_carga_lote WHERE idSuscripcion = %s", GetSQLValueString($_POST['sltSuscripcion'], "text"));
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("SC002", mysql_error()));
         while ($row = mysql_fetch_array($rs)) {
@@ -45,9 +43,7 @@ class admin {
 
     function getPage() {
         global $conexion;
-        global $database_conexion;
         $opciones = "";
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT id, nombre FROM suscripciones");
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("SC001", mysql_error()));
 

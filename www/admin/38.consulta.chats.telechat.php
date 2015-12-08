@@ -24,8 +24,6 @@ if (isset($_POST['desde']) && isset($_POST['hasta']) && isset($_POST['idTelechat
     $hasta = $_POST['hasta'];
     $idTelechat = $_POST['idTelechat'];
 
-    mysql_select_db($database_conexion, $conexion);
-
     $_SQL = sprintf("SELECT rp.numero, rp.mensaje AS msgOriginal, rr.mensaje AS msgRespuesta, rp.fecha FROM telechats t, telechats_mensajes rp, telechats_respuestas rr WHERE t.id=rp.idTelechat AND rp.id=rr.idMensaje AND t.id=%s AND rp.fecha>=%s AND rp.fecha<=%s ORDER BY rp.fecha DESC", GetSQLValueString($idTelechat, "int"), GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
     $rs = mysql_query($_SQL, $conexion) or die(register_mysql_error("CRC001", mysql_error()));
 }

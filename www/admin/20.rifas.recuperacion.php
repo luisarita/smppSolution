@@ -11,7 +11,6 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST["accion"])) {
     $idRifa = $_POST['idRifa'];
     $fecha = $_POST['fecha_reinicio'];

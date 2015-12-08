@@ -43,7 +43,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $path .= $name;
 
     $insertSQL = sprintf("INSERT INTO ws_media (nombre, descripcion, tipo, path, descarga, numero, usuario, clave) VALUES (%s, %s,%s, %s, %s, %s, %s, %s)", GetSQLValueString($_POST['nombre'], "text"), GetSQLValueString($_POST['descripcion'], "text"), GetSQLValueString($_POST['tipo'], "int"), GetSQLValueString($path, "text"), GetSQLValueString($_POST['descargas'], "int"), GetSQLValueString($_POST['numero'], "text"), GetSQLValueString($_POST['usuario'], "text"), GetSQLValueString($_POST['password'], "text"));
-    mysql_select_db($database_conexion, $conexion);
     $result = mysql_query($insertSQL, $conexion) or die();
     $result = mysql_query("SELECT LAST_INSERT_ID()", $conexion) or die();
     $row = mysql_fetch_array($result);
@@ -52,7 +51,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     foreach ($_POST['clave'] as $key => $value) {
         if ($value != "") {
             $insertSQL = sprintf("INSERT INTO claves ( clave, idMedia ) VALUES ( %s, %s )", GetSQLValueString($value, "text"), GetSQLValueString($idMedia, "int"));
-            mysql_select_db($database_conexion, $conexion);
             mysql_query($insertSQL, $conexion) or die();
         }
     }
@@ -72,7 +70,6 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     header($header);
 }
 
-mysql_select_db($database_conexion, $conexion);
 $query_rs2 = "SELECT * FROM ws_tipo";
 $rs2 = mysql_query($query_rs2, $conexion) or die();
 $row_rs2 = mysql_fetch_assoc($rs2);

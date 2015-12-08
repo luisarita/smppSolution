@@ -11,7 +11,6 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST["accion"])) {
     if (isset($_POST['activo']) && $_POST['activo'] == 1)
         $activo = 1;

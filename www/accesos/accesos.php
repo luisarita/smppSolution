@@ -66,9 +66,6 @@ class accesos {
 
     function constructor() {
         global $conexion;
-        global $database_conexion;
-
-        mysql_select_db($database_conexion, $conexion);
         $this->url = $_SERVER['PHP_SELF'];
     }
 
@@ -97,7 +94,7 @@ class accesos {
     }
 
     function doLogin() {
-       global $conexion, $database_conexion;
+       global $conexion;
 
        $this->doLogout();
        session_start();
@@ -108,7 +105,6 @@ class accesos {
        $this->usuario = (get_magic_quotes_gpc()) ? $_POST['username'] : addslashes($_POST['username']);
        $clave = (get_magic_quotes_gpc()) ? $_POST['password'] : addslashes($_POST['password']);
 
-       mysql_select_db($database_conexion, $conexion) or die(register_mysql_error("VI000", mysql_error()));
        $sql = sprintf("SELECT id FROM %s WHERE estado=1 AND usuario='%s' AND clave = MD5('%s');", $this->table, $this->usuario, $clave);
        $rs = mysql_query($sql, $conexion) or die(register_mysql_error("VI001", mysql_error()));
        $row = mysql_fetch_assoc($rs);
@@ -200,9 +196,8 @@ class accesos {
     }
 
     function printOpciones() { //funcion modificada
-        global $conexion, $database_conexion;
+        global $conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT DISTINCT aa.id, aa.nombre, aa.tabla, aa.pagina FROM accesos_actividades aa, accesos_permisos ap WHERE estado=1 AND ap.tipoActividad=aa.id AND ap.idUsuario=%s ORDER BY aa.nombre;", GetSQLValueString($_SESSION['idAcceso'], "int"));
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("MU0001", mysql_error()));
 

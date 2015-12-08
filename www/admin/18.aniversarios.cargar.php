@@ -12,11 +12,11 @@ if (!isset($_SESSION['idAdmin'])) {
 }
 
 $idAniversario = $_GET["id"];
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST["accion"]) && isset($_FILES['archivo'])) {
     $archivo = $_FILES['archivo']['tmp_name'];
-    if (!cargar_archivo($archivo))
+    if (!cargar_archivo($archivo)){
         $alert = "El archivo no est� en el formato esperado";
+    }
 }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -65,8 +65,9 @@ if (isset($_POST["accion"]) && isset($_FILES['archivo'])) {
                                     global $idAniversario;
                                     global $conexion;
 
-                                    if (!validarArchivo($archivo))
+                                    if (!validarArchivo($archivo)){
                                         return false;
+                                    }
                                     $handle = fopen($archivo, "r");
                                     while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
                                         $fecha = $data[2];
@@ -89,4 +90,3 @@ if (isset($_POST["accion"]) && isset($_FILES['archivo'])) {
                                     fclose($handle);
                                     return true;
                                 }
-                                ?>

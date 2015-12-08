@@ -33,7 +33,6 @@ if (isset($_POST['dateFrom']) && isset($_POST['dateTo'])) {
     $dateTo = $_POST['dateTo'];
     $id = $_POST['id'];
 
-    mysql_select_db($database_conexion, $conexion);
     $sql = sprintf("SELECT r.id, r.nombre, p.fecha, p.numero, p.mensaje, p.variable1 FROM rifas r, rifas_participantes p WHERE p.fecha>=%s AND p.fecha<=%s AND p.idRifa=r.id AND (-1=%s OR r.id=%s) ORDER BY r.id, p.fecha", GetSQLValueString($dateFrom, "date"), GetSQLValueString($dateTo, "date"), GetSQLValueString($id, "int"), GetSQLValueString($id, "int"));
     $rs = mysql_query($sql, $conexion) or die(register_mysql_error("XR001", mysql_error()));
 

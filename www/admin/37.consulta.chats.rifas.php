@@ -24,8 +24,6 @@ if (isset($_POST['desde']) && isset($_POST['hasta']) && isset($_POST['idRifa']))
     $hasta = $_POST['hasta'];
     $idRifa = $_POST['idRifa'];
 
-    mysql_select_db($database_conexion, $conexion);
-
     $_SQL = sprintf("SELECT r.nombre AS rifa, rp.numero, rp.mensaje AS msgOriginal, rr.mensaje AS msgRespuesta, rp.fecha FROM rifas r, rifas_participantes rp, rifas_respuestas rr WHERE r.id=rp.idRifa AND rp.id=rr.idParticipante AND r.id=%s AND rp.fecha>=%s AND rp.fecha<=%s ORDER BY rp.fecha DESC", GetSQLValueString($idRifa, "int"), GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
     $rs = mysql_query($_SQL, $conexion) or die(register_mysql_error("CRC001", mysql_error()));
 }

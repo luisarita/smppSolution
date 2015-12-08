@@ -9,9 +9,6 @@ class admin {
 
     function imagen() {
         global $conexion;
-        global $database_conexion;
-
-        mysql_select_db($database_conexion, $conexion);
         $resultado = mysql_query(sprintf("SELECT logo_archivo, log_tipo FROM recordatorios WHERE id=%s;", intval($_GET['id'])));
         $imagen = mysql_fetch_assoc($resultado);
 
@@ -23,4 +20,3 @@ class admin {
 
 $objeto = new admin();
 echo $objeto->imagen();
-?>

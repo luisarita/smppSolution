@@ -15,7 +15,6 @@ if (!isset($_SESSION['idAdmin'])) {
 
 ini_set("max_execution_time", 0);
 
-mysql_select_db($database_conexion, $conexion);
 $numero = (isset($_POST['numero'])) ? $_POST['numero'] : '';
 $fecha1 = (isset($_POST['fecha1'])) ? $_POST['fecha1'] : strftime("%Y-%m-%d 00:00:00", time());
 $fecha2 = (isset($_POST['fecha2'])) ? $_POST['fecha2'] : strftime("%Y-%m-%d 23:59:59", time());

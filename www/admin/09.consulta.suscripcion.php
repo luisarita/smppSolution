@@ -18,7 +18,6 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
 $numero = (isset($_POST['numero'])) ? $_POST['numero'] : '';
 if ($numero == '')
     $numero = '';

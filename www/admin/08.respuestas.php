@@ -11,7 +11,6 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
 $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : '1';
 $actividad = (isset($_POST['actividad'])) ? $_POST['actividad'] : '0';
 

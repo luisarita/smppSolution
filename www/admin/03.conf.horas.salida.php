@@ -12,7 +12,6 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST['inicio']) && isset($_POST['final'])) {
     $sql = "UPDATE mantenimiento_parametros SET valor='" . $_POST['inicio'] . "' WHERE id=4";
     mysql_query($sql) or die(mysql_error());

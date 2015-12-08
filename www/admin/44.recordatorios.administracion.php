@@ -52,14 +52,12 @@ class admin {
     // "crearRecordatorio()" inserta el nuevo recordatorio en la base de datos
     function crearRecordatorio() {
         global $conexion;
-        global $database_conexion;
         $imagen = mysql_escape_string(join(@file($_FILES['imagen']['tmp_name'])));
 
         $query = sprintf("INSERT INTO recordatorios (id, nombre, numero, estado, usuario, clave, claveAdmin, log_tipo, logo_archivo, mensaje_participante, mensaje_adicional) VALUES (NULL, %s, %s, 1, %s, %s, %s, %s, '@@IMAGEN@@', %s, %s)", GetSQLValueString($_POST['nombreCrear'], "text"), GetSQLValueString($_POST['numeroR'], "int"), GetSQLValueString($_POST['usuario'], "text"), GetSQLValueString($_POST['pass'], "text"), GetSQLValueString($_POST['passAdmin'], "text"), GetSQLValueString($_FILES['imagen']['type'], "text"), GetSQLValueString($_POST['msjParticipante'], "text"), GetSQLValueString($_POST['msjAdicional'], "text"));
         //insertamos el recordatorios
         $query = str_replace("@@IMAGEN@@", $imagen, $query);
 
-        mysql_select_db($database_conexion, $conexion);
         mysql_query("BEGIN");
         mysql_query($query, $conexion) or die(register_mysql_error("CX0001", mysql_error()));
         //recuperamos el ultimo id Creado
@@ -77,7 +75,6 @@ class admin {
 
     function editarRecordatorio() {
         global $conexion;
-        global $database_conexion;
         $query = "UPDATE recordatorios SET nombre=%s, numero=%s, usuario=%s, clave=%s, claveAdmin=%s, mensaje_participante=%s, mensaje_adicional=%s @@IMAGEN@@ WHERE recordatorios.id=%s;";
 
         //se arma el query para actualizar
@@ -92,7 +89,6 @@ class admin {
         }
 
         //actualizamos el registro
-        mysql_select_db($database_conexion, $conexion);
         mysql_query("BEGIN");
         mysql_query($query, $conexion) or die(register_mysql_error("CX0001", mysql_error()));
 
@@ -116,10 +112,8 @@ class admin {
 
     function getNumeros($tipo) {
         global $conexion;
-        global $database_conexion;
         $htmlOptions = '';
         $query = "SELECT numero FROM numeros";
-        mysql_select_db($database_conexion, $conexion);
 
         $rs = mysql_query($query, $conexion) or die(register_mysql_error("CX0001", mysql_error()));
 
@@ -131,46 +125,44 @@ class admin {
 
     function getContenido() {
         global $conexion;
-        global $database_conexion;
         $htmlContenido = '
-   <table cellspacing="0" style="width: 100%">
-    <tr>
-     <th colspan="5">Lista de Recordatorios</th>
-    </tr><tr>
-     <td class="content">Nombre</td>
-     <td style="text-align: center" class="content">Numero</td>
-     <td style="text-align: center" class="content">Estado</td>
-     <td style="text-align: center" class="content">Logo</td>
-     <td class="content">&nbsp;</td>
-    </tr><tr>
-     <td colspan="5">&nbsp;</td>
-    </tr>';
+            <table cellspacing="0" style="width: 100%">
+             <tr>
+              <th colspan="5">Lista de Recordatorios</th>
+             </tr><tr>
+              <td class="content">Nombre</td>
+              <td style="text-align: center" class="content">Numero</td>
+              <td style="text-align: center" class="content">Estado</td>
+              <td style="text-align: center" class="content">Logo</td>
+              <td class="content">&nbsp;</td>
+             </tr><tr>
+              <td colspan="5">&nbsp;</td>
+             </tr>';
 
         $query = "SELECT id, nombre, numero, estado FROM recordatorios";
 
-        mysql_select_db($database_conexion, $conexion);
         $rs = mysql_query($query, $conexion) or die(register_mysql_error("CX0001", mysql_error()));
 
         if (mysql_num_rows($rs) > 0) {
             while ($row = mysql_fetch_array($rs)) {
                 $htmlContenido .= '
-  <tr>
-      <td>' . $row[1] . '</td>
-      <td>' . $row[2] . '</td>
-      <td style="text-align: center">
-       <form action="" name="activador' . $row[0] . '" method="post">
-        <input type="hidden" name="id_estado" value="' . $row[0] . '@' . $row[3] . '"/>
-        <input style="width:30px" name="idEstado" type="checkbox" onChange="document.activador' . $row[0] . '.submit()" ' . (($row[3] == 1) ? ' checked' : '') . '/>
-       </form>
-      </td>
-      <td style="text-align: center"><img src="44.recordatorio.imagen.php?id=' . $row[0] . '" width="30" height = "25" alt="logo" /></td>
-      <td>
-       <form action="" name="editar' . $row[0] . '" method="POST">
-        <input type="hidden" name="idRecordatorioEdit" value="' . $row[0] . '"/>
-        <input class = "button" type = "button" value = "Editar" onClick="document.editar' . $row[0] . '.submit()"/>
-       </form>
-      </td>
-     </tr>';
+                <tr>
+                    <td>' . $row[1] . '</td>
+                    <td>' . $row[2] . '</td>
+                    <td style="text-align: center">
+                     <form action="" name="activador' . $row[0] . '" method="post">
+                      <input type="hidden" name="id_estado" value="' . $row[0] . '@' . $row[3] . '"/>
+                      <input style="width:30px" name="idEstado" type="checkbox" onChange="document.activador' . $row[0] . '.submit()" ' . (($row[3] == 1) ? ' checked' : '') . '/>
+                     </form>
+                    </td>
+                    <td style="text-align: center"><img src="44.recordatorio.imagen.php?id=' . $row[0] . '" width="30" height = "25" alt="logo" /></td>
+                    <td>
+                     <form action="" name="editar' . $row[0] . '" method="POST">
+                      <input type="hidden" name="idRecordatorioEdit" value="' . $row[0] . '"/>
+                      <input class = "button" type = "button" value = "Editar" onClick="document.editar' . $row[0] . '.submit()"/>
+                     </form>
+                    </td>
+                </tr>';
             }
         }
         $htmlContenido .= '<tr>
@@ -181,7 +173,6 @@ class admin {
 
     function getClaves() {
         global $conexion;
-        global $database_conexion;
         $query = sprintf("SELECT clave FROM tecmovil.claves WHERE idRecordatorio = %s", GetSQLValueString($_SESSION['idRecordatorio'], "int"));
         $claves = '';
         $clavesList = "";
@@ -199,7 +190,6 @@ class admin {
     </td></tr>
    </table>';
 
-        mysql_select_db($database_conexion, $conexion);
         $rs = mysql_query($query, $conexion) or die(register_mysql_error("CX0001", mysql_error()));
 
         while ($row = mysql_fetch_array($rs)) {
@@ -212,9 +202,7 @@ class admin {
 
     function getEditarRecordatorio() {
         global $conexion;
-        global $database_conexion;
         $query = sprintf("SELECT id, nombre, mensaje_participante, mensaje_adicional, numero, usuario, clave, claveAdmin FROM recordatorios WHERE id = %s", GetSQLValueString($_POST['idRecordatorioEdit'], "text"));
-        mysql_select_db($database_conexion, $conexion);
         $rs = mysql_query($query, $conexion) or die(register_mysql_error("CX0001", mysql_error()));
         $row = mysql_fetch_array($rs);
         $_SESSION['idRecordatorio'] = $row[0];
@@ -333,7 +321,6 @@ class admin {
 
     function actualizarRecordatorio() {
         global $conexion;
-        global $database_conexion;
 
         $datos = explode("@", $_POST['id_estado']);
 
@@ -344,7 +331,6 @@ class admin {
         } else {
             $query = sprintf($query, 0, $datos[0]);
         }
-        mysql_select_db($database_conexion, $conexion);
         mysql_query($query, $conexion)or die(mysql_error()); //register_mysql_error("SS001", mysql_error()));
     }
 

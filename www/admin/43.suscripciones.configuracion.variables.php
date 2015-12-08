@@ -25,10 +25,7 @@ class admin {
 
     function guardarVariables() {
         global $conexion;
-        global $database_conexion;
-        $query = "";
         $cont = 1;
-        mysql_select_db($database_conexion, $conexion);
 
         if (isset($_POST['actualizar']) && isset($_POST['id']) && (isset($_POST['variable1']) || isset($_POST['variable2']) || isset($_POST['variable3']) || isset($_POST['variable4']) || isset($_POST['variable5']))) {
 
@@ -44,8 +41,9 @@ class admin {
                     $value = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($value) : mysql_escape_string($value);
                     $value = "'" . $value . "'";
                     $variable[substr($key, 8, 1)] = $value;
-                    if ($value != "''")
+                    if ($value != "''"){
                         $aplicar = 1;
+                    }
                 } else if (substr($key, 0, 8) == "pregunta") {
                     $value = get_magic_quotes_gpc() ? stripslashes($value) : $value;
                     $value = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($value) : mysql_escape_string($value);
@@ -91,8 +89,6 @@ class admin {
     //obtenemos las opciones del select
     function getOpciones() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
 
         $opciones = "";
         $rs = mysql_query("SELECT id, nombre FROM suscripciones WHERE activa=1 ORDER BY nombre;", $conexion) or die(register_mysql_error("SCL0003", mysql_error()));
@@ -107,8 +103,6 @@ class admin {
 
     function getVariables() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
 
         $cont = 0;
         $opciones = "";

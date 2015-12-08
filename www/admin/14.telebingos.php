@@ -11,8 +11,6 @@ if (!isset($_SESSION['idAdmin'])) {
     header("Location: index.php");
 }
 
-mysql_select_db($database_conexion, $conexion);
-
 if (isset($_POST["accion"]) && $_POST["accion"] == "guardar") {
     $chkDevolverAciertos = (isset($_POST['devolveraciertos'])) ? $_POST['devolveraciertos'] : 0;
     $numeros = array(rand(0, 99), rand(0, 99), rand(0, 99), rand(0, 99));
@@ -44,10 +42,8 @@ if (isset($_POST["accion"]) && $_POST["accion"] == "guardar") {
 }
 
 function agregarClaves($idTelebingo, $claves) {
-    global $database_conexion;
     global $conexion;
 
-    mysql_select_db($database_conexion, $conexion);
     $sql = sprintf("DELETE FROM claves WHERE idTelebingo=%s;", $idTelebingo);
     mysql_query($sql, $conexion) or die(register_mysql_error("TBA005", mysql_error()));
 

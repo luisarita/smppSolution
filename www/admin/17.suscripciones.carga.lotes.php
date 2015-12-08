@@ -40,8 +40,7 @@ class admin {
 
     function cargarDatos() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
+
 
         if (isset($_POST['id'])) {
             $archivo = $this->directorio . $this->idSuscripcion . "_" . date("YmdHis") . "." . substr(strrchr($_FILES["fileExcel"]['name'], '.'), 1);
@@ -103,8 +102,6 @@ class admin {
     //obtenemos las opciones del select
     function getOpciones() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
 
         $opciones = "";
         $rs = mysql_query("SELECT id, nombre FROM suscripciones WHERE activa=1 ORDER BY nombre;", $conexion) or die(register_mysql_error("SCL0003", mysql_error()));

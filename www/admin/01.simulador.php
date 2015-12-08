@@ -17,7 +17,6 @@ if (isset($_SERVER['QUERY_STRING'])) {
     $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST['numero']) && (strlen($_POST['numero']) < 10 || strlen($_POST['numero']) > 11 )) {
     $msg = setAlert("El número ingresado no es válido");
 } else if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "updateForm")) {

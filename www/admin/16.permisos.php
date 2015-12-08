@@ -12,7 +12,6 @@ if (!isset($_SESSION['idAdmin'])) {
 }
 
 $id = intval($_GET['id']);
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST["accion"]) && $_POST["accion"] == "guardar") {
     mysql_query("DELETE FROM mantenimiento_permisos WHERE usuario=$id ", $conexion) or die(mysql_error());
     if (isset($_POST['opciones'])) {

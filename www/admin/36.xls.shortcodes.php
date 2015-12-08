@@ -43,8 +43,9 @@ if (isset($_POST['desde']) && isset($_POST['hasta'])) {
     while ($row = mysql_fetch_array($rs)) {
         $name = fixName($row['nombre']);
         if ($lname != $name) {
-            if ($j > 0)
+            if ($j > 0){
                 $objWorksheet1 = $objPHPExcel->createSheet();
+            }
             $objPHPExcel->setActiveSheetIndex($j);
             $objPHPExcel->getActiveSheet()->setTitle($name);
             $i = 1;
@@ -53,8 +54,9 @@ if (isset($_POST['desde']) && isset($_POST['hasta'])) {
         }
 
         $mensaje = trim($row['mensaje']);
-        if (substr($mensaje, 0, 1) == "=")
+        if (substr($mensaje, 0, 1) == "="){
             $mensaje = "'" . $mensaje;
+        }
         $objPHPExcel->getActiveSheet()->SetCellValue("A$i", $row['fecha']);
         $objPHPExcel->getActiveSheet()->SetCellValue("B$i", $row['numero']);
         $objPHPExcel->getActiveSheet()->SetCellValue("C$i", $mensaje);
@@ -71,8 +73,9 @@ if (isset($_POST['desde']) && isset($_POST['hasta'])) {
     header('Content-Disposition: attachment; filename=' . $path);
     header('Pragma: no-cache');
     header('Expires: 0');
-    if (strcmp($_SERVER['REQUEST_METHOD'], 'HEAD') != 0)
+    if (strcmp($_SERVER['REQUEST_METHOD'], 'HEAD') != 0){
         $i = readfile($fullpath);
+    }
     exit();
 }
 

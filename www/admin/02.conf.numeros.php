@@ -13,7 +13,6 @@ session_start();
   exit();
   } */
 $_SESSION['usuario'] = "admin";
-mysql_select_db($database_conexion, $conexion);
 if (isset($_POST['numero']) && isset($_POST['mensaje_respuesta']) && strlen($_POST['mensaje_respuesta']) > 0) {
     $tipo = (isset($_POST['tipo']) && $_POST['tipo'] == 1) ? 1 : 0;
     $monitoreable = (isset($_POST['monitoreable']) && $_POST['monitoreable'] == 1) ? 1 : 0;

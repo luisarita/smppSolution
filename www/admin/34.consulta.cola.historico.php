@@ -22,15 +22,14 @@ if (isset($_POST['accion'])) {
     $hasta = $_POST['hasta'];
 
     $SQL = array();
-    $SQL[sizeof($SQL)] = sprintf("DROP TEMPORARY TABLE T1;");
-    $SQL[sizeof($SQL)] = sprintf("CREATE TEMPORARY TABLE T1 (mensaje VARCHAR(255), numero_salida VARCHAR(5), fecha_envio DATETIME, conteo INT);");
-    $SQL[sizeof($SQL)] = sprintf("INSERT INTO T1 SELECT DISTINCT mensaje, numero_salida, fecha_envio, COUNT(*) AS conteo FROM mensajes_pendientes WHERE estado=1 AND visible=1 AND fecha_envio>=%s AND fecha_envio <= %s GROUP BY mensaje, numero_salida, fecha_envio;", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
+    $SQL[] = sprintf("DROP TEMPORARY TABLE T1;");
+    $SQL[] = sprintf("CREATE TEMPORARY TABLE T1 (mensaje VARCHAR(255), numero_salida VARCHAR(5), fecha_envio DATETIME, conteo INT);");
+    $SQL[] = sprintf("INSERT INTO T1 SELECT DISTINCT mensaje, numero_salida, fecha_envio, COUNT(*) AS conteo FROM mensajes_pendientes WHERE estado=1 AND visible=1 AND fecha_envio>=%s AND fecha_envio <= %s GROUP BY mensaje, numero_salida, fecha_envio;", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
     if (isset($_POST['historico']) && $_POST['historico'] == 1) {
-        $SQL[sizeof($SQL)] = sprintf("INSERT INTO T1 SELECT DISTINCT mensaje, numero_salida, fecha_envio, COUNT(*) AS conteo FROM mensajes_enviados WHERE estado=1 AND visible=1 AND fecha_envio>=%s AND fecha_envio <= %s GROUP BY mensaje, numero_salida, fecha_envio;", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
+        $SQL[] = sprintf("INSERT INTO T1 SELECT DISTINCT mensaje, numero_salida, fecha_envio, COUNT(*) AS conteo FROM mensajes_enviados WHERE estado=1 AND visible=1 AND fecha_envio>=%s AND fecha_envio <= %s GROUP BY mensaje, numero_salida, fecha_envio;", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
     }
-    $SQL[sizeof($SQL)] = sprintf("SELECT * FROM T1 ORDER BY fecha_envio DESC;");
+    $SQL[] = sprintf("SELECT * FROM T1 ORDER BY fecha_envio DESC;");
 
-    mysql_select_db($database_conexion, $conexion);
     foreach ($SQL as $index => $value) {
         $rs = mysql_query($value, $conexion) or die(register_mysql_error("CCH00" . $index, mysql_error()));
     }

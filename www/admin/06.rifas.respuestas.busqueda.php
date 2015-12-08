@@ -11,11 +11,10 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
-
 $_palabra = "";
-if (isset($_POST['palabra']) && trim($_POST['palabra']) != "")
+if (isset($_POST['palabra']) && trim($_POST['palabra']) != ""){
     $_palabra = "%" . trim($_POST['palabra']) . "%";
+}
 $_SQL = sprintf("SELECT r.nombre AS rifa, rp.numero, rp.mensaje AS msgOriginal, rr.mensaje AS msgRespuesta, rp.fecha FROM rifas r, rifas_participantes rp, rifas_respuestas rr WHERE r.id=rp.idRifa AND rp.id=rr.idParticipante AND rr.id AND rr.mensaje LIKE %s AND %s <> '' ORDER BY rp.fecha DESC", GetSQLValueString($_palabra, "text"), GetSQLValueString($_palabra, "text"));
 $rs = mysql_query($_SQL, $conexion) or die();
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

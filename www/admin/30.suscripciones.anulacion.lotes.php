@@ -32,16 +32,15 @@ class admin {
 
     function processRecords($records, $file) {
         global $conexion;
-        global $database_conexion;
         global $_CONF;
-        mysql_select_db($database_conexion, $conexion);
 
         $conteo = 0;
         mysql_query("START TRANSACTION;") or die(register_mysql_error("SAL001", mysql_error()));
         //print_r($records); exit();
         foreach ($records as $key => $registro) {
-            if (strlen($registro) < $_CONF['num_length'])
+            if (strlen($registro) < $_CONF['num_length']){
                 $registro = $_CONF['area_code'] . $registro;
+            }
             if (strlen($registro) == $_CONF['num_length']) {
                 $sql = sprintf("UPDATE suscripciones_participantes SET estado=0 , obs_anl=%s WHERE numero=%s;", GetSQLValueString("Desuscripcion por lotes " . date("Y-m-d H:i:s"), "text"), $registro);
                 mysql_query($sql, $conexion) or die($sql . register_mysql_error("SAL002", mysql_error()));
@@ -102,4 +101,3 @@ class admin {
 }
 
 $a = new admin();
-?>

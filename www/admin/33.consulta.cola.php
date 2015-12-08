@@ -14,7 +14,6 @@ if (!isset($_SESSION['idAdmin'])) {
 }
 
 ini_set("max_execution_time", 0);
-mysql_select_db($database_conexion, $conexion);
 
 if (isset($_POST['action']) && isset($_POST['mensaje'])) {
     if (strlen($_POST['mensaje']) > 1) {

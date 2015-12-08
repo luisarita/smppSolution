@@ -13,7 +13,6 @@ if (!isset($_SESSION['idAdmin'])) {
     exit();
 }
 
-mysql_select_db($database_conexion, $conexion);
 $erroneos = "";
 $idRifa = (isset($_POST['id'])) ? $_POST['id'] : -1;
 if (isset($_POST["actualizar"])) {

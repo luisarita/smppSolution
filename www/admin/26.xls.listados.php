@@ -26,7 +26,6 @@ if (isset($_POST['desde']) && isset($_POST['hasta'])) {
     $desde = $_POST['desde'];
     $hasta = $_POST['hasta'];
 
-    mysql_select_db($database_conexion, $conexion);
     $sql = sprintf("SELECT r.id, r.nombre, p.fecha, p.numero, '' AS mensaje FROM listados r, listados_mensajes m, listados_participantes p WHERE p.fecha>=%s AND p.fecha<=%s AND m.idListado=r.id AND m.id=p.idMensaje ORDER BY r.nombre, p.fecha", GetSQLValueString($desde, "date"), GetSQLValueString($hasta, "date"));
     $rs = mysql_query($sql, $conexion) or die(register_mysql_error("XL001", mysql_error()));
 
