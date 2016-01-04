@@ -19,7 +19,6 @@ $anio = $_GET['anio'];
 $mes2  = $mes % 12 + 1;
 $anio2 = $mes < 12 ? $anio : $anio + 1;     
 
-mysql_select_db($database_conexion, $conexion);
 $sql = "SELECT DAY(fecha) AS fecha, COUNT(*) AS conteo FROM encuestas_participantes WHERE fecha >= '$anio-$mes-01' AND fecha < '$anio2-$mes2-01' AND idEncuesta=$idEncuesta GROUP BY DAY(fecha) ORDER BY DAY(fecha)"; 
 $rs = mysql_query($sql, $conexion) or die( register_mysql_error("EG001", mysql_error()));
 $num = mysql_num_rows($rs);

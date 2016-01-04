@@ -13,7 +13,6 @@ if (!isset($_SESSION['idEncuesta'])){
 }
 $id = $_SESSION[ 'idEncuesta' ];
 
-mysql_select_db($database_conexion, $conexion);
 $result = mysql_query("SELECT pregunta, wallpaper FROM encuestas WHERE id=$id", $conexion) or die(mysql_error());
 $row   = mysql_fetch_assoc($result);
 $title = $row['pregunta'];

@@ -18,10 +18,8 @@ class telechat {
  }
  function constructor (){
   global $conexion;
-  global $database_conexion;
   
   $this->pagina = ( isset($_GET['pagina'])) ? $_GET['pagina'] : 0;
-  mysql_select_db($database_conexion, $conexion);
 
   /*$query_cnt = sprintf("SELECT DATE_FORMAT(MIN(fecha), '%%Y-%%m-%%d %%H:00') AS desde, MAX(id) AS lastID FROM rifas_participantes WHERE estado=1 AND idRifa=%s;", GetSQLValueString($this->idRifa, "int"));
   $rs        = mysql_query( $query_cnt, $conexion ) or die(register_mysql_error("EE001", mysql_error()));
@@ -51,7 +49,6 @@ function action(){
 
  function doLogin    (){
   global $conexion;
-  global $database_conexion;
   
   $this->doLogout();
   session_start();	 
@@ -60,7 +57,6 @@ function action(){
   $usuario = (get_magic_quotes_gpc()) ? $_POST['username'] : addslashes($_POST['username']);
   $clave = (get_magic_quotes_gpc()) ? $_POST['password'] : addslashes($_POST['password']);
   
-  mysql_select_db($database_conexion, $conexion);
   $sql = sprintf("SELECT id FROM %s WHERE estado=1 AND usuario='%s' AND clave='%s'", $this->table, $usuario, $clave);
   $rs  = mysql_query($sql, $conexion) or die(register_mysql_error("TL001", mysql_error()));
   $row = mysql_fetch_assoc($rs);

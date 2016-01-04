@@ -12,7 +12,6 @@ if( !$conexion ){
 
 set_time_limit(0);
 
-mysql_select_db( $database_conexion, $conexion );
 $id = $_GET['id'];
 
 $sql = sprintf("SELECT m.path, m.tipo, m.id FROM ws_media m, ws_compras_msg cm WHERE cm.id_media=m.id AND cm.code=%s AND cm.fechaexp>=NOW();", GetSQLValueString($id, "text"));

@@ -12,8 +12,6 @@
  require_once('../functions/functions.php');
  require_once('../functions/db.php');
 
- mysql_select_db($database_conexion, $conexion);
-
  $numero = "";
  $desde     = (isset($_GET['desde' ]) ? $_GET['desde' ] : -1); 
  $hasta     = (isset($_GET['hasta' ]) ? $_GET['hasta' ] : -1);

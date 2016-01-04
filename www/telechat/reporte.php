@@ -6,7 +6,6 @@ $idTelechat = $_SESSION['idTelechat'];
 require_once('../connections/conexion.php'); 
 require_once('../functions/functions.php'); 
 require_once('../functions/db.php'); 
-mysql_select_db($database_conexion, $conexion);
 
 $g   = getdate(); 
 $cnt = 0;

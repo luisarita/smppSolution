@@ -31,8 +31,6 @@
 
  $fullURL  = "?desde=$desde&hasta=$hastaStr&mensaje=$mensaje&mbcolor=$mbcolor&mfcolor=$mfcolor&msg_font=$mfont&msg_size=$msize&tbcolor=$tbcolor&tfcolor=$tfcolor&tkr_font=$tfont&tkr_size=$tsize&popup=$popup";
 
- mysql_select_db($database_conexion, $conexion);
-
  if ( isset($_GET['submit']) && $_GET['submit']=='Agregar'){ 
   $query = sprintf("INSERT INTO telechats_mensajes (idTelechat,fecha,mensaje) VALUES (%s,'" . strftime("%Y-%m-%d %H:%M:%S", time()) . "','%s')",$idTelechat,$texto);
   mysql_query($query, $conexion) or die();
@@ -50,7 +48,7 @@
  }
 
  if ( $_IGNORED_WORDS != "" ){
-  $_QUERYI = sprintf("INSERT INTO mensajes_pendientes (numero,numero_salida,mensaje,prioridad,fecha_salida) SELECT m.numero, t.numero, 'Tu mensaje fue omitido por contener expresiones no válidas',2,NOW() FROM telechats_mensajes m, telechats t WHERE t.id=m.idTelechat AND m.estado IS NULL AND idTelechat=%s AND fecha >='%s' AND fecha <= '%s' AND (1=0 %s) ORDER BY fecha DESC",  $idTelechat, $desde, $hasta ,$_IGNORED_WORDS);
+  $_QUERYI = sprintf("INSERT INTO mensajes_pendientes (numero,numero_salida,mensaje,prioridad,fecha_salida) SELECT m.numero, t.numero, 'Tu mensaje fue omitido por contener expresiones no vï¿½lidas',2,NOW() FROM telechats_mensajes m, telechats t WHERE t.id=m.idTelechat AND m.estado IS NULL AND idTelechat=%s AND fecha >='%s' AND fecha <= '%s' AND (1=0 %s) ORDER BY fecha DESC",  $idTelechat, $desde, $hasta ,$_IGNORED_WORDS);
   mysql_query($_QUERYI, $conexion) or die();
   $_QUERYU = sprintf("UPDATE telechats_mensajes SET estado=1 WHERE estado IS NULL AND idTelechat=%s AND fecha>='%s' AND fecha <= '%s' AND (1=0 %s) ORDER BY fecha DESC",  $idTelechat, $desde, $hasta ,$_IGNORED_WORDS);
   mysql_query($_QUERYU, $conexion) or die();

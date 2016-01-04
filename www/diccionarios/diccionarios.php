@@ -37,10 +37,8 @@ class diccionarios {
  }
  function constructor  (){
   global $conexion;
-  global $database_conexion;
   
   $this->pagina = ( isset($_GET['pagina'])) ? $_GET['pagina'] : 0;
-  mysql_select_db($database_conexion, $conexion);
 
   $query_cnt = sprintf("SELECT DATE_FORMAT(MIN(p.fecha), '%%Y-%%m-%%d %%H:00') AS desde, MAX(p.id) AS lastID FROM %s p WHERE p.estado=1 AND p.%s=%s;", $this->tableDetail, $this->sessionVar, GetSQLValueString($_SESSION[$this->sessionVar], "int"));
   $rs        = mysql_query( $query_cnt, $conexion ) or die(register_mysql_error("CN001", mysql_error()));
@@ -106,7 +104,6 @@ class diccionarios {
 
  function doLogin    (){
   global $conexion;
-  global $database_conexion;
   
   $this->doLogout();
   session_start();	 
@@ -115,7 +112,6 @@ class diccionarios {
   $usuario = (get_magic_quotes_gpc()) ? $_POST['username'] : addslashes($_POST['username']);
   $clave = (get_magic_quotes_gpc()) ? $_POST['password'] : addslashes($_POST['password']);
   
-  mysql_select_db($database_conexion, $conexion);
   $sql = sprintf("SELECT id FROM %s WHERE estado=1 AND usuario='%s' AND clave='%s'", $this->table, $usuario, $clave);
   $rs  = mysql_query($sql, $conexion) or die(register_mysql_error("VI001", mysql_error()));
   $row = mysql_fetch_assoc($rs);
@@ -188,7 +184,7 @@ class diccionarios {
   echo $html;
   exit();
  }
- function printImagen             (){ /* Imprimir imágen                        */ 
+ function printImagen             (){ /* Imprimir imï¿½gen                        */ 
   global $conexion;
   $rs = mysql_query(sprintf("SELECT logo_archivo, logo_tipo FROM %s WHERE id=%s;", $this->table, GetSQLValueString($_SESSION[$this->sessionVar],"int")), $conexion) or die(register_mysql_error("TI001", mysql_error()));
   $row    = mysql_fetch_assoc($rs);
@@ -197,7 +193,7 @@ class diccionarios {
   header( "Content-type: $type");
   echo $data;
  }
- function printGrafico            (){ /* Imprimir gráfico                       */ 
+ function printGrafico            (){ /* Imprimir grï¿½fico                       */ 
   global $conexion;
   global $_CONF;
   
@@ -294,7 +290,7 @@ class diccionarios {
    $html .= "<tr>
     <td scope='row' class='content'>";
    if ( $this->enableChat ){
-    $html .="<input type='button' class='msg-button' value='" . $row['numero'] . "' onclick=\"javascript: popUpChat('?MM_ACTION=respuestaMensaje&id=" . $row['id'] . "')\" /><input type='checkbox' name='chkMarca' class='checkbox' onClick=\"javascript: if ( confirm('¿Desea marcar como contestada?')) window.location='" . $this->url ."?MM_ACTION=marcarContestado&idM=" . $row['id'] . "'\" " . $contestado . " />";
+    $html .="<input type='button' class='msg-button' value='" . $row['numero'] . "' onclick=\"javascript: popUpChat('?MM_ACTION=respuestaMensaje&id=" . $row['id'] . "')\" /><input type='checkbox' name='chkMarca' class='checkbox' onClick=\"javascript: if ( confirm('ï¿½Desea marcar como contestada?')) window.location='" . $this->url ."?MM_ACTION=marcarContestado&idM=" . $row['id'] . "'\" " . $contestado . " />";
    } else {
     $html .= $row['numero'];
    }
@@ -418,7 +414,7 @@ class diccionarios {
   $html = str_replace("@@GANADORES@@",$this->printGanadores(),$html);
   $html = str_replace("@@OPCIONES@@",$this->printOpciones(),$html);
   
-  /* Estadísticas Propietarias  */
+  /* Estadï¿½sticas Propietarias  */
   /*$html = str_replace("@@MAYORNUMERO@@",$this->maxConteo,$html);
   $html = str_replace("@@MEJORRESULTADO@@",$this->maxResultado,$html);*/
 
