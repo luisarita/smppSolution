@@ -32,16 +32,14 @@ class admin {
 
     function guardarSorteo() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
+
         $sql = sprintf("UPDATE ac_recargas_sorteos SET monto = %s, limiteGanadores = %s, horaInicio = %s, horaFin = %s WHERE idRecarga=%s AND fecha=%s AND monto = %s", GetSQLValueString($_POST['sltMonto'], "int"), GetSQLValueString($_POST['txtLimiteGanadores'], "int"), GetSQLValueString($_POST['sltHoraInicio'], "int"), GetSQLValueString($_POST['sltHoraFin'], "int"), GetSQLValueString($_POST['txtIdRecarga'], "int"), GetSQLValueString($_POST['txtFechaE'], "text"), GetSQLValueString($_POST['txtMontoA'], "text"));
         mysql_query($sql, $conexion) or die(register_mysql_error("MRS003" . mysql_error(), mysql_error()));
     }
 
     function getSorteos() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
+
         $listaSorteos = "<table><tr><th colspan = '8'>Lista de Sorteos</th></tr><tr><th>Fecha</th><th>Monto</th><th>Limite de ganadores</th><th>Hora de Inicio</th><th>Hora Final</th><th>Intervalo de sorteo</th><th>Conteo de intervalo</th><th>Acci&oacute;n</th></tr>";
         $sql = sprintf("SELECT monto, limiteGanadores, horaInicio, horaFin, intervaloSorteo, conteoIntervalo, fecha FROM ac_recargas_sorteos WHERE idRecarga=%s AND fecha>=%s ORDER BY fecha DESC", GetSQLValueString($this->idRecarga, "int"), GetSQLValueString($this->fecha, "text"));
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("MRS002", mysql_error()));
@@ -55,9 +53,8 @@ class admin {
 
     function getMontos($monto) {
         global $conexion;
-        global $database_conexion;
         $options = "";
-        mysql_select_db($database_conexion, $conexion);
+
         $sql = "SELECT monto FROM ac_recargas_montos";
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("MRS004", mysql_error()));
 
@@ -77,9 +74,8 @@ class admin {
 
     function getRecargas() {
         global $conexion;
-        global $database_conexion;
         $options = "";
-        mysql_select_db($database_conexion, $conexion);
+
         $sql = "SELECT id, nombre FROM ac_recargas WHERE activa=1;";
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("MRS001", mysql_error()));
 

@@ -1,6 +1,8 @@
 <?php
+require_once('../conf.php');
 require_once('../connections/conexion.php');
 require_once('functions.php');
+
 session_start();
 if (!isset($_SESSION['idAdmin'])) {
     header("Location: " . initPage());
@@ -15,7 +17,8 @@ if (!isset($_SESSION['idAdmin'])) {
     <body>
         <table cellpadding="1" cellspacing="1" width="220px">
             <tr><th>Men&uacute; Principal</th></tr>
-            <tr><td class="menuitem"><a href="00.cambiar.clave.php">Cambiar Clave</a></td></tr><?php if (permission(15)) { ?><tr><td class="menuitem"><a href="15.usuarios.php">Usuarios</a></td></tr><?php } ?><?php if (permission(1)) { ?><tr><td class="menuitem"><a href="01.simulador.php">Simulador</a></td></tr><?php }
+            <tr><td class="menuitem"><a href="00.cambiar.clave.php">Cambiar Clave</a></td></tr>
+            <?php if (permission(15)) { ?><tr><td class="menuitem"><a href="15.usuarios.php">Usuarios</a></td></tr><?php } ?><?php if (permission(1)) { ?><tr><td class="menuitem"><a href="01.simulador.php">Simulador</a></td></tr><?php }
 if (permission(2)) {
     ?><tr><td class="menuitem"><a href="02.conf.numeros.php">Configuraci&oacute;n de Números de Salida</a></td></tr><?php }
 if (permission(3)) {

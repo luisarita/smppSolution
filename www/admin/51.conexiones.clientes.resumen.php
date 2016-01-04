@@ -34,8 +34,6 @@ class admin {
 
     function getExcel() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $cont = 1;
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "786M");
@@ -93,8 +91,7 @@ class admin {
 
     function getConexionesClientes() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
+
         $sql = sprintf("SELECT id, nombre FROM conexiones_clientes");
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("CR001", mysql_error()));
         $listaConexiones = "";

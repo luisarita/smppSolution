@@ -28,7 +28,6 @@ class admin {
 
     function generarExcel() {
         global $conexion;
-        global $database_conexion;
         $letras = array(1 => 'B', 2 => 'C', 3 => 'D', 4 => 'E', 5 => 'F');
         $numVars = 0;
         $cont = 1;
@@ -41,7 +40,6 @@ class admin {
             ini_set("memory_limit", "786M");
             $vars = $this->getNumVars();
 
-            mysql_select_db($database_conexion, $conexion);
             $sql = sprintf("SELECT tipo FROM suscripciones_preguntas sp WHERE sp.idSuscripcion = %s ORDER BY variable ASC;", GetSQLValueString($this->idSuscripcion, "int"));
             $rs = mysql_query($sql, $conexion);
 
@@ -118,11 +116,9 @@ class admin {
 
     function getRespuesta($tipo, $dato) {
         global $conexion;
-        global $database_conexion;
         $cont = 0;
 
         if ($tipo == 1) {
-            mysql_select_db($database_conexion, $conexion);
             $sql = sprintf("SELECT valor FROM suscripciones_preguntas_opciones spo WHERE spo.idSuscripcion = %s AND spo.variable = %s AND spo.letra = %s;", GetSQLValueString($this->idSuscripcion, "int"), GetSQLValueString($tipo, "int"), GetSQLValueString($dato, "text"));
             $rs = mysql_query($sql, $conexion) or die();
             if (mysql_num_rows($rs) == 1) {
@@ -138,10 +134,8 @@ class admin {
 
     function getNumVars() {
         global $conexion;
-        global $database_conexion;
         $vars = array();
         $cont = 0;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT sp.preguntas, sp.tipo FROM suscripciones_preguntas sp WHERE sp.idSuscripcion=%s ORDER BY variable ASC;", GetSQLValueString($this->idSuscripcion, "int"));
 
         $rs = mysql_query($sql, $conexion) or die(mysql_error());
@@ -160,8 +154,6 @@ class admin {
 
     function getOpciones() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
 
         $opciones = "";
         $rs = mysql_query("SELECT id, nombre FROM suscripciones WHERE activa=1 ORDER BY nombre;", $conexion) or die(register_mysql_error("SCL0003", mysql_error()));

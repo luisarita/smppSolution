@@ -30,17 +30,16 @@ class admin {
 
     function guardarPermisos() {
         global $conexion;
-        global $database_conexion;
         $cont = 0;
 
-        mysql_select_db($database_conexion, $conexion);
         foreach ($_POST as $variable => $valor) {
             $cont++;
             $data = explode("@", $variable);
-            if (strlen(str_replace(" ", "", $valor)) > 0)
+            if (strlen(str_replace(" ", "", $valor)) > 0){
                 $permisos = explode(",", $valor);
-            else
+            } else { 
                 $permisos = null;
+            }
             $sql = sprintf("UPDATE accesos_permisos SET estado=0 WHERE idUsuario=%s AND tipoActividad=%s;", GetSQLValueString($data[2], "int"), GetSQLValueString($data[1], "int"));
             mysql_query($sql, $conexion) or die(register_mysql_error("UP0005", mysql_error()));
             for ($i = 0; $i < count($permisos); $i++) {
@@ -56,9 +55,7 @@ class admin {
 
     function getUsuariosPermisos() {
         global $conexion;
-        global $database_conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT id, usuario, nombre_completo, estado FROM accesos_usuarios");
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("UP0001", mysql_error()));
         $htmlContenido = '<table cellspacing="0" style="width: 100%">
@@ -94,9 +91,7 @@ class admin {
 
     function cambiarPermisos() {
         global $conexion;
-        global $database_conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT nombre, tabla, id FROM accesos_actividades;");
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("UP0002", mysql_error()));
         $htmlPermisos = '<tr>

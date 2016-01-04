@@ -30,8 +30,6 @@ if (!function_exists("GetSQLValueString")) {
 
 function lastInsertID() {
     global $conexion;
-    global $database_conexion;
-    mysql_select_db($database_conexion, $conexion);
     $sql = "SELECT @@last_insert_id AS id";
     $rs = mysql_query($sql, $conexion) or die(mysql_error());
     $row = mysql_fetch_array($rs);
@@ -40,8 +38,7 @@ function lastInsertID() {
 
 function permission($i) {
     global $conexion;
-    global $database_conexion;
-    mysql_select_db($database_conexion, $conexion);
+
     $query_Recordset1 = sprintf("SELECT usuario FROM mantenimiento_permisos WHERE usuario=%s AND permiso=%s", $_SESSION['idAdmin'], $i);
     $Recordset1 = mysql_query($query_Recordset1, $conexion) or die(mysql_error());
     $totalRows_Recordset1 = mysql_num_rows($Recordset1);
@@ -104,8 +101,6 @@ function setAlert($msg) {
 
 function printSelectNumeros($numero, $js = "") {
     global $conexion;
-    global $database_conexion;
-    mysql_select_db($database_conexion, $conexion);
 
     $query_rsNumeros = "SELECT numero FROM numeros";
     $rsNumeros = mysql_query($query_rsNumeros, $conexion) or die(register_mysql_error("ASN003", mysql_error()));

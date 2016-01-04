@@ -35,8 +35,6 @@ class admin {
 
     function getUsuarios() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("SELECT md5(id), usuario, nombre_completo, estado FROM accesos_usuarios");
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("UA0001", mysql_error()));
         $htmlContenido = '<table cellspacing="0" style="width: 100%">
@@ -78,7 +76,6 @@ class admin {
 
     function getEditarCrearU() {
         global $conexion;
-        global $database_conexion;
         $htmlContenido = '
    <tr>
     <th colspan="4">' . ((isset($_POST['idRecordatorioEdit'])) ? "Editar Usuario" : "Nuevo Usuario" ) . '</th>
@@ -91,7 +88,6 @@ class admin {
       <table style="margin:auto;">';
 
         if (isset($_POST['idRecordatorioEdit'])) {
-            mysql_select_db($database_conexion, $conexion);
             $sql = sprintf("SELECT md5(id), usuario,  nombre_completo, estado FROM accesos_usuarios WHERE md5(id) = %s Limit 1", GetSQLValueString($_POST['idRecordatorioEdit'], "text"));
             $rs = mysql_query($sql, $conexion) or die(register_mysql_error("UA0002", mysql_error()));
             $row = mysql_fetch_array($rs);
@@ -147,8 +143,6 @@ class admin {
     function actualizarUsuario() {
         $datos = explode("@", $_POST['idEstadoA']);
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("UPDATE accesos_usuarios SET estado=%s WHERE md5(id)=%s;", ( ( $datos[1] == 1 ) ? 0 : 1), GetSQLValueString($datos[0], "text"));
         mysql_query($sql, $conexion) or die(register_mysql_error("UA0004", mysql_error()));
         mysql_query("COMMIT");
@@ -156,8 +150,6 @@ class admin {
 
     function editarUsuario() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("UPDATE accesos_usuarios SET usuario = %s, nombre_completo = %s, clave = %s, estado = %s WHERE md5(id) = %s", GetSQLValueString($_POST['txtUser'], "text"), GetSQLValueString($_POST['txtName'], "text"), ((strlen(trim($_POST['txtPass'])) > 0) ? GetSQLValueString(md5($_POST['txtPass']), "text") : "clave"), ((isset($_POST['idEstadoEdit'])) ? 1 : 0), GetSQLValueString($_POST['idUsuarioEdit'], "text"));
         mysql_query($sql, $conexion) or die(register_mysql_error("UA0003", mysql_error()));
         mysql_query("COMMIT");
@@ -165,8 +157,6 @@ class admin {
 
     function crearUsuario() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("INSERT INTO accesos_usuarios VALUES(null, %s, md5(%s), %s, 1)", GetSQLValueString($_POST['txtNewUser'], "text"), GetSQLValueString($_POST['txtNewPass'], "text"), GetSQLValueString($_POST['txtNewName'], "text"));
         mysql_query($sql, $conexion) or die(register_mysql_error("UA0004", mysql_error()));
         mysql_query("COMMIT");
@@ -185,4 +175,3 @@ class admin {
 ;
 
 $r = new admin();
-?>

@@ -32,36 +32,28 @@ class admin {
 
     function actualizarPalabra() {
         global $conexion;
-        global $database_conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("UPDATE mensajes_bloqueados SET palabra=%s WHERE id=%s;", GetSQLValueString($_POST['txtPalabraEditada'], "text"), GetSQLValueString($_POST['txtIdPalabra'], "int"));
         mysql_query($sql, $conexion) or die(register_mysql_error("BL0004", mysql_error()));
     }
 
     function agregarPalabra() {
         global $conexion;
-        global $database_conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("INSERT INTO mensajes_bloqueados(id, palabra) VALUES (NULL, %s)", GetSQLValueString($_POST['txtPalabra'], "text"));
         mysql_query($sql, $conexion) or die(register_mysql_error("BL0003", mysql_error()));
     }
 
     function eliminarPalabra() {
         global $conexion;
-        global $database_conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("DELETE FROM mensajes_bloqueados WHERE id = %s", GetSQLValueString($_POST['txtEliminar'], "int"));
         mysql_query($sql, $conexion) or die(register_mysql_error("BL0005", mysql_error()));
     }
 
     function getHtml() {
         global $conexion;
-        global $database_conexion;
 
-        mysql_select_db($database_conexion, $conexion);
         $contenido = "
    <table>
     <tr>

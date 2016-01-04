@@ -34,8 +34,7 @@ class admin {
 
     function getDatos() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
+
         ini_set('max_execution_time', 0);
         ini_set("memory_limit", "786M");
         $sql = sprintf("INSERT INTO suscripciones_estadisticas SELECT idSuscripcion, DATE(%s), conteo FROM suscripciones_estadisticas WHERE fecha=DATE(DATE_ADD(%s, INTERVAL -1 DAY));", GetSQLValueString($_POST['txtHasta'], "text"), GetSQLValueString($_POST['txtHasta'], "text"));

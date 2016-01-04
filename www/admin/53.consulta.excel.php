@@ -36,10 +36,8 @@ class admin {
 
     function getResult() {
         global $conexion;
-        global $database_conexion;
         $resultado = "<table><tr><th colspan='5'>Resultado</th></tr>
    <tr><td style='border:solid 1px #FFF; text-align:center'>Id Actividad</td><td style='border:solid 1px #FFF; text-align:center'>Nombre Actividad</td><td style='border:solid 1px #FFF; text-align:center'>Tipo Actividad</td><td style='border:solid 1px #FFF; text-align:center'>Tipo</td><td style='border:solid 1px #FFF; text-align:center'>Conteo</td></tr>";
-        mysql_select_db($database_conexion, $conexion);
         $rs = mysql_query("SELECT idActividad, nombreActividad, tipoActividad, nombreTipo, conteo FROM t1", $conexion);
         while ($row = mysql_fetch_array($rs)) {
             $resultado .= "<tr><td style='text-align:center'>" . $row["idActividad"] . "</td><td style='text-align:center'>" . $row["nombreActividad"] . "</td><td style='text-align:center'>" . $row["tipoActividad"] . "</td><td style='text-align:center'>" . $row["nombreTipo"] . "</td><td style='text-align:center'>" . $row["conteo"] . "</td></tr>";
@@ -50,8 +48,8 @@ class admin {
 
     function createTempTable() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
+
+        
         mysql_query("DROP TEMPORARY TABLE IF EXISTS t1", $conexion) or die(register_mysql_error("CE0001", mysql_error()));
         mysql_query("CREATE TEMPORARY TABLE t1 (idActividad INT, nombreActividad VARCHAR(255), tipoActividad INT, nombreTipo VARCHAR(255), conteo INT, PRIMARY KEY (idActividad, tipoActividad))") or die(register_mysql_error("CE0002", mysql_error()));
         ;
@@ -59,8 +57,6 @@ class admin {
 
     function getRegistros() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
 
         $archivo = $_FILES["flExcel"]['name'];
         $version = (substr(strrchr($archivo, '.'), 1) == "xlsx" ) ? "Excel2007" : "Excel5";

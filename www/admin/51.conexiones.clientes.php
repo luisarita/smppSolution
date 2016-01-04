@@ -41,8 +41,6 @@ class admin {
 
     function actualizarCliente() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
 
         mysql_query("BEGIN", $conexion) or die(register_mysql_error("CC010", mysql_error()));
         $sql = sprintf("UPDATE conexiones_clientes SET nombre=%s WHERE id=%s", GetSQLValueString($_POST['txtGuardarCliente'], "text"), GetSQLValueString($_POST['txtIdClienteEditar'], "int"));
@@ -58,8 +56,6 @@ class admin {
 
     function crearCliente() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("INSERT INTO conexiones_clientes(id, nombre) VALUES(NULL, %s)", GetSQLValueString($_POST['txtCrearCliente'], "text"));
         mysql_query($sql, $conexion) or die(register_mysql_error("CC002", mysql_error()));
         //agregamos los valores
@@ -71,9 +67,7 @@ class admin {
 
     function getListaConexiones() {
         global $conexion;
-        global $database_conexion;
         $lista = "<tr><th colspan ='2'>Lista de Clientes</th></tr>";
-        mysql_select_db($database_conexion, $conexion);
         if (isset($_POST['txtEditarCliente'])) {// ingresa aqui si se editara alguno de los clientes
             $sql = sprintf("SELECT id, nombre FROM conexiones_clientes WHERE id = %s", GetSQLValueString($_POST['txtEditarCliente'], "int"));
             $rs = mysql_query($sql, $conexion) or die(register_mysql_error("CC003", mysql_error()));

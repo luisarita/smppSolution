@@ -42,7 +42,6 @@ if (!function_exists("GetSQLValueString")) {
 }
 
 if (isset($_GET['id'])) {
-    mysql_select_db($database_conexion, $conexion);
     $query = "DELETE FROM ws_media WHERE id=" . $_GET['id'];
     $rs = mysql_query($query, $conexion) or die(mysql_error());
 }
@@ -54,7 +53,6 @@ if (isset($_GET['pageNum_rsMedia'])) {
 }
 $startRow_rsMedia = $pageNum_rsMedia * $maxRows_rsMedia;
 
-mysql_select_db($database_conexion, $conexion);
 $query_rsMedia = "SELECT m.clave, COUNT(*) AS conteo FROM ws_media m, ws_compras_msg c WHERE m.id=c.id_media AND fechaexp >='$desde' AND fechaexp <='$hasta' GROUP BY m.clave";
 $query_limit_rsMedia = sprintf("%s LIMIT %d, %d", $query_rsMedia, $startRow_rsMedia, $maxRows_rsMedia);
 $rsMedia = mysql_query($query_limit_rsMedia, $conexion) or die(mysql_error());

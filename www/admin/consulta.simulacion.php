@@ -5,7 +5,6 @@ if (!isset($_SESSION['idAdmin'])) {
 }
 
 require_once('../connections/conexion.php');
-mysql_select_db($database_conexion, $conexion);
 
 $usuario = (isset($_POST['usuario'])) ? $_POST['usuario'] : '-1';
 $desde = (isset($_POST['desde'])) ? $_POST['desde'] : strftime("%Y-%m-%d %H:00", time() - 24 * 3600);

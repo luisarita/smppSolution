@@ -1,6 +1,8 @@
 <?php
 
+require_once('../conf.php');
 require_once('../connections/conexion.php');
+
 $usuario_Recordset1 = "-1";
 if (isset($_POST['usuario'])) {
     $usuario_Recordset1 = (get_magic_quotes_gpc()) ? $_POST['usuario'] : addslashes($_POST['usuario']);

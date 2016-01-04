@@ -27,8 +27,6 @@ class admin {
 
     function getListaRecargas() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = "SELECT id, nombre FROM ac_recargas WHERE activa=1 ORDER BY nombre;";
         $opciones = "";
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RA0001", mysql_error()));
@@ -40,8 +38,6 @@ class admin {
 
     function getFormMensajes() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $formMensajes = "";
         $sql = sprintf("SELECT id, respuestaGanador, respuesta, respuestaErrorCodigo, respuestaErrorOpcion, respuestaFueraHorario, respuestaDentroHorario, respuestaMotivacional, respuestaBloqueoCodigo, respuestaBloqueoClave, respuestaBlacklist, respuestaRecarga, respuestaAdicional, respuestaBloqueoNumero FROM ac_recargas WHERE id=%s;", GetSQLValueString($_POST['sltRecarga'], "int"));
         $rs = mysql_query($sql, $conexion) or die(register_mysql_error("RA0002", mysql_error()));
@@ -100,8 +96,6 @@ class admin {
 
     function guardarMensajesRecargas() {
         global $conexion;
-        global $database_conexion;
-        mysql_select_db($database_conexion, $conexion);
         $sql = sprintf("UPDATE ac_recargas SET respuesta = %s, respuestaGanador = %s, respuestaDentroHorario = %s, respuestaFueraHorario  = %s, respuestaErrorCodigo = %s, respuestaBloqueoCodigo = %s, respuestaBlacklist = %s, respuestaRecarga = %s, respuestaAdicional = %s, respuestaErrorOpcion = %s, respuestaMotivacional = %s, respuestaBloqueoClave = %s, respuestaBloqueoNumero = %s WHERE id = %s", GetSQLValueString((($_POST['msjRespuesta'] != NULL) ? $_POST['msjRespuesta'] : ""), "text"), GetSQLValueString((($_POST['msjRespuestaGanador'] != NULL) ? $_POST['msjRespuestaGanador'] : ""), "text"), GetSQLValueString((($_POST['msjDentroHorario'] != NULL) ? $_POST['msjDentroHorario'] : ""), "text"), GetSQLValueString((($_POST['msjFueraHorario'] != NULL) ? $_POST['msjFueraHorario'] : ""), "text"), GetSQLValueString((($_POST['msjCodigoError'] != NULL) ? $_POST['msjCodigoError'] : ""), "text"), GetSQLValueString((($_POST['msjBloqueoCodigo'] != NULL) ? $_POST['msjBloqueoCodigo'] : ""), "text"), GetSQLValueString((($_POST['msjBlacklist'] != NULL) ? $_POST['msjBlacklist'] : ""), "text"), GetSQLValueString((($_POST['msjRecarga'] != NULL) ? $_POST['msjRecarga'] : ""), "text"), GetSQLValueString((($_POST['msjAdicional'] != NULL) ? $_POST['msjAdicional'] : ""), "text"), GetSQLValueString((($_POST['msjOpcionError'] != NULL) ? $_POST['msjOpcionError'] : ""), "text"), GetSQLValueString((($_POST['msjMotivacional'] != NULL) ? $_POST['msjMotivacional'] : ""), "text"), GetSQLValueString((($_POST['msjBloqueoClave'] != NULL) ? $_POST['msjBloqueoClave'] : ""), "text"), GetSQLValueString((($_POST['msjBloqueoNumero'] != NULL) ? $_POST['msjBloqueoNumero'] : ""), "text"), GetSQLValueString($_POST['idRecarga'], "int")); //echo $sql;
         mysql_query($sql, $conexion) or die(register_mysql_error("RA0003", mysql_error()));
     }

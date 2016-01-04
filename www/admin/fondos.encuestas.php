@@ -12,12 +12,13 @@ if (!isset($_SESSION['idAdmin'])) {
     header("Location: " . $initPage);
 }
 
-mysql_select_db($database_conexion, $conexion);
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-    if (!isset($_POST['id']))
-        die('No seleccion� una encuesta');
-    if (!isset($_FILES['file']['name']))
+    if (!isset($_POST['id'])) {
+        die('No seleccionó una encuesta');
+    }
+    if (!isset($_FILES['file']['name'])) {
         die('No ingreso un archivo');
+    }
     $name = $_FILES['file']['name'];
     $src = $_FILES['file']['tmp_name'];
     $path = $SURVEY_WALL;
@@ -64,10 +65,10 @@ $totalRows_rs = mysql_num_rows($rs);
                 </tr>
                 <td colspan="2"><div align="right">
                         <button onclick='javascript: if (removeLeadingAndTrailingChar(file.value) != "") {
-                  this.form.submit();
-              } else {
-                  alert("No ha llenado todos los campos")
-              }'>Cargar</button>
+                                    this.form.submit();
+                                } else {
+                                    alert("No ha llenado todos los campos")
+                                }'>Cargar</button>
                     </div></td>
                 </tr>
                 <tr><td colspan="2">&nbsp;</td></tr>    
