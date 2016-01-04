@@ -25,7 +25,7 @@ Public Class consRifas
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents dgDatos As System.Windows.Forms.DataGrid
     Friend WithEvents dgDatos2 As System.Windows.Forms.DataGrid
@@ -116,8 +116,8 @@ Public Class consRifas
     End Sub
 
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
-    Private dataSet As New dataSet
+    Private dtaAdpInicial As New MySqlDataAdapter
+    Private dataSet As New DataSet
     Private dtaAdpInicial2 As New MySqlDataAdapter
     Private dataSet2 As New DataSet
 

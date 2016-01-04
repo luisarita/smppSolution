@@ -37,7 +37,7 @@ Public Module fncListBox
             rs.Close()
             cmd.Connection.Close()
         Catch thisError As OdbcException
-            showerror(thisError.Message)
+            showError(thisError.Message)
         End Try
         If lb.Items.Count > 0 Then lb.SelectedIndex = 0
     End Sub

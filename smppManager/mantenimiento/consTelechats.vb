@@ -1,5 +1,4 @@
 Imports MySql.Data.MySqlClient
-Imports funciones
 
 Public Class consTelechats
     Inherits formControl.frmTemplate
@@ -25,7 +24,7 @@ Public Class consTelechats
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents dgDatos As System.Windows.Forms.DataGrid
     Friend WithEvents cmdEliminar As System.Windows.Forms.Button
@@ -102,8 +101,8 @@ Public Class consTelechats
     End Sub
 
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
-    Private dataSet As New dataSet
+    Private dtaAdpInicial As New MySqlDataAdapter
+    Private dataSet As New DataSet
 
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick
         Dim row As DataRow = row_actual(dgDatos)
@@ -120,7 +119,7 @@ Public Class consTelechats
     End Sub
     Sub cargar()
         If Not dgDatos.DataSource Is Nothing Then CType(dgDatos.DataSource, DataTable).Clear()
-        Dim selectCMD As New MySQLCommand("SELECT id,nombre,numero FROM TELECHATS")
+        Dim selectCMD As New MySqlCommand("SELECT id,nombre,numero FROM TELECHATS")
         Dim CNX2 As New MySqlConnection(cnxString)
         fncGridDataset.cargar(dtaAdpInicial, dgDatos, "DATOS", selectCMD, Nothing, Nothing, Nothing, CNX2, dataSet)
         formatear_datos()

@@ -4,17 +4,17 @@ Public Class agrMsgSuscripcion
     Inherits formControl.frmTemplate
 
 #Region " Windows Form Designer generated code "
-        Public Sub New()
-            MyBase.New()
-            InitializeComponent()
-        End Sub
-        Sub New(ByVal id As Integer)
-            MyBase.New()
-            InitializeComponent()
-            vID = id
-            pTitle = "Modificar Suscripción"
-            cmdCrear.Text = "Modificar"
-            If CNX.State <> ConnectionState.Open Then CNX.Open()
+    Public Sub New()
+        MyBase.New()
+        InitializeComponent()
+    End Sub
+    Sub New(ByVal id As Integer)
+        MyBase.New()
+        InitializeComponent()
+        vId = id
+        pTitle = "Modificar Suscripción"
+        cmdCrear.Text = "Modificar"
+        If CNX.State <> ConnectionState.Open Then CNX.Open()
         Dim dr As MySqlDataReader = New MySqlCommand("SELECT * FROM suscripciones_mensajes WHERE id=" & id, CNX).ExecuteReader
         If dr.Read Then
             fecha.Text = dr!fecha
@@ -188,11 +188,11 @@ Public Class agrMsgSuscripcion
         agregar = False
         If CNX.State <> ConnectionState.Open Then CNX.Open()
         Dim strCMD As String = IIf(vId = -1, "INSERT INTO suscripciones_mensajes (fecha,mensaje,idSuscripcion) VALUES ('" & getDate(fecha.Text) & "','" & contenido.Text & "'," & vIdS & ")", "UPDATE suscripciones_mensajes SET fecha='" & getDate(fecha.Value) & "',mensaje='" & contenido.Text & "',estado=0 WHERE id=" & vId)
-        Dim cmd As New MySQLCommand(strCMD, CNX)
+        Dim cmd As New MySqlCommand(strCMD, CNX)
         Try
             cmd.ExecuteNonQuery()
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

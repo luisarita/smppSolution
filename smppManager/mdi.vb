@@ -21,7 +21,7 @@ Public Class mdi
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents MainMenu1 As System.Windows.Forms.MainMenu
     Friend WithEvents MenuItem1 As System.Windows.Forms.MenuItem
@@ -445,8 +445,6 @@ Public Class mdi
         a.MdiParent = Me
         a.Show()
     End Sub
-
-
 
     Private Sub MenuItem35_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItem35.Click
         Dim a As New agrDiccionario

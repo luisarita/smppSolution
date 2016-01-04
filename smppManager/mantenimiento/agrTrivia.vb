@@ -439,7 +439,7 @@ Public Class agrTrivia
         Try
             cmd.ExecuteNonQuery()
             If vID = -1 Then
-                Dim dr As Integer = New MySQLCommand("SELECT id FROM TRIVIAS WHERE nombre='" & nombre.Text & "'", CNX).ExecuteScalar
+                Dim dr As Integer = New MySqlCommand("SELECT id FROM TRIVIAS WHERE nombre='" & nombre.Text & "'", CNX).ExecuteScalar
                 'If dr.Read Then
                 vID = dr
                 'End If
@@ -460,7 +460,7 @@ Public Class agrTrivia
                 Next
             End If
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

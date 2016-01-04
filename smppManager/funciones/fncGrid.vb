@@ -157,7 +157,7 @@ Public Module fncGrid
         dbgrid.TableStyles.Add(tableStyle)
         Return tableStyle
     End Function
-    Public Function bindDataSet(ByVal dataTable As dataTable, ByVal dbgrid As DataGrid) As DataGridTableStyle
+    Public Function bindDataSet(ByVal dataTable As DataTable, ByVal dbgrid As DataGrid) As DataGridTableStyle
         Dim tableStyle As DataGridTableStyle
         tableStyle = New DataGridTableStyle
         tableStyle.MappingName = dataTable.TableName
@@ -217,5 +217,5 @@ Public Module fncGrid
     '            AddHandler txtBox.KeyPress, myFunction
     '        Next
     '    End With
-    'End Sub   
+    'End Sub
 End Module

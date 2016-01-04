@@ -87,8 +87,8 @@ Public Class consDiccionarios
 
     End Sub
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
-    Private dataSet As New dataSet
+    Private dtaAdpInicial As New MySqlDataAdapter
+    Private dataSet As New DataSet
 
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick
         Dim row As DataRow = row_actual(dgDatos)
@@ -104,7 +104,7 @@ Public Class consDiccionarios
     End Sub
     Sub cargar()
         If Not dgDatos.DataSource Is Nothing Then CType(dgDatos.DataSource, DataTable).Clear()
-        Dim selectCMD As New MySQLCommand("SELECT id,nombre,numero FROM DICCIONARIOS")
+        Dim selectCMD As New MySqlCommand("SELECT id,nombre,numero FROM DICCIONARIOS")
         Dim CNX2 As New MySqlConnection(cnxString)
         fncGridDataset.cargar(dtaAdpInicial, dgDatos, "DATOS", selectCMD, Nothing, Nothing, Nothing, CNX2, dataSet)
         formatear_datos()
@@ -143,11 +143,11 @@ Public Class consDiccionarios
                 Exit Sub
             End If
             If CNX.State <> ConnectionState.Open Then CNX.Open()
-            Dim deleteCMD As New MySQLCommand("DELETE FROM DICCIONARIOS WHERE id=" & row("id"), CNX)
+            Dim deleteCMD As New MySqlCommand("DELETE FROM DICCIONARIOS WHERE id=" & row("id"), CNX)
             Try
                 deleteCMD.ExecuteNonQuery()
                 cargar()
-            Catch ex As MySQLException
+            Catch ex As MySqlException
                 MsgBox("Error al ejecutar comando: " & ex.Message)
             End Try
         End If

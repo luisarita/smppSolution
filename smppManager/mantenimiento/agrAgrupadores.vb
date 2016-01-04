@@ -102,7 +102,7 @@ Public Class agrAgrupadores
         With cbSuscripciones
             If .SelectedIndex >= 0 Then
                 Dim myitem As listitem = CType(cbSuscripciones.SelectedItem, listitem)
-                lbSuscripciones.Items.Add(New listitem(myitem.name, myitem.id))
+                lbSuscripciones.Items.Add(New listitem(myitem.Name, myitem.id))
             End If
         End With
     End Sub

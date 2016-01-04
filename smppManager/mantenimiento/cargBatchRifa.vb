@@ -145,7 +145,7 @@ Public Class cargBatchRifa
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(416, 36)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Ingrese una lista de números, (uno por línea), sin dejar líneas vacías. Debe incl" & _
+        Me.Label1.Text = "Ingrese una lista de números, (uno por línea), sin dejar líneas vacías. Debe incl" &
             "uir el código de área en cada uno."
         '
         'cargBatchRifa
@@ -210,7 +210,7 @@ ShowError:  ErrorProvider.SetError(numeros, "El item " & i + 1 & ": " & strNumer
 
         If CNX.State <> ConnectionState.Open Then CNX.Open()
         Dim trans As MySqlTransaction = CNX.BeginTransaction
-        Dim cmd As New MySQLCommand("", CNX, trans)
+        Dim cmd As New MySqlCommand("", CNX, trans)
         Dim strNumeros As String() = numeros.Text.Split(vbNewLine)
         Dim suscripcion As Integer = valor(cbSuscripciones)
 
@@ -220,14 +220,14 @@ ShowError:  ErrorProvider.SetError(numeros, "El item " & i + 1 & ": " & strNumer
             Try
                 cmd.CommandText = "INSERT INTO rifas_participantes (idRifa,numero,fecha,mensaje) VALUES (" & suscripcion & "," & strNumeros(i) & ",NOW(),'Cargado Por Lote')"
                 cmd.ExecuteNonQuery()
-            Catch ex As MySQLException
+            Catch ex As MySqlException
                 trans.Rollback()
                 MsgBox("Error! No se pudo ingresar el item " & i + 1 & ": " & strNumeros(i) & " / " & ex.Message, MsgBoxStyle.SystemModal)
             End Try
         Next
         Try
             trans.Commit()
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error! No se pudo completar la transacción", MsgBoxStyle.SystemModal)
             Return False
         End Try

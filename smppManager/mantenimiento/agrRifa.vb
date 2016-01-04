@@ -1045,7 +1045,7 @@ Public Class agrRifa
         With cbRifas
             If .SelectedIndex >= 0 Then
                 Dim myitem As listitem = CType(.SelectedItem, listitem)
-                lbReplicacion.Items.Add(New listitem(myitem.name, myitem.id))
+                lbReplicacion.Items.Add(New listitem(myitem.Name, myitem.id))
             End If
         End With
     End Sub

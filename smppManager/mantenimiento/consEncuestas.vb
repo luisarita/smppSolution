@@ -92,8 +92,8 @@ Public Class consEncuestas
 
     End Sub
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
-    Private dataSet As New dataSet
+    Private dtaAdpInicial As New MySqlDataAdapter
+    Private dataSet As New DataSet
 
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick
         Dim row As DataRow = row_actual(dgDatos)
@@ -163,7 +163,7 @@ Public Class consEncuestas
             Try
                 deleteCMD.ExecuteNonQuery()
                 cargar()
-            Catch ex As MySQLException
+            Catch ex As MySqlException
                 MsgBox("Error al ejecutar comando: " & ex.Message)
             End Try
         End If

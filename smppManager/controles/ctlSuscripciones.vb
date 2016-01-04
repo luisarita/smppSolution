@@ -199,7 +199,7 @@ Public Class ctlSuscripciones
 #End Region
 
     Private vID As Integer
-    Private dtaAdpInicial As New MySQLDataAdapter
+    Private dtaAdpInicial As New MySqlDataAdapter
     Private dataSet As New DataSet
 
     Private Sub ctlSuscripciones_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -209,7 +209,7 @@ Public Class ctlSuscripciones
     Private Sub cbSuscripciones_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbSuscripciones.SelectedIndexChanged
         vID = valor(cbSuscripciones)
         If Not connectionOne.State = ConnectionState.Open Then connectionOne.Open()
-        Dim dr As MySQLDataReader = New MySQLCommand("SELECT COUNT(*) AS cantidad FROM suscripciones, suscripciones_participantes WHERE suscripciones_participantes.fecha - Now() <= suscripciones.duracion AND suscripciones.id=suscripciones_participantes.idsuscripcion AND suscripciones_participantes.notificado=0 AND suscripciones_participantes.idsuscripcion=" & vID, connectionOne).ExecuteReader(CommandBehavior.SingleRow)
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT COUNT(*) AS cantidad FROM suscripciones, suscripciones_participantes WHERE suscripciones_participantes.fecha - Now() <= suscripciones.duracion AND suscripciones.id=suscripciones_participantes.idsuscripcion AND suscripciones_participantes.notificado=0 AND suscripciones_participantes.idsuscripcion=" & vID, connectionOne).ExecuteReader(CommandBehavior.SingleRow)
         If dr.Read Then cantidad.Text = dr!cantidad
         dr.Close()
         Dim SQL As String = "SELECT id, idsuscripcion, estado, mensaje, fecha FROM suscripciones_mensajes WHERE estado=1 AND idSuscripcion=" & vID

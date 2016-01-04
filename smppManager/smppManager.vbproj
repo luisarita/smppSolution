@@ -49,13 +49,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://25.173.56.151/smpp/manager/</InstallUrl>
+    <InstallUrl>http://25.85.238.217/smpp/manager/</InstallUrl>
     <ProductName>SMPP Manager</ProductName>
     <PublisherName>SMPP</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>168</ApplicationRevision>
+    <ApplicationRevision>169</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -107,11 +107,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="formControl">
-      <HintPath>..\..\..\tecmovil\formControl.dll</HintPath>
+      <HintPath>..\..\..\tecmovil\publish\manager\Application Files\formControl.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.3.6\Assemblies\v4.0\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\tecmovil\publish\manager\Application Files\MySql.Data.dll</HintPath>
       <Private>True</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>

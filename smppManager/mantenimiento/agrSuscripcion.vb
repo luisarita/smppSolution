@@ -71,7 +71,7 @@ Public Class agrSuscripcion
             fncListboxMySQL.popularMySQL(CObj(lbClavesCancelacion), "claves", "id", "clave", CNX, "idSuscripcionCancelacion=" & vID)
             fncListboxMySQL.popularMySQL(CObj(lbReplicacion), "suscripciones", "id", "nombre", CNX, String.Format("id IN (SELECT hijo FROM suscripciones_replicaciones WHERE padre={0})", vID))
         Else
-                dr.Close()
+            dr.Close()
             showError("Registro no encontrado")
             Dispose()
         End If
@@ -1481,7 +1481,7 @@ Public Class agrSuscripcion
         With cbSuscripciones
             If .SelectedIndex >= 0 Then
                 Dim myitem As listitem = CType(cbSuscripciones.SelectedItem, listitem)
-                lbReplicacion.Items.Add(New listitem(myitem.name, myitem.id))
+                lbReplicacion.Items.Add(New listitem(myitem.Name, myitem.id))
             End If
         End With
     End Sub

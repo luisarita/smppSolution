@@ -178,7 +178,7 @@ Public Class ctlRecepcion
     End Sub
 #End Region
 
-    Private dtaAdpInicial As New MySQLDataAdapter
+    Private dtaAdpInicial As New MySqlDataAdapter
     Private dataSet As New DataSet
     'Private vId As Integer = -1
     Shared Sub formatear_datos(ByVal dbgrid As DataGrid)
@@ -221,7 +221,7 @@ Public Class ctlRecepcion
 
         Dim SQL As String = "SELECT TELEFONO_ORIGEN_DE_RESPUE,FECHA_DE_RECEPCION,DATOS_RECIBIDOS FROM comunicacion_recibida_tabla WHERE TELEFON_DESTINO_DE_RESPU=" & sNumero & " AND FECHA_DE_RECEPCION >='" & sDesde & "' AND FECHA_DE_RECEPCION < '" & sHasta & "'"
         SQL = SQL & " UNION " & SQL.Replace("comunicacion_recibida_tabla", "comunicacion_recibida_tabla_bck") '& " ORDER BY FECHA_DE_RECEPCION DESC"
-        Dim selectCMD As New MySQLCommand(SQL)
+        Dim selectCMD As New MySqlCommand(SQL)
         fncGridDataset.cargar(dtaAdpInicial, dgDatos, "DATOS", selectCMD, Nothing, Nothing, Nothing, connectionOne, dataSet)
         formatear_datos(dgDatos)
     End Sub

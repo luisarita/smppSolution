@@ -439,7 +439,7 @@ Public Class agrListado
                 Next
             End If
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

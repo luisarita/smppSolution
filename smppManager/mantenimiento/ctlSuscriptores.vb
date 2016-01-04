@@ -121,7 +121,7 @@ Public Class ctlSuscriptores
     End Sub
 #End Region
 
-    Private dtaAdpInicial As New MySQLDataAdapter
+    Private dtaAdpInicial As New MySqlDataAdapter
     Private dataSet As New DataSet
     Private vId As Integer = -1
     Private vActivo As Integer
@@ -164,7 +164,7 @@ Public Class ctlSuscriptores
         If Not dgDatos.DataSource Is Nothing Then CType(dgDatos.DataSource, DataTable).Clear()
         If condition <> "" Then condition = " AND numero LIKE '%" & condition & "%'"
         If vActivo Then condition &= " AND estado=1 "
-        Dim selectCMD As New MySQLCommand("SELECT id, idSuscripcion, numero, fecha, cantidad FROM suscripciones_participantes WHERE idSuscripcion=" & vId & condition & " AND estado=1 AND notificado=0 ORDER BY cantidad DESC")
+        Dim selectCMD As New MySqlCommand("SELECT id, idSuscripcion, numero, fecha, cantidad FROM suscripciones_participantes WHERE idSuscripcion=" & vId & condition & " AND estado=1 AND notificado=0 ORDER BY cantidad DESC")
         fncGridDataset.cargar(dtaAdpInicial, dgDatos, "DATOS", selectCMD, Nothing, Nothing, Nothing, connectionOne, dataSet)
         formatear_datos(dgDatos)
     End Sub
@@ -182,7 +182,7 @@ Public Class ctlSuscriptores
         Try
             deleteCMD.ExecuteNonQuery()
             cargar()
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Sub
@@ -191,9 +191,9 @@ Public Class ctlSuscriptores
         Dim numero As String = InputBox("Ingrese el número")
         Dim fecha As String = getDate(Now)
         If numero.Length >= NUMBERLENGTH And IsNumeric(numero) Then
-            Dim cmd As New MySQLCommand("", connectionOne)
+            Dim cmd As New MySqlCommand("", connectionOne)
             If connectionOne.State <> ConnectionState.Open Then connectionOne.Open()
-            Dim dr As MySQLDataReader = New MySQLCommand("SELECT id FROM suscripciones_participantes WHERE numero=" & numero & " AND idSuscripcion=" & vId, connectionOne).ExecuteReader
+            Dim dr As MySqlDataReader = New MySqlCommand("SELECT id FROM suscripciones_participantes WHERE numero=" & numero & " AND idSuscripcion=" & vId, connectionOne).ExecuteReader
             If dr.Read Then
                 dr.Close()
                 cmd.CommandText = "UPDATE suscripciones_participantes SET fecha='" & fecha & "', cantidad=cantidad+1 WHERE numero=" & numero & " AND idSuscripcion=" & vId

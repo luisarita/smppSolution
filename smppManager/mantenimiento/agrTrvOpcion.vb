@@ -11,11 +11,11 @@ Public Class agrTrvOpcion
     Sub New(ByVal id As Integer)
         MyBase.New()
         InitializeComponent()
-        vID = id
+        vId = id
         pTitle = "Modificar Opción"
         cmdCrear.Text = "Modificar"
         If CNX.State <> ConnectionState.Open Then CNX.Open()
-        Dim dr As MySQLDataReader = New MySQLCommand("SELECT * FROM TRIVIAS_OPCIONES WHERE id=" & id, CNX).ExecuteReader
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT * FROM TRIVIAS_OPCIONES WHERE id=" & id, CNX).ExecuteReader
         If dr.Read Then
             contenido.Text = dr!mensaje
             valor.Text = dr!valor
@@ -221,11 +221,11 @@ Public Class agrTrvOpcion
         agregar = False
         If CNX.State <> ConnectionState.Open Then CNX.Open()
         Dim strCMD As String = IIf(vId = -1, "INSERT INTO TRIVIAS_OPCIONES (valor,opcion,mensaje,idPregunta) VALUES ('" & valor.Text & "','" & opcion.Text & "','" & contenido.Text & "'," & vIdS & ")", "UPDATE TRIVIAS_OPCIONES SET valor=" & valor.Text & ",opcion='" & opcion.Text & "',mensaje='" & contenido.Text & "' WHERE id=" & vId)
-        Dim cmd As New MySQLCommand(strCMD, CNX)
+        Dim cmd As New MySqlCommand(strCMD, CNX)
         Try
             cmd.ExecuteNonQuery()
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

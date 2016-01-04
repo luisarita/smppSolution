@@ -89,7 +89,7 @@ Public Class consListados
     End Sub
 
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
+    Private dtaAdpInicial As New MySqlDataAdapter
     Private dataSet As New DataSet
 
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick
@@ -108,7 +108,7 @@ Public Class consListados
         If Not dgDatos.DataSource Is Nothing Then CType(dgDatos.DataSource, DataTable).Clear()
         Dim selectCMD As New MySqlCommand("SELECT id,nombre,numero FROM LISTADOS")
         Dim CNX2 As New MySqlConnection(cnxString)
-        fncGridDataSet.cargar(dtaAdpInicial, dgDatos, "DATOS", selectCMD, Nothing, Nothing, Nothing, CNX2, dataSet)
+        fncGridDataset.cargar(dtaAdpInicial, dgDatos, "DATOS", selectCMD, Nothing, Nothing, Nothing, CNX2, dataSet)
         formatear_datos()
     End Sub
     Sub formatear_datos()
@@ -146,11 +146,11 @@ Public Class consListados
                 Exit Sub
             End If
             If CNX.State <> ConnectionState.Open Then CNX.Open()
-            Dim deleteCMD As New MySQLCommand("DELETE FROM LISTADOS WHERE id=" & row("id"), CNX)
+            Dim deleteCMD As New MySqlCommand("DELETE FROM LISTADOS WHERE id=" & row("id"), CNX)
             Try
                 deleteCMD.ExecuteNonQuery()
                 cargar()
-            Catch ex As MySQLException
+            Catch ex As MySqlException
                 MsgBox("Error al ejecutar comando: " & ex.Message)
             End Try
         End If

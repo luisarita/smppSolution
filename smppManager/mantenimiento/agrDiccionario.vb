@@ -18,7 +18,7 @@ Public Class agrDiccionario
         pTitle = "Modificar Encuesta"
         cmdCrear.Text = "Modificar"
         If CNX.State <> ConnectionState.Open Then CNX.Open()
-        Dim dr As MySQLDataReader = New MySQLCommand("SELECT nombre,usuario,clave,numero FROM DICCIONARIOS WHERE id=" & id, CNX).ExecuteReader
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT nombre,usuario,clave,numero FROM DICCIONARIOS WHERE id=" & id, CNX).ExecuteReader
         If dr.Read Then
             nombre.Text = dr!nombre
             usuario.Text = dr!usuario
@@ -339,7 +339,7 @@ Public Class agrDiccionario
         Try
             cmd.ExecuteNonQuery()
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

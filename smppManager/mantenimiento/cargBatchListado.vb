@@ -145,7 +145,7 @@ Public Class cargBatchListado
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(401, 36)
         Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Ingrese una lista de números, (uno por línea), sin dejar líneas vacías. Debe incl" & _
+        Me.Label1.Text = "Ingrese una lista de números, (uno por línea), sin dejar líneas vacías. Debe incl" &
             "uir el código de área en cada uno."
         '
         'cargBatchListado

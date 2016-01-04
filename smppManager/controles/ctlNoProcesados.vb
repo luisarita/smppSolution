@@ -107,8 +107,8 @@ Public Class ctlNoProcesados
 
     End Sub
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
-    Private dataSet As New dataSet
+    Private dtaAdpInicial As New MySqlDataAdapter
+    Private dataSet As New DataSet
 
     Private Sub consRifas_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         cargar()
@@ -179,6 +179,3 @@ Public Class ctlNoProcesados
         If fncGridDataset.actualizar(dtaAdpInicial, "DATOS", dataSet) Then Dispose()
     End Sub
 End Class
-
-
-

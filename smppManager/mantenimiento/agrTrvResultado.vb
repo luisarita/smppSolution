@@ -11,11 +11,11 @@ Public Class agrTrvResultado
     Sub New(ByVal id As Integer)
         MyBase.New()
         InitializeComponent()
-        vID = id
+        vId = id
         pTitle = "Modificar Resultado"
         cmdCrear.Text = "Modificar"
         If CNX.State <> ConnectionState.Open Then CNX.Open()
-        Dim dr As MySQLDataReader = New MySQLCommand("SELECT * FROM TRIVIAS_RESULTADOS WHERE id=" & id, CNX).ExecuteReader
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT * FROM TRIVIAS_RESULTADOS WHERE id=" & id, CNX).ExecuteReader
         If dr.Read Then
             contenido.Text = dr!mensaje
         Else
@@ -166,28 +166,28 @@ Public Class agrTrvResultado
             Dim cantidad As Integer = 0
             Dim puntos As Integer = 0
             Try
-                cantidad = New MySQLCommand("SELECT COUNT(id) AS id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vIdS, CNX).ExecuteScalar
-            Catch ex As MySQLException
+                cantidad = New MySqlCommand("SELECT COUNT(id) AS id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vIdS, CNX).ExecuteScalar
+            Catch ex As MySqlException
             End Try
             Try
-                puntos = New MySQLCommand("SELECT SUM(valor) AS puntos FROM (SELECT MAX(valor) AS valor FROM TRIVIAS_OPCIONES INNER JOIN TRIVIAS_PREGUNTAS ON TRIVIAS_PREGUNTAS.id = TRIVIAS_OPCIONES.idPregunta WHERE idTrivia=" & vIdS & " GROUP BY idPregunta) AS DRVTBL", CNX).ExecuteScalar
-            Catch es As MySQLException
+                puntos = New MySqlCommand("SELECT SUM(valor) AS puntos FROM (SELECT MAX(valor) AS valor FROM TRIVIAS_OPCIONES INNER JOIN TRIVIAS_PREGUNTAS ON TRIVIAS_PREGUNTAS.id = TRIVIAS_OPCIONES.idPregunta WHERE idTrivia=" & vIdS & " GROUP BY idPregunta) AS DRVTBL", CNX).ExecuteScalar
+            Catch es As MySqlException
                 MsgBox("No existen opciones para esta trivia. No se puede calcular puntajes")
                 Return False
             End Try
             Dim minimo As Integer = 0
             Dim maximo As Integer = 0
             cantidad += 1
-            Dim dr As MySQLDataReader = New MySQLCommand("SELECT id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vIdS, CNX).ExecuteReader
+            Dim dr As MySqlDataReader = New MySqlCommand("SELECT id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vIdS, CNX).ExecuteReader
             Dim CNX2 As New MySqlConnection(cnxString)
             CNX2.Open()
             While dr.Read
                 maximo = maximo + puntos / cantidad
-                Dim CMD1 As New MySQLCommand("UPDATE TRIVIAS_RESULTADOS SET minimo=" & minimo & ", maximo=" & maximo & " WHERE id=" & dr!id, CNX2)
+                Dim CMD1 As New MySqlCommand("UPDATE TRIVIAS_RESULTADOS SET minimo=" & minimo & ", maximo=" & maximo & " WHERE id=" & dr!id, CNX2)
                 Try
                     CMD1.ExecuteNonQuery()
                     minimo = maximo + 1
-                Catch ex As MySQLException
+                Catch ex As MySqlException
                     MsgBox("Error al ejecutar comando: " & ex.Message)
                 End Try
             End While
@@ -198,11 +198,11 @@ Public Class agrTrvResultado
         Else
             strCMD = "UPDATE TRIVIAS_RESULTADOS SET mensaje='" & contenido.Text & "' WHERE id=" & vId
         End If
-        Dim CMD2 As New MySQLCommand(strCMD, CNX)
+        Dim CMD2 As New MySqlCommand(strCMD, CNX)
         Try
             CMD2.ExecuteNonQuery()
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

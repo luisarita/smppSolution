@@ -11,11 +11,11 @@ Public Class agrTrvPregunta
     Sub New(ByVal id As Integer)
         MyBase.New()
         InitializeComponent()
-        vID = id
+        vId = id
         pTitle = "Modificar Pregunta"
         cmdCrear.Text = "Modificar"
         If CNX.State <> ConnectionState.Open Then CNX.Open()
-        Dim dr As MySQLDataReader = New MySQLCommand("SELECT * FROM TRIVIAS_PREGUNTAS WHERE id=" & id, CNX).ExecuteReader
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT * FROM TRIVIAS_PREGUNTAS WHERE id=" & id, CNX).ExecuteReader
         If dr.Read Then
             contenido.Text = dr!pregunta
         Else
@@ -164,20 +164,20 @@ Public Class agrTrvPregunta
         Dim strCMD As String
         If vId = -1 Then
             Dim idPadre As String = "NULL"
-            Dim dr As Integer = New MySQLCommand("SELECT id FROM TRIVIAS_PREGUNTAS WHERE idPadre IS NULL AND idTrivia=" & vIdS, CNX).ExecuteScalar
+            Dim dr As Integer = New MySqlCommand("SELECT id FROM TRIVIAS_PREGUNTAS WHERE idPadre IS NULL AND idTrivia=" & vIdS, CNX).ExecuteScalar
             While dr
                 idPadre = dr
-                dr = New MySQLCommand("SELECT id FROM TRIVIAS_PREGUNTAS WHERE idPadre=" & idPadre, CNX).ExecuteScalar
+                dr = New MySqlCommand("SELECT id FROM TRIVIAS_PREGUNTAS WHERE idPadre=" & idPadre, CNX).ExecuteScalar
             End While
             strCMD = "INSERT INTO TRIVIAS_PREGUNTAS (pregunta,idPadre,idTrivia) VALUES ('" & contenido.Text & "'," & idPadre & "," & vIdS & ")"
         Else
             strCMD = "UPDATE TRIVIAS_PREGUNTAS SET pregunta='" & contenido.Text & "' WHERE id=" & vId
         End If
-        Dim cmd As New MySQLCommand(strCMD, CNX)
+        Dim cmd As New MySqlCommand(strCMD, CNX)
         Try
             cmd.ExecuteNonQuery()
             agregar = True
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
         End Try
     End Function

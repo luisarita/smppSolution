@@ -5,7 +5,6 @@ Public Class consAgrupador
     Private dtaAdpInicial As New MySqlDataAdapter
     Private dataSet As New DataSet
 
-
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick
         Dim row As DataRow = row_actual(dgDatos)
         If row Is Nothing Then Exit Sub

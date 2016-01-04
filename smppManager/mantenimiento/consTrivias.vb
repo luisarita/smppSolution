@@ -92,7 +92,7 @@ Public Class consTrivias
 
     End Sub
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
+    Private dtaAdpInicial As New MySqlDataAdapter
     Private ReadOnly dataSet As New DataSet()
 
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick

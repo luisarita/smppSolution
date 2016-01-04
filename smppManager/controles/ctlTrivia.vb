@@ -234,7 +234,7 @@ Public Class ctlTrivia
 #End Region
 
     Private vID As Integer
-    Private dtaAdpInicial As New MySQLDataAdapter
+    Private dtaAdpInicial As New MySqlDataAdapter
     Private dataSet As New DataSet
 
     Private Sub ctlSuscripciones_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
@@ -253,12 +253,12 @@ Public Class ctlTrivia
         If Not dgDatos.DataSource Is Nothing Then CType(dgDatos.DataSource, DataTable).Clear()
         Dim CNX2 As New MySqlConnection(cnxString)
 
-        Dim selectCMD As New MySQLCommand("SELECT id,idPadre,pregunta FROM TRIVIAS_PREGUNTAS WHERE idTrivia=" & vID)
+        Dim selectCMD As New MySqlCommand("SELECT id,idPadre,pregunta FROM TRIVIAS_PREGUNTAS WHERE idTrivia=" & vID)
         fncGridDataset.cargar(dtaAdpInicial, dgDatos, "DATOS1", selectCMD, Nothing, Nothing, Nothing, CNX2, dataSet)
         formatear_datos(dgDatos)
         checkOpciones()
 
-        selectCMD = New MySQLCommand("SELECT id,minimo,maximo,mensaje FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vID)
+        selectCMD = New MySqlCommand("SELECT id,minimo,maximo,mensaje FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vID)
         fncGridDataset.cargar(dtaAdpInicial, dgDatos3, "DATOS3", selectCMD, Nothing, Nothing, Nothing, CNX2, dataSet)
         formatear_datos3(dgDatos3)
     End Sub
@@ -477,9 +477,9 @@ Public Class ctlTrivia
         Dim cantidad As Integer = 0
         Dim puntos As Integer = 0
         Try
-            cantidad = New MySQLCommand("SELECT COUNT(id) AS id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vID, CNX).ExecuteScalar
+            cantidad = New MySqlCommand("SELECT COUNT(id) AS id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vID, CNX).ExecuteScalar
             If cantidad = 0 Then Exit Function
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             Exit Function
         End Try
         Try
@@ -490,7 +490,7 @@ Public Class ctlTrivia
         End Try
         Dim minimo As Integer = 0
         Dim maximo As Integer = 0
-        Dim dr As MySQLDataReader = New MySQLCommand("SELECT id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vID, CNX).ExecuteReader
+        Dim dr As MySqlDataReader = New MySqlCommand("SELECT id FROM TRIVIAS_RESULTADOS WHERE idTrivia=" & vID, CNX).ExecuteReader
         Dim CNX2 As New MySqlConnection(cnxString)
         CNX2.Open()
         While dr.Read
@@ -499,7 +499,7 @@ Public Class ctlTrivia
             Try
                 CMD1.ExecuteNonQuery()
                 minimo = maximo + 1
-            Catch ex As MySQLException
+            Catch ex As MySqlException
                 MsgBox("Error al ejecutar comando: " & ex.Message)
             End Try
         End While
@@ -510,10 +510,10 @@ Public Class ctlTrivia
     Sub recalcularOrden()
         If CNX.State <> ConnectionState.Open Then CNX.Open()
 
-        Dim updateCMD As New MySQLCommand("UPDATE TRIVIAS_PREGUNTAS SET idPadre = NULL WHERE idTrivia=" & vID, CNX)
+        Dim updateCMD As New MySqlCommand("UPDATE TRIVIAS_PREGUNTAS SET idPadre = NULL WHERE idTrivia=" & vID, CNX)
         Try
             updateCMD.ExecuteNonQuery()
-        Catch ex As MySQLException
+        Catch ex As MySqlException
             MsgBox("Error al ejecutar comando: " & ex.Message)
             Exit Sub
         End Try
@@ -528,7 +528,7 @@ Public Class ctlTrivia
                 Try
                     updateCMD.CommandText = String.Format("UPDATE TRIVIAS_PREGUNTAS SET idPadre = {0}  WHERE id={1}", id, dr!id)
                     updateCMD.ExecuteNonQuery()
-                Catch ex As MySQLException
+                Catch ex As MySqlException
                     MsgBox("Error al ejecutar comando: " & ex.Message)
                     Exit Sub
                 End Try

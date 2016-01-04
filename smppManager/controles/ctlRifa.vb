@@ -371,7 +371,7 @@ cerrar: Dim updateCMD As New MySqlCommand("UPDATE rifas SET estado=0 WHERE id=" 
 
         cantidad_jugadores = 0
         Dim selectQuery As String = "SELECT id,numero FROM rifas_participantes WHERE idRifa=" & id
-        Dim dr2 As MySQLDataReader = New MySQLCommand(selectQuery, CNX).ExecuteReader
+        Dim dr2 As MySqlDataReader = New MySqlCommand(selectQuery, CNX).ExecuteReader
         While dr2.Read
             cantidad_jugadores += 1
         End While
@@ -385,7 +385,7 @@ cerrar: Dim updateCMD As New MySqlCommand("UPDATE rifas SET estado=0 WHERE id=" 
             CNX2.Open()
 
             While cantidad_ganadores > 0
-                dr = New MySQLCommand(selectQuery, CNX).ExecuteReader
+                dr = New MySqlCommand(selectQuery, CNX).ExecuteReader
                 Dim rand As Integer = cantidad_jugadores * Rnd()
                 While rand > 0
                     dr.Read()
@@ -416,7 +416,7 @@ cerrar: Dim updateCMD As New MySqlCommand("UPDATE rifas SET estado=0 WHERE id=" 
                 cmdLimpiar.Enabled = False
                 cmdCerrarRifa.Enabled = True
                 txtEstado.Text = "Abierta"
-            Catch thisError As MySQLException
+            Catch thisError As MySqlException
                 MsgBox("No se pudo limpiar: " & thisError.Message)
             End Try
         End If

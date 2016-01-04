@@ -25,7 +25,7 @@ Public Class consChats
     Private components As System.ComponentModel.IContainer
 
     'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
+    'It can be modified using the Windows Form Designer.
     'Do not modify it using the code editor.
     Friend WithEvents dgDatos As System.Windows.Forms.DataGrid
     Friend WithEvents cmdEliminar As System.Windows.Forms.Button
@@ -98,8 +98,8 @@ Public Class consChats
     End Sub
 
 #End Region
-    Private dtaAdpInicial As New MySQLDataAdapter
-    Private dataSet As New dataSet
+    Private dtaAdpInicial As New MySqlDataAdapter
+    Private dataSet As New DataSet
 
     Private Sub dgDatos_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgDatos.DoubleClick
         Dim row As DataRow = row_actual(dgDatos)
