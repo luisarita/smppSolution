@@ -1,7 +1,3 @@
-# Dependencies
-vnframework  
- - an open source .net framework that can be found here https://github.com/luisarita/vnframework  
-
 # Included Projects  
 library  
  A .Net class project containing all the logic to interact with the esme java app  
